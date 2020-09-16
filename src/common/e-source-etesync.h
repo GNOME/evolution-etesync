@@ -48,22 +48,34 @@ struct _ESourceEteSyncClass {
 
 GType		e_source_etesync_get_type	(void) G_GNUC_CONST;
 void		e_source_etesync_type_register  (GTypeModule *type_module);
-const gchar *	e_source_etesync_get_journal_id	(ESourceEteSync *extension);
-gchar *		e_source_etesync_dup_journal_id	(ESourceEteSync *extension);
-void		e_source_etesync_set_journal_id	(ESourceEteSync *extension,
-						 const gchar *journal_id);
-const gchar *	e_source_etesync_get_journal_description
+const gchar *	e_source_etesync_get_collection_id
 						(ESourceEteSync *extension);
-gchar *		e_source_etesync_dup_journal_description
+gchar *		e_source_etesync_dup_collection_id
 						(ESourceEteSync *extension);
-void		e_source_etesync_set_journal_description
+void		e_source_etesync_set_collection_id
+						(ESourceEteSync *extension,
+						 const gchar *collection_id);
+const gchar *	e_source_etesync_get_collection_description
+						(ESourceEteSync *extension);
+gchar *		e_source_etesync_dup_collection_description
+						(ESourceEteSync *extension);
+void		e_source_etesync_set_collection_description
 						(ESourceEteSync *extension,
 						 const gchar *description);
-gint32 		e_source_etesync_get_journal_color
+const gchar *	e_source_etesync_get_collection_color
 						(ESourceEteSync *extension);
-void		e_source_etesync_set_journal_color
+gchar *		e_source_etesync_dup_collection_color
+						(ESourceEteSync *extension);
+void		e_source_etesync_set_collection_color
 						(ESourceEteSync *extension,
-						 const gint32 color);
+						 const gchar *color);
+const gchar *	e_source_etesync_get_etebase_collection_b64
+						(ESourceEteSync *extension);
+gchar *		e_source_etesync_dup_etebase_collection_b64
+						(ESourceEteSync *extension);
+void		e_source_etesync_set_etebase_collection_b64
+						(ESourceEteSync *extension,
+						 const gchar *etebase_collection_b64);
 G_END_DECLS
 
 #endif /* E_SOURCE_ETESYNC_H */

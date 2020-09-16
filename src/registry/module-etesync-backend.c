@@ -12,6 +12,7 @@
 #include "e-etesync-backend.h"
 #include "e-etesync-backend-factory.h"
 #include "common/e-source-etesync.h"
+#include "common/e-source-etesync-account.h"
 
 /* Module Entry Points */
 void e_module_load (GTypeModule *type_module);
@@ -26,6 +27,7 @@ e_module_load (GTypeModule *type_module)
 	e_etesync_backend_factory_type_register (type_module);
 
 	e_source_etesync_type_register (type_module);
+	e_source_etesync_account_type_register (type_module);
 }
 
 G_MODULE_EXPORT void

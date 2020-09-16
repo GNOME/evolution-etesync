@@ -9,8 +9,11 @@
 
 #include <glib/gi18n-lib.h>
 #include <e-util/e-util.h>
+#include "common/e-etesync-defines.h"
+#include "common/e-etesync-connection.h"
+#include "common/e-etesync-utils.h"
 #include "e-etesync-config-lookup.h"
-#include <etesync.h>
+#include <etebase.h>
 
 /* Standard GObject macros */
 #define E_TYPE_ETESYNC_CONFIG_LOOKUP \
@@ -97,9 +100,9 @@ etesync_config_lookup_worker_result (EConfigLookupWorker *lookup_worker,
 			"calendar-url", servers);
 	} else {
 		e_config_lookup_result_simple_add_string (lookup_result, E_SOURCE_EXTENSION_COLLECTION,
-			"contacts-url", etesync_get_server_url ());
+			"contacts-url", etebase_get_default_server_url ());
 		e_config_lookup_result_simple_add_string (lookup_result, E_SOURCE_EXTENSION_COLLECTION,
-			"calendar-url", etesync_get_server_url ());
+			"calendar-url", etebase_get_default_server_url ());
 	}
 
 	e_config_lookup_add_result (config_lookup, lookup_result);
@@ -110,55 +113,69 @@ etesync_config_lookup_discover (const ENamedParameters *params,
 				GError **error)
 {
 	gboolean success = TRUE;
-	const gchar *email_address, *server_url;
-	EteSync *etesync = NULL;
+	const gchar *email_address, *server_url, *default_server_url;
+	EtebaseClient *etebase_client;
 
 	email_address = e_named_parameters_get (params, E_CONFIG_LOOKUP_PARAM_EMAIL_ADDRESS);
 	server_url = e_named_parameters_get (params, E_CONFIG_LOOKUP_PARAM_SERVERS);
+	default_server_url = etebase_get_default_server_url ();
 
 	if (!email_address)
 		return FALSE;
 
-	etesync = etesync_new (PACKAGE "/" VERSION, server_url && *server_url ? server_url :  etesync_get_server_url ());
+	if (!server_url || !*server_url)
+		server_url = default_server_url;
 
-	if (etesync) {
-		if (!e_named_parameters_exists (params, E_CONFIG_LOOKUP_PARAM_PASSWORD)) {
+	etebase_client = etebase_client_new (PACKAGE "/" VERSION, server_url);
+
+	if (etebase_client) {
+		gint32 etebase_server_check = 0;
+
+		if (!g_str_equal (server_url, default_server_url))
+			etebase_server_check = etebase_client_check_etebase_server (etebase_client);
+
+		/* Returns 0 if client is pointing an etebase server, 1 if not, -1 on error */
+		if (etebase_server_check != 0) {
+			if (etebase_server_check == 1)
+				g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED, _("Etebase server not found."));
+			else
+				g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED, _("Failed connecting to server."));
+			success = FALSE;
+
+		} else if (!e_named_parameters_exists (params, E_CONFIG_LOOKUP_PARAM_PASSWORD)) {
 			g_set_error_literal (error, E_CONFIG_LOOKUP_WORKER_ERROR, E_CONFIG_LOOKUP_WORKER_ERROR_REQUIRES_PASSWORD,
 				_("Requires password to continue."));
 
 			success = FALSE;
 		} else {
+			EtebaseErrorCode etebase_error;
+			EEteSyncConnection *connection;
 			const gchar *password;
-			gchar *token = NULL;
 
+			connection = e_etesync_connection_new (NULL);
 			password = e_named_parameters_get (params, E_CONFIG_LOOKUP_PARAM_PASSWORD);
-			token = etesync_auth_get_token(etesync, email_address, password);
 
-			if (!token || !*token) {
-				EteSyncErrorCode etesync_error;
-				const gchar *error_message;
+			if (e_etesync_connection_login_connection_sync (connection, email_address, password, server_url, &etebase_error)) {
 
-				etesync_error = etesync_get_error_code ();
+				/* The connection was successfully set, but need to check permession denied error using token valid */
+				if (e_etesync_connection_check_session_key_validation_sync (connection, &etebase_error, NULL) != E_SOURCE_AUTHENTICATION_ACCEPTED)
+					success = FALSE;
+
+				etebase_account_logout (e_etesync_connection_get_etebase_account (connection));
+			} else
 				success = FALSE;
 
-				switch (etesync_error) {
-					case ETESYNC_ERROR_CODE_HTTP:
-					case ETESYNC_ERROR_CODE_CONNECTION:
-						error_message = server_url ? _("Wrong username, password or server.") : _("Wrong username or password.");
-						break;
-					default:
-						error_message = etesync_get_error_message ();
-						break;
-				}
+			if (!success) {
+				if (etebase_error == ETEBASE_ERROR_CODE_UNAUTHORIZED)
+					g_set_error_literal (error, E_CONFIG_LOOKUP_WORKER_ERROR, E_CONFIG_LOOKUP_WORKER_ERROR_REQUIRES_PASSWORD, etebase_error_get_message ());
+				else
+					e_etesync_utils_set_io_gerror (etebase_error, etebase_error_get_message (), error);
+			}
 
-				g_set_error_literal (error, E_CONFIG_LOOKUP_WORKER_ERROR, E_CONFIG_LOOKUP_WORKER_ERROR_REQUIRES_PASSWORD, error_message);
-			} else
-				etesync_auth_invalidate_token (etesync, token);
-
-			g_free (token);
+			g_object_unref (connection);
 		}
 
-		etesync_destroy(etesync);
+		etebase_client_destroy (etebase_client);
 	} else {
 		if (server_url) {
 			g_set_error_literal (error, G_IO_ERROR, G_IO_ERROR_FAILED,

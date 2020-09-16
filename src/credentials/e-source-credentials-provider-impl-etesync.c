@@ -10,7 +10,7 @@
 #include <glib/gi18n-lib.h>
 
 #include "e-source-credentials-provider-impl-etesync.h"
-#include "e-etesync-service.h"
+#include "common/e-etesync-service.h"
 #include "common/e-etesync-defines.h"
 
 struct _ESourceCredentialsProviderImplEteSyncPrivate {
@@ -160,9 +160,10 @@ e_source_credentials_provider_impl_etesync_lookup_sync (ESourceCredentialsProvid
 	}
 
 	/* This means that this is the first time for authentication
-	   in which we haven't yet stored the credentials as NamedParameters
-	   so we have to retrieve the password as text */
-	if (e_named_parameters_count (*out_credentials) == 1) {
+	   in which we haven't yet stored the credentials as NamedParameters.
+	   So we have to retrieve the password as text, we check if session key exists.
+	   Ss normally we don't store the password itself in the NamedParameters */
+	if (!e_named_parameters_exists (*out_credentials, E_ETESYNC_CREDENTIAL_SESSION_KEY)) {
 		gchar *out_password = NULL;
 
 		e_named_parameters_clear (*out_credentials);
@@ -189,8 +190,6 @@ e_source_credentials_provider_impl_etesync_store_sync (ESourceCredentialsProvide
 	g_return_val_if_fail (E_IS_SOURCE_CREDENTIALS_PROVIDER_IMPL_ETESYNC (provider_impl), FALSE);
 	g_return_val_if_fail (E_IS_SOURCE (source), FALSE);
 	g_return_val_if_fail (credentials != NULL, FALSE);
-	g_return_val_if_fail (e_named_parameters_get (credentials, E_SOURCE_CREDENTIAL_PASSWORD) != NULL, FALSE);
-	g_return_val_if_fail (e_named_parameters_get (credentials, E_ETESYNC_CREDENTIAL_ENCRYPTION_PASSWORD) != NULL, FALSE);
 
 	return e_source_cpi_etesync_store_credentials_sync (source, credentials ,permanently, cancellable, error);
 }

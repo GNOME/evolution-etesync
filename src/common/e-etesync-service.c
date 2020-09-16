@@ -83,10 +83,10 @@ e_etesync_service_lookup_password_sync (const gchar *uid,
 		return FALSE;
 	}
 
-	*out_password = g_strdup (secret);
-
-	if (out_password)
+	if (out_password) {
+		*out_password = g_strdup (secret);
 		success = TRUE;
+	}
 
 	e_util_safe_free_string (secret);
 

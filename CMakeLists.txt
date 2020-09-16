@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.1)
 cmake_policy(VERSION 3.1)
 
 project(evolution-etesync
-	VERSION 0.5.1
+	VERSION 1.0.0
 	LANGUAGES C)
 set(PROJECT_BUGREPORT "https://gitlab.gnome.org/GNOME/evolution-etesync/issues/")
 
@@ -122,7 +122,7 @@ pkg_check_modules(GNOME_PLATFORM REQUIRED
 	gtk+-3.0>=${gdk_minimum_version}
 )
 
-pkg_check_modules(ETESYNC REQUIRED etesync)
+pkg_check_modules(ETESYNC REQUIRED etebase)
 
 # ******************************
 # Special directories

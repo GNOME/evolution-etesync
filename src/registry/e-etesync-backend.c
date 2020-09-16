@@ -7,12 +7,19 @@
 
 #include "evolution-etesync-config.h"
 
-#include <etesync.h>
+#include <etebase.h>
 
 #include "e-etesync-backend.h"
 #include "common/e-source-etesync.h"
+#include "common/e-source-etesync-account.h"
 #include "common/e-etesync-connection.h"
 #include "common/e-etesync-defines.h"
+#include "common/e-etesync-service.h"
+#include "common/e-etesync-utils.h"
+
+static gulong source_removed_handler_id = 0;
+static gint backend_count = 0;
+G_LOCK_DEFINE_STATIC (backend_count);
 
 struct _EEteSyncBackendPrivate {
 	EEteSyncConnection *connection;
@@ -31,7 +38,7 @@ etesync_backend_dup_resource_id (ECollectionBackend *backend,
 	extension_name = E_SOURCE_EXTENSION_ETESYNC;
 	extension = e_source_get_extension (child_source, extension_name);
 
-	return e_source_etesync_dup_journal_id (extension);
+	return e_source_etesync_dup_collection_id (extension);
 }
 
 static void
@@ -117,64 +124,72 @@ etesync_backend_populate (ECollectionBackend *backend)
 
 static ESource *
 etesync_backend_new_child (EEteSyncBackend *backend,
-			   EteSyncJournal *journal,
-			   EteSyncCollectionInfo *info)
+			   const EtebaseCollection *col_obj,
+			   EtebaseItemMetadata *item_metadata)
 {
 	ECollectionBackend *collection_backend;
 	ESourceExtension *extension;
 	ESourceBackend *source_backend;
 	ESource *source;
-	gchar *journal_uid, *display_name, *type, *description;
+	gchar *col_obj_b64 =  NULL, *type = NULL;
+	const gchar *collection_uid, *display_name, *description, *color;
 	const gchar *extension_name;
-	gint32 color;
 
-	journal_uid = etesync_journal_get_uid (journal);
-	display_name = etesync_collection_info_get_display_name (info);
-	type = etesync_collection_info_get_type (info);
-	description = etesync_collection_info_get_description (info);
-	color = etesync_collection_info_get_color (info);
+	collection_uid = etebase_collection_get_uid (col_obj);
+	type = etebase_collection_get_collection_type (col_obj);
+	display_name = etebase_item_metadata_get_name (item_metadata);
+	description = etebase_item_metadata_get_description (item_metadata);
+	color = etebase_item_metadata_get_color (item_metadata);
 
 	collection_backend = E_COLLECTION_BACKEND (backend);
-	source = e_collection_backend_new_child (collection_backend, journal_uid);
+	source = e_collection_backend_new_child (collection_backend, collection_uid);
 
 	e_source_set_display_name (source, display_name);
 
-	if (g_str_equal (type, ETESYNC_COLLECTION_TYPE_CALENDAR)) {
+	if (g_str_equal (type, E_ETESYNC_COLLECTION_TYPE_CALENDAR)) {
 		extension_name = E_SOURCE_EXTENSION_CALENDAR;
-	} else if (g_str_equal (type, ETESYNC_COLLECTION_TYPE_TASKS)) {
+	} else if (g_str_equal (type, E_ETESYNC_COLLECTION_TYPE_TASKS)) {
 		extension_name = E_SOURCE_EXTENSION_TASK_LIST;
-	} else if (g_str_equal (type, ETESYNC_COLLECTION_TYPE_ADDRESS_BOOK)) {
+	} else if (g_str_equal (type, E_ETESYNC_COLLECTION_TYPE_ADDRESS_BOOK)) {
 		extension_name = E_SOURCE_EXTENSION_ADDRESS_BOOK;
 	} else {
 		g_object_unref (source);
-		g_return_val_if_reached (NULL);
+		return NULL;
 	}
 
 	extension = e_source_get_extension (source, extension_name);
 	source_backend = E_SOURCE_BACKEND (extension);
+	col_obj_b64 = e_etesync_utils_etebase_collection_to_base64 (
+					col_obj,
+					e_etesync_connection_get_collection_manager (backend->priv->connection));
 	e_source_backend_set_backend_name (source_backend, "etesync");
 	etesync_backend_update_enabled (source, e_backend_get_source (E_BACKEND (backend)));
 
 	/* Set color for calendar and task only */
 	if (!g_str_equal (extension_name, E_SOURCE_EXTENSION_ADDRESS_BOOK)) {
-		if (color) {
+		if (color && !(color[0] == 0)) {
 			gchar *safe_color;
 
-			safe_color = g_strdup_printf ("#%06X", (0xFFFFFF & color));
+			/* Copying first 7 chars as color is stored in format #RRGGBBAA */
+			safe_color = g_strndup (color, 7);
 			e_source_selectable_set_color (E_SOURCE_SELECTABLE (source_backend), safe_color);
 
 			g_free (safe_color);
-		}
+		} else
+			e_source_selectable_set_color (E_SOURCE_SELECTABLE (source_backend), E_ETESYNC_COLLECTION_DEFAULT_COLOR);
+
 	}
 
 	extension_name = E_SOURCE_EXTENSION_ETESYNC;
 	extension = e_source_get_extension (source, extension_name);
-	e_source_etesync_set_journal_id (
-		E_SOURCE_ETESYNC (extension), journal_uid);
-	e_source_etesync_set_journal_description (
+	e_source_etesync_set_collection_id (
+		E_SOURCE_ETESYNC (extension), collection_uid);
+	e_source_etesync_set_collection_description (
 		E_SOURCE_ETESYNC (extension), description);
-	e_source_etesync_set_journal_color (
+	e_source_etesync_set_collection_color (
 		E_SOURCE_ETESYNC (extension), color);
+	e_source_etesync_set_etebase_collection_b64 (
+		E_SOURCE_ETESYNC (extension), col_obj_b64);
 
 	extension_name = E_SOURCE_EXTENSION_OFFLINE;
 	extension = e_source_get_extension (source, extension_name);
@@ -184,10 +199,8 @@ etesync_backend_new_child (EEteSyncBackend *backend,
 	e_server_side_source_set_remote_deletable (
 		E_SERVER_SIDE_SOURCE (source), TRUE);
 
-	g_free (journal_uid);
-	g_free (display_name);
+	g_free (col_obj_b64);
 	g_free (type);
-	g_free (description);
 
 	return source;
 }
@@ -202,42 +215,35 @@ etesync_backend_new_child (EEteSyncBackend *backend,
  */
 static void
 etesync_check_create_modify (EEteSyncBackend *backend,
-			     EteSyncJournal *journal,
-			     EteSyncCollectionInfo *info,
-			     GHashTable *known_sources,
+			     const EtebaseCollection *col_obj,
+			     EtebaseItemMetadata *item_metadata,
+			     ESource *source,
 			     ECollectionBackend *collection_backend,
 			     ESourceRegistryServer *server)
 {
-	gchar *journal_uid;
-	ESource *source;
-
 	g_return_if_fail (E_IS_ETESYNC_BACKEND (backend));
-	g_return_if_fail (journal != NULL);
-
-	journal_uid = etesync_journal_get_uid (journal);
-
-	source = g_hash_table_lookup (known_sources, journal_uid);
+	g_return_if_fail (col_obj != NULL);
 
 	/* if exists check if needs modification
 	   else create the source */
 	if (source != NULL) {
 		ESourceExtension *extension;
 		ESourceBackend *source_backend;
-		gchar *display_name, *description;
+		const gchar *display_name, *description;
 		const gchar *extension_name = NULL;
-		gint32 color;
+		const gchar *color;
 
-		display_name = etesync_collection_info_get_display_name (info);
-		description = etesync_collection_info_get_description (info);
-		color = etesync_collection_info_get_color (info);
+		display_name = etebase_item_metadata_get_name (item_metadata);
+		description = etebase_item_metadata_get_description (item_metadata);
+		color = etebase_item_metadata_get_color (item_metadata);
 
 		extension_name = E_SOURCE_EXTENSION_ETESYNC;
 		extension = e_source_get_extension (source, extension_name);
 
 		/* Set source data */
 		e_source_set_display_name (source, display_name);
-		e_source_etesync_set_journal_description ( E_SOURCE_ETESYNC (extension), description);
-		e_source_etesync_set_journal_color (E_SOURCE_ETESYNC (extension), color);
+		e_source_etesync_set_collection_description ( E_SOURCE_ETESYNC (extension), description);
+		e_source_etesync_set_collection_color (E_SOURCE_ETESYNC (extension), color);
 
 		extension_name = NULL;
 
@@ -251,29 +257,26 @@ etesync_check_create_modify (EEteSyncBackend *backend,
 		if (extension_name) {
 			source_backend = e_source_get_extension (source, extension_name);
 
-			if (color) {
+			if (color && *color) {
 				gchar *safe_color;
 
-				safe_color = g_strdup_printf ("#%06X", (0xFFFFFF & color));
+				/* Copying first 7 chars as color is stored in format #RRGGBBAA */
+				safe_color = g_strndup (color, 7);
 				e_source_selectable_set_color (E_SOURCE_SELECTABLE (source_backend), safe_color);
 
 				g_free (safe_color);
-			}
+			} else
+				e_source_selectable_set_color (E_SOURCE_SELECTABLE (source_backend), E_ETESYNC_COLLECTION_DEFAULT_COLOR);
 		}
 
-		e_server_side_source_set_remote_deletable (
-			E_SERVER_SIDE_SOURCE (source), TRUE);
-
-		g_free (display_name);
-		g_free (description);
 	} else {
-		source = etesync_backend_new_child (backend, journal, info);
-		e_source_registry_server_add_source (server, source);
-		g_object_unref (source);
-	}
+		source = etesync_backend_new_child (backend, col_obj, item_metadata);
 
-	g_hash_table_remove (known_sources, journal_uid);
-	g_free (journal_uid);
+		if (source) {
+			e_source_registry_server_add_source (server, source);
+			g_object_unref (source);
+		}
+	}
 }
 
 static void
@@ -303,14 +306,17 @@ etesync_backend_fill_known_sources (EEteSyncBackend *backend,
 
 		if (e_source_has_extension (source, E_SOURCE_EXTENSION_ETESYNC)) {
 			ESourceEteSync *extension;
-			gchar *journal_id;
+			gchar *collection_id;
 
 			extension = e_source_get_extension (source, E_SOURCE_EXTENSION_ETESYNC);
-			journal_id = e_source_etesync_dup_journal_id (extension);
+			collection_id = e_source_etesync_dup_collection_id (extension);
 
-			if (journal_id)
-				g_hash_table_insert (known_sources, journal_id, g_object_ref (source));
+			if (collection_id)
+				g_hash_table_insert (known_sources, collection_id, g_object_ref (source));
 		}
+
+		e_server_side_source_set_remote_deletable (
+			E_SERVER_SIDE_SOURCE (source), TRUE);
 	}
 	g_list_free_full (sources, g_object_unref);
 
@@ -320,80 +326,230 @@ etesync_backend_fill_known_sources (EEteSyncBackend *backend,
 
 		if (e_source_has_extension (source, E_SOURCE_EXTENSION_ETESYNC)) {
 			ESourceEteSync *extension;
-			gchar *journal_id;
+			gchar *collection_id;
 
 			extension = e_source_get_extension (source, E_SOURCE_EXTENSION_ETESYNC);
-			journal_id = e_source_etesync_dup_journal_id (extension);
+			collection_id = e_source_etesync_dup_collection_id (extension);
 
-			if (journal_id)
-				g_hash_table_insert (known_sources, journal_id, g_object_ref (source));
+			if (collection_id)
+				g_hash_table_insert (known_sources, collection_id, g_object_ref (source));
 		}
+
+		e_server_side_source_set_remote_deletable (
+			E_SERVER_SIDE_SOURCE (source), TRUE);
 	}
 
 	g_list_free_full (sources, g_object_unref);
 }
 
-static gboolean
-etesync_backend_sync_folders (EEteSyncBackend *backend,
-			      GCancellable *cancellable,
-			      GError **error)
+/* Creates a default EtebaseCollection and upload it to the server, then
+   adds it to Evolution EteSync account */
+static const gchar*
+etesync_backend_create_and_add_collection_sync (EEteSyncBackend *backend,
+						ESourceRegistryServer *server,
+						const gchar *type,
+						const gchar *name,
+						GCancellable *cancellable)
 {
-	EteSyncJournal **journals;
-	EEteSyncConnection *connection = backend->priv->connection;
-	gboolean success = TRUE;
-	g_rec_mutex_lock (&backend->priv->etesync_lock);
+	EBackend *e_backend = E_BACKEND (backend);
+	EtebaseCollection *col_obj;
+	const gchar* stoken = NULL;
 
-	journals =  etesync_journal_manager_list (e_etesync_connection_get_journal_manager (connection));
+	if (e_etesync_connection_collection_create_upload_sync (backend->priv->connection, e_backend,
+		type, name, NULL, E_ETESYNC_COLLECTION_DEFAULT_COLOR, &col_obj, cancellable, NULL)) {
 
-	/*
-	   1) Get all sources in a hashtable.
-	   2) loop on the journals, check if it is new (create), or old (maybe modified).
-	   3) remove these two from the hashtable while looping.
-	   4) what is left in the hashtable should be deleted.
-	*/
+		ESource *source;
+		EtebaseItemMetadata *item_metadata;
 
-	if (journals) {
-		gpointer key = NULL, value = NULL;
-		ECollectionBackend *collection_backend;
-		EteSyncJournal **journal_iter;
-		ESourceRegistryServer *server;
-		GHashTable *known_sources; /* Journal ID -> ESource */
-		GHashTableIter iter;
+		item_metadata = etebase_collection_get_meta (col_obj);
+		source = etesync_backend_new_child (backend, col_obj, item_metadata);
 
-		collection_backend = E_COLLECTION_BACKEND (backend);
-		server = e_collection_backend_ref_server (collection_backend);
-		known_sources =  g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
-		etesync_backend_fill_known_sources (backend, known_sources);
-
-		for (journal_iter = journals ;*journal_iter ;journal_iter++) {
-			EteSyncJournal *journal = *journal_iter;
-			EteSyncCryptoManager *crypto_manager;
-			EteSyncCollectionInfo *info;
-
-			crypto_manager = etesync_journal_get_crypto_manager (journal,
-					 e_etesync_connection_get_derived_key (connection),
-					 e_etesync_connection_get_keypair (connection));
-			info = etesync_journal_get_info (journal, crypto_manager);
-
-			etesync_check_create_modify (backend, journal, info, known_sources, collection_backend, server);
-
-			etesync_collection_info_destroy (info);
-			etesync_crypto_manager_destroy (crypto_manager);
-			etesync_journal_destroy (journal);
+		if (source) {
+			e_source_registry_server_add_source (server, source);
+			g_object_unref (source);
 		}
 
-		/* this is step 4 */
-		g_hash_table_iter_init (&iter, known_sources);
-		while (g_hash_table_iter_next (&iter, &key, &value))
-			etesync_backend_delete_source (value);
-
-		g_hash_table_destroy (known_sources);
-		g_free (journals);
-		g_object_unref (server);
-	} else {
-		/* error 500 or 503 */
-		success = FALSE;
+		if (col_obj) {
+			etebase_collection_destroy (col_obj);
+			stoken = etebase_collection_get_stoken (col_obj);
+		}
+		if (item_metadata)
+			etebase_item_metadata_destroy (item_metadata);
 	}
+
+	return stoken;
+}
+
+static gboolean
+etesync_backend_sync_folders_sync (EEteSyncBackend *backend,
+				   gboolean check_rec,
+				   GCancellable *cancellable,
+				   GError **error)
+{
+	EEteSyncConnection *connection = backend->priv->connection;
+	ECollectionBackend *collection_backend;
+	ESourceEteSyncAccount *etesync_account_extention;
+	ESourceRegistryServer *server;
+	EtebaseFetchOptions *fetch_options;
+	GHashTable *known_sources; /* Collection ID -> ESource */
+	gboolean success = TRUE, done = FALSE, is_first_time = FALSE;
+	gchar *stoken = NULL;
+
+	if (g_cancellable_set_error_if_cancelled (cancellable, error))
+		return FALSE;
+
+	g_rec_mutex_lock (&backend->priv->etesync_lock);
+
+	collection_backend = E_COLLECTION_BACKEND (backend);
+	server = e_collection_backend_ref_server (collection_backend);
+	etesync_account_extention = e_source_get_extension (e_backend_get_source (E_BACKEND (backend)), E_SOURCE_EXTENSION_ETESYNC_ACCOUNT);
+	fetch_options = etebase_fetch_options_new();
+	known_sources =  g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+
+	/*
+		1) Get all known-sources (loaded in evo before) in a hashtable to easily lookup.
+		2) Keep getting list of changes until "done" is true
+		3) From the list we got, delete removed membership collection sources.
+		4) loop on the collections, check if it is deleted
+		5) if not deleted then check if it is new (create), or old (maybe modified).
+		6) remove what is deleted or has removed member-ship
+	*/
+
+	etebase_fetch_options_set_prefetch(fetch_options, ETEBASE_PREFETCH_OPTION_MEDIUM);
+	etebase_fetch_options_set_limit (fetch_options, E_ETESYNC_COLLECTION_FETCH_LIMIT);
+	etesync_backend_fill_known_sources (backend, known_sources); /* (1) */
+
+	stoken = g_hash_table_size (known_sources) > 0 ? e_source_etesync_account_dup_collection_stoken (etesync_account_extention) : NULL;
+
+	/* if stoken is null, then it is first time to fetch data from server */
+	if (!stoken)
+		is_first_time = TRUE;
+
+	while (!done) {
+		EtebaseCollectionListResponse *col_list;
+
+		etebase_fetch_options_set_stoken (fetch_options, stoken);
+		col_list =  etebase_collection_manager_list_multi (e_etesync_connection_get_collection_manager (connection),
+								   e_etesync_util_get_collection_supported_types (),
+								   EETESYNC_UTILS_SUPPORTED_TYPES_SIZE,
+								   fetch_options); /* (2) */
+
+		if (col_list) {
+			guintptr col_objs_len = etebase_collection_list_response_get_data_length (col_list);
+			const EtebaseCollection *col_objs[col_objs_len];
+			guintptr col_iter, col_list_rmv_membership_len;
+
+			g_free (stoken);
+
+			stoken = g_strdup (etebase_collection_list_response_get_stoken (col_list));
+			done = etebase_collection_list_response_is_done (col_list);
+			col_list_rmv_membership_len = etebase_collection_list_response_get_removed_memberships_length (col_list);
+
+			etebase_collection_list_response_get_data (col_list, col_objs);
+
+			if (col_list_rmv_membership_len > 0) { /* (3) */
+				const EtebaseRemovedCollection *col_list_rmv_membership[col_list_rmv_membership_len];
+
+				/* Creating a hashed table to easily look up if a collection has removed membership or not */
+				if (etebase_collection_list_response_get_removed_memberships (col_list, col_list_rmv_membership) == 0) {
+
+					for (col_iter = 0; col_iter < col_list_rmv_membership_len; col_iter++) {
+						ESource *source = g_hash_table_lookup (known_sources, etebase_removed_collection_get_uid (col_list_rmv_membership[col_iter]));
+
+						if (source)
+							etesync_backend_delete_source (source);
+					}
+				} else {
+					success = FALSE;
+					etebase_collection_list_response_destroy (col_list);
+					break;
+				}
+			}
+
+			/* Loop each collection to see should we remove or check it, depending if it is deleted or removed membership */
+			for (col_iter = 0; col_iter < col_objs_len; col_iter++) { /* (4) */
+				ESource *source;
+				const EtebaseCollection *col_obj;
+				const gchar *collection_uid;
+
+				col_obj = col_objs[col_iter];
+				collection_uid = etebase_collection_get_uid (col_obj);
+				source = g_hash_table_lookup (known_sources, collection_uid);
+
+				if (!etebase_collection_is_deleted (col_obj)) { /* (5) */
+					EtebaseItemMetadata *item_metadata;
+
+					item_metadata = etebase_collection_get_meta (col_obj);
+					etesync_check_create_modify (backend, col_obj, item_metadata, source, collection_backend, server);
+
+					etebase_item_metadata_destroy (item_metadata);
+				} else /* (6) */
+					etesync_backend_delete_source (source);
+			}
+
+			etebase_collection_list_response_destroy (col_list);
+		} else {
+			/* error 500 or 503 */
+			success = FALSE;
+			break;
+		}
+	}
+
+	/* If this is the first time to sync, then try fetching supported types, if success then don't create default collections */
+	if (is_first_time) {
+		EtebaseCollectionListResponse *col_list;
+		EtebaseFetchOptions *fetch_options;
+
+		fetch_options = etebase_fetch_options_new();
+		etebase_fetch_options_set_prefetch(fetch_options, ETEBASE_PREFETCH_OPTION_MEDIUM);
+		etebase_fetch_options_set_stoken (fetch_options, NULL);
+		etebase_fetch_options_set_limit (fetch_options, 1);
+
+		col_list =  etebase_collection_manager_list_multi (e_etesync_connection_get_collection_manager (connection),
+								   e_etesync_util_get_collection_supported_types (),
+								   EETESYNC_UTILS_SUPPORTED_TYPES_SIZE,
+								   fetch_options);
+
+		if (etebase_collection_list_response_get_data_length (col_list) == 0) {
+			gint ii = 0;
+			const gchar *temp_stoken;
+			const gchar *const *collection_supported_types;
+			const gchar *const *collection_supported_types_default_names;
+
+			collection_supported_types = e_etesync_util_get_collection_supported_types ();
+			collection_supported_types_default_names = e_etesync_util_get_collection_supported_types_default_names ();
+
+			for (ii = 0; ii < EETESYNC_UTILS_SUPPORTED_TYPES_SIZE; ii++)
+				temp_stoken = etesync_backend_create_and_add_collection_sync (backend, server, collection_supported_types[ii], collection_supported_types_default_names[ii], cancellable);
+
+			if (temp_stoken) {
+				g_free (stoken);
+				stoken = g_strdup (temp_stoken);
+			}
+		}
+
+		etebase_collection_list_response_destroy (col_list);
+		etebase_fetch_options_destroy (fetch_options);
+	}
+
+	if (success)
+		e_source_etesync_account_set_collection_stoken (etesync_account_extention, stoken);
+	else {
+		EtebaseErrorCode etebase_error = etebase_error_get_code ();
+
+		e_etesync_utils_set_io_gerror (etebase_error, etebase_error_get_message (), error);
+		if (etebase_error == ETEBASE_ERROR_CODE_UNAUTHORIZED && check_rec) {
+			EBackend *e_backend = E_BACKEND (backend);
+
+			if (e_etesync_connection_maybe_reconnect_sync (connection, e_backend, cancellable, error))
+				success = etesync_backend_sync_folders_sync (backend, FALSE, cancellable, error);
+		}
+	}
+
+	g_object_unref (server);
+	g_hash_table_destroy (known_sources);
+	etebase_fetch_options_destroy (fetch_options);
+	g_free (stoken);
 
 	g_rec_mutex_unlock (&backend->priv->etesync_lock);
 
@@ -408,9 +564,9 @@ etesync_backend_create_resource_sync (ECollectionBackend *backend,
 {
 	EEteSyncConnection *connection;
 	EEteSyncBackend *etesync_backend;
-	EteSyncJournal *new_journal = NULL;
+	EtebaseCollection *new_col_obj = NULL;
 	const gchar *extension_name = NULL;
-	const gchar *journal_type = NULL;
+	const gchar *col_type = NULL;
 	gboolean success = TRUE;
 
 	etesync_backend = E_ETESYNC_BACKEND (backend);
@@ -423,26 +579,27 @@ etesync_backend_create_resource_sync (ECollectionBackend *backend,
 
 	if (e_source_has_extension (source, E_SOURCE_EXTENSION_ADDRESS_BOOK)) {
 		extension_name = E_SOURCE_EXTENSION_ADDRESS_BOOK;
-		journal_type = ETESYNC_COLLECTION_TYPE_ADDRESS_BOOK;
+		col_type = E_ETESYNC_COLLECTION_TYPE_ADDRESS_BOOK;
 	}
 
 	if (e_source_has_extension (source, E_SOURCE_EXTENSION_CALENDAR)) {
 		extension_name = E_SOURCE_EXTENSION_CALENDAR;
-		journal_type = ETESYNC_COLLECTION_TYPE_CALENDAR;
+		col_type = E_ETESYNC_COLLECTION_TYPE_CALENDAR;
 	}
 
 	if (e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST)) {
 		extension_name = E_SOURCE_EXTENSION_TASK_LIST;
-		journal_type = ETESYNC_COLLECTION_TYPE_TASKS;
+		col_type = E_ETESYNC_COLLECTION_TYPE_TASKS;
 	}
 
-	if (journal_type == NULL) {
+	if (col_type == NULL) {
 		success = FALSE;
 	}
 
 	if (success) {
 		gchar *display_name = NULL;
-		gint32 color = ETESYNC_COLLECTION_DEFAULT_COLOR;
+		gchar *color = NULL;
+		EBackend *e_backend = E_BACKEND (backend);
 
 		if (!g_str_equal (extension_name, E_SOURCE_EXTENSION_ADDRESS_BOOK)) {
 			ESourceBackend *source_backend;
@@ -452,49 +609,46 @@ etesync_backend_create_resource_sync (ECollectionBackend *backend,
 			source_color = e_source_selectable_get_color (E_SOURCE_SELECTABLE (source_backend));
 
 			if (source_color) {
-				color = g_ascii_strtoll (&source_color[1], NULL, 16);
-				color |= 0xFF000000;
+				g_free (color);
+				color = g_strdup (source_color);
 			}
 		}
 
 		display_name = e_source_dup_display_name (source);
 
-		success = e_etesync_connection_write_journal_action (connection,
-								     ETESYNC_SYNC_ENTRY_ACTION_ADD,
-								     NULL,
-								     journal_type,
-								     display_name,
-								     NULL,
-								     color,
-								     &new_journal);
+		success = e_etesync_connection_collection_create_upload_sync (connection,
+									      e_backend,
+									      col_type,
+									      display_name,
+									      NULL,
+									      color ? color : E_ETESYNC_COLLECTION_DEFAULT_COLOR,
+									      &new_col_obj,
+									      cancellable,
+									      error);
 
 		g_free (display_name);
+		g_free (color);
 	}
 
 	if (success) {
 		ESourceRegistryServer *server;
-		EteSyncCryptoManager *crypto_manager;
-		EteSyncCollectionInfo *info;
+		EtebaseItemMetadata *item_metadata;
 		ESource *new_source;
 
-		crypto_manager = etesync_journal_get_crypto_manager (new_journal,
-				e_etesync_connection_get_derived_key (connection),
-				e_etesync_connection_get_keypair (connection));
-		info = etesync_journal_get_info (new_journal, crypto_manager);
+		item_metadata = etebase_collection_get_meta (new_col_obj);
 
-		new_source = etesync_backend_new_child (etesync_backend, new_journal, info);
+		new_source = etesync_backend_new_child (etesync_backend, new_col_obj, item_metadata);
 
 		server = e_collection_backend_ref_server (backend);
 		e_source_registry_server_add_source (server, new_source);
 
-		etesync_collection_info_destroy (info);
-		etesync_crypto_manager_destroy (crypto_manager);
+		etebase_item_metadata_destroy (item_metadata);
 		g_object_unref (new_source);
 		g_object_unref (server);
 	}
 
-	if (new_journal)
-		etesync_journal_destroy (new_journal);
+	if (new_col_obj)
+		etebase_collection_destroy (new_col_obj);
 
 	g_rec_mutex_unlock (&etesync_backend->priv->etesync_lock);
 
@@ -508,73 +662,36 @@ etesync_backend_delete_resource_sync (ECollectionBackend *backend,
 				      GError **error)
 {
 	EEteSyncBackend *etesync_backend;
+	EBackend *e_backend;
+	EEteSyncConnection *connection;
 	ESourceEteSync *extension;
-	gchar *journal_uid;
+	EtebaseCollection *col_obj;
 	gboolean success;
 
 	etesync_backend = E_ETESYNC_BACKEND (backend);
+	e_backend = E_BACKEND (backend);
 
 	g_return_val_if_fail (etesync_backend->priv->connection != NULL, FALSE);
 
 	g_rec_mutex_lock (&etesync_backend->priv->etesync_lock);
 
+	connection = etesync_backend->priv->connection;
 	extension = e_source_get_extension (source, E_SOURCE_EXTENSION_ETESYNC);
-	journal_uid = e_source_etesync_dup_journal_id (extension);
+	col_obj = e_etesync_utils_etebase_collection_from_base64 (
+					e_source_etesync_get_etebase_collection_b64 (extension),
+					e_etesync_connection_get_collection_manager (connection));
 
-	success = e_etesync_connection_write_journal_action (etesync_backend->priv->connection,
-							     ETESYNC_SYNC_ENTRY_ACTION_DELETE,
-							     journal_uid, NULL, NULL, NULL, 0, NULL);
+	success = e_etesync_connection_collection_delete_upload_sync (connection, e_backend, col_obj, cancellable, error);
 
 	if (success)
 		etesync_backend_delete_source (source);
 
-	g_free (journal_uid);
+	if (col_obj)
+		etebase_collection_destroy (col_obj);
+
 	g_rec_mutex_unlock (&etesync_backend->priv->etesync_lock);
 
 	return success;
-}
-
-static ESourceAuthenticationResult
-etesync_backend_set_credentials_sync (EEteSyncBackend *backend,
-				      const ENamedParameters *credentials)
-{
-	ESource *source;
-	ESourceAuthentication *authentication_extension;
-	ESourceCollection *collection_extension;
-	EEteSyncConnection *connection = backend->priv->connection;
-
-	source = e_backend_get_source (E_BACKEND (backend));
-	authentication_extension = e_source_get_extension (source, E_SOURCE_EXTENSION_AUTHENTICATION);
-	collection_extension = e_source_get_extension (source, E_SOURCE_EXTENSION_COLLECTION);
-
-	return e_etesync_connection_set_connection_from_sources (connection, credentials, authentication_extension, collection_extension);
-}
-
-static void
-etesync_backend_setup_connection (EEteSyncBackend *etesync_backend)
-{
-	EBackend *backend;
-	ESource *source;
-	const gchar *username = NULL, *server_url = NULL;
-
-	backend = E_BACKEND (etesync_backend);
-	source = e_backend_get_source (backend);
-
-	if (e_source_has_extension (source, E_SOURCE_EXTENSION_COLLECTION)) {
-		ESourceCollection *collection_extension;
-
-		collection_extension = e_source_get_extension (source, E_SOURCE_EXTENSION_COLLECTION);
-		server_url = e_source_collection_get_calendar_url (collection_extension);
-	}
-
-	if (e_source_has_extension (source, E_SOURCE_EXTENSION_AUTHENTICATION)) {
-		ESourceAuthentication *authentication_extension;
-
-		authentication_extension = e_source_get_extension (source, E_SOURCE_EXTENSION_AUTHENTICATION);
-		username = e_source_authentication_get_user (authentication_extension);
-	}
-
-	etesync_backend->priv->connection = e_etesync_connection_new_from_user_url (username, server_url);
 }
 
 static ESourceAuthenticationResult
@@ -586,8 +703,7 @@ etesync_backend_authenticate_sync (EBackend *backend,
 				   GError **error)
 {
 	EEteSyncBackend *etesync_backend;
-	EEteSyncConnection *connection;
-	ESourceAuthenticationResult result;
+	ESourceAuthenticationResult result = E_SOURCE_AUTHENTICATION_ERROR;
 
 	g_return_val_if_fail (E_IS_ETESYNC_BACKEND (backend), E_SOURCE_AUTHENTICATION_ERROR);
 
@@ -595,33 +711,83 @@ etesync_backend_authenticate_sync (EBackend *backend,
 
 	g_rec_mutex_lock (&etesync_backend->priv->etesync_lock);
 
-	if (!etesync_backend->priv->connection)
-		etesync_backend_setup_connection (etesync_backend);
+	if (e_etesync_connection_is_connected (etesync_backend->priv->connection))
+		result = E_SOURCE_AUTHENTICATION_ACCEPTED;
+	else {
+		ESource *source = e_backend_get_source (backend);
 
-	if (etesync_backend->priv->connection) {
-		gboolean needs_setting;
+		if (!etesync_backend->priv->connection)
+			etesync_backend->priv->connection = e_etesync_connection_new (source);
 
-		connection = etesync_backend->priv->connection;
-		/* Get data from credentials if not there already */
-		needs_setting = e_etesync_connection_needs_setting (connection, credentials, &result);
+		if (e_etesync_connection_reconnect_sync (etesync_backend->priv->connection, &result, cancellable, error))
+			result = E_SOURCE_AUTHENTICATION_ACCEPTED;
 
-		if (needs_setting)
-			result = etesync_backend_set_credentials_sync (etesync_backend, credentials);
+	}
 
-		if (result == E_SOURCE_AUTHENTICATION_ACCEPTED) {
-			/* Getting the journals here, and updating the Sources */
-			if (etesync_backend_sync_folders (etesync_backend, cancellable, error))
-				e_collection_backend_authenticate_children (E_COLLECTION_BACKEND (backend), credentials);
-			else
-				result = E_SOURCE_AUTHENTICATION_ERROR;
-		}
-	} else {
-		result = E_SOURCE_AUTHENTICATION_ERROR;
+	if (result == E_SOURCE_AUTHENTICATION_ACCEPTED) {
+		/* Getting the journals here, and updating the Sources */
+		if (etesync_backend_sync_folders_sync (etesync_backend, TRUE, cancellable, error))
+			e_collection_backend_authenticate_children (E_COLLECTION_BACKEND (backend), credentials);
+		else
+			result = E_SOURCE_AUTHENTICATION_ERROR;
 	}
 
 	g_rec_mutex_unlock (&etesync_backend->priv->etesync_lock);
 
 	return result;
+}
+
+/* This function is a call back for "source-removed" signal, it makes sure
+   that the account logs-out after being removed */
+static void
+etesync_backend_source_removed_cb (ESourceRegistryServer *server,
+				   ESource *source,
+				   gpointer user_data)
+{
+	/* Checking if it is a collection and is an EteSync collection */
+	if (e_source_has_extension (source, E_SOURCE_EXTENSION_COLLECTION) &&
+	    e_source_has_extension (source, E_SOURCE_EXTENSION_ETESYNC_ACCOUNT)) {
+
+		EEteSyncConnection *connection;
+		ENamedParameters *credentials;
+		const gchar *collection_uid;
+
+		collection_uid = e_source_get_uid (source);
+		connection = e_etesync_connection_new (source);
+
+		/* Get credentials and set connection object, then use the connection object to logout */
+		if (e_etesync_service_lookup_credentials_sync (collection_uid, &credentials, NULL, NULL)
+		    && e_etesync_connection_set_connection_from_sources (connection, credentials)) {
+
+			etebase_account_logout (e_etesync_connection_get_etebase_account (connection));
+		}
+
+		g_object_unref (connection);
+		e_named_parameters_free (credentials);
+	}
+}
+
+static void
+etesync_backend_dispose (GObject *object)
+{
+	ESourceRegistryServer *server;
+
+	server = e_collection_backend_ref_server (E_COLLECTION_BACKEND (object));
+
+	/* Only disconnect when backend_count is zero */
+	G_LOCK (backend_count);
+	if (server && !--backend_count) {
+		g_signal_handler_disconnect (
+			server, source_removed_handler_id);
+
+		backend_count = 0;
+	}
+	G_UNLOCK (backend_count);
+
+	g_object_unref (server);
+
+	/* Chain up to parent's method. */
+	G_OBJECT_CLASS (e_etesync_backend_parent_class)->dispose (object);
 }
 
 static void
@@ -643,13 +809,18 @@ static void
 etesync_backend_constructed (GObject *object)
 {
 	EBackend *backend;
+	EEteSyncBackend *etesync_backend;
+	ESourceRegistryServer *server;
 	ESource *source;
 
 	/* Chain up to parent's constructed() method. */
 	G_OBJECT_CLASS (e_etesync_backend_parent_class)->constructed (object);
 
 	backend = E_BACKEND (object);
+	etesync_backend = E_ETESYNC_BACKEND (object);
+	server = e_collection_backend_ref_server (E_COLLECTION_BACKEND (backend));
 	source = e_backend_get_source (backend);
+	etesync_backend->priv->connection = e_etesync_connection_new (source);
 
 	e_server_side_source_set_remote_creatable (
 		E_SERVER_SIDE_SOURCE (source), TRUE);
@@ -660,6 +831,16 @@ etesync_backend_constructed (GObject *object)
 		collection_extension = e_source_get_extension (source, E_SOURCE_EXTENSION_COLLECTION);
 		e_source_collection_set_allow_sources_rename (collection_extension, TRUE);
 	}
+
+	G_LOCK (backend_count);
+	if (!backend_count++) {
+		source_removed_handler_id = g_signal_connect (
+					server, "source-removed",
+					G_CALLBACK (etesync_backend_source_removed_cb), NULL);
+	}
+	G_UNLOCK (backend_count);
+
+	g_object_unref (server);
 }
 
 static void
@@ -670,6 +851,7 @@ e_etesync_backend_class_init (EEteSyncBackendClass *class)
 	ECollectionBackendClass *collection_backend_class;
 
 	object_class = G_OBJECT_CLASS (class);
+	object_class->dispose = etesync_backend_dispose;
 	object_class->finalize = etesync_backend_finalize;
 	object_class->constructed = etesync_backend_constructed;
 
@@ -688,4 +870,5 @@ e_etesync_backend_init (EEteSyncBackend *backend)
 {
 	backend->priv = e_etesync_backend_get_instance_private (backend);
 	g_rec_mutex_init (&backend->priv->etesync_lock);
+
 }

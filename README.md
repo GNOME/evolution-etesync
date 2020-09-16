@@ -1,3 +1,4 @@
+## Please Note that the repo has been moved, the official repo is now [here](https://gitlab.gnome.org/GNOME/evolution-etesync)
 # BUILD
 ### The development packages needed
 This is for ubuntu, please check simillar development package depending on you disto

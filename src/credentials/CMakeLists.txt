@@ -1,7 +1,5 @@
 set(extra_deps)
 set(sources
-	e-etesync-service.h
-	e-etesync-service.c
 	e-credentials-prompter-impl-etesync.c
 	e-credentials-prompter-impl-etesync.h
 	e-source-credentials-provider-impl-etesync.c
