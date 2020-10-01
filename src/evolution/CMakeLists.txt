@@ -1,0 +1,38 @@
+set(extra_deps
+)
+set(sources
+	module-etesync-configuration.c
+
+	e-book-config-etesync.c
+	e-book-config-etesync.h
+	e-cal-config-etesync.c
+	e-cal-config-etesync.h
+	e-etesync-config-lookup.c
+	e-etesync-config-lookup.h
+)
+set(extra_defines)
+set(extra_cflags
+	${EVOLUTION_SHELL_CFLAGS}
+	${LIBECAL_CFLAGS}
+	${LIBEBOOK_CFLAGS}
+)
+set(extra_incdirs
+	${EVOLUTION_SHELL_INCLUDE_DIRS}
+	${LIBECAL_INCLUDE_DIRS}
+	${LIBEBOOK_INCLUDE_DIRS}
+)
+set(extra_ldflags
+	${EVOLUTION_SHELL_LDFLAGS}
+	${LIBECAL_LDFLAGS}
+	${LIBEBOOK_LDFLAGS}
+)
+
+add_simple_module(module-etesync-configuration
+	sources
+	extra_deps
+	extra_defines
+	extra_cflags
+	extra_incdirs
+	extra_ldflags
+	"${evo_moduledir}"
+)

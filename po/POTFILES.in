@@ -1,0 +1,9 @@
+# List of source files containing translatable strings.
+# Please keep this list in alphabetic order.
+org.gnome.Evolution-etesync.metainfo.xml.in
+src/common/e-etesync-connection.c
+src/credentials/e-credentials-prompter-impl-etesync.c
+src/credentials/e-etesync-service.c
+src/credentials/e-source-credentials-provider-impl-etesync.c
+src/evolution/e-etesync-config-lookup.c
+

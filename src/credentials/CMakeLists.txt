@@ -1,0 +1,24 @@
+set(extra_deps)
+set(sources
+	e-etesync-service.h
+	e-etesync-service.c
+	e-credentials-prompter-impl-etesync.c
+	e-credentials-prompter-impl-etesync.h
+	e-source-credentials-provider-impl-etesync.c
+	e-source-credentials-provider-impl-etesync.h
+	module-etesync-credentials.c
+)
+set(extra_defines)
+set(extra_cflags)
+set(extra_incdirs)
+set(extra_ldflags)
+
+add_simple_module(module-etesync-credentials
+	sources
+	extra_deps
+	extra_defines
+	extra_cflags
+	extra_incdirs
+	extra_ldflags
+	"${cred_moduledir}"
+)

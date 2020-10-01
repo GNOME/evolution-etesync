@@ -1,0 +1,22 @@
+set(extra_deps)
+set(sources
+	module-etesync-backend.c
+	e-etesync-backend.c
+	e-etesync-backend.h
+	e-etesync-backend-factory.c
+	e-etesync-backend-factory.h
+)
+set(extra_defines)
+set(extra_cflags)
+set(extra_incdirs)
+set(extra_ldflags)
+
+add_simple_module(module-etesync-backend
+	sources
+	extra_deps
+	extra_defines
+	extra_cflags
+	extra_incdirs
+	extra_ldflags
+	"${eds_moduledir}"
+)
