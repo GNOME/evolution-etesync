@@ -1,0 +1,187 @@
+# Ukrainian translation for evolution-etesync.
+# Copyright (C) 2020 evolution-etesync's COPYRIGHT HOLDER
+# This file is distributed under the same license as the evolution-etesync package.
+#
+# Yuri Chornoivan <yurchor@ukr.net>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: evolution-etesync master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/issues"
+"\n"
+"POT-Creation-Date: 2020-10-09 09:25+0000\n"
+"PO-Revision-Date: 2020-10-09 15:35+0300\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 20.11.70\n"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
+msgid "EteSync"
+msgstr "EteSync"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
+msgid "For accessing EteSync servers using EteSync C API"
+msgstr ""
+"Для доступу до серверів EteSync за допомогою програмного інтерфейсу мовою C"
+" до EteSync"
+
+#: ../src/common/e-etesync-connection.c:454
+msgid "My Contacts"
+msgstr "Контакти"
+
+#: ../src/common/e-etesync-connection.c:456
+msgid "My Calendar"
+msgstr "Календар"
+
+#: ../src/common/e-etesync-connection.c:458
+msgid "My Tasks"
+msgstr "Завдання"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:123
+#, c-format
+msgid "Failed to obtain access token for account “%s”"
+msgstr "Не вдалося отримати ключ доступу для облікового запису «%s»"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:183
+msgid "EteSync account authentication request"
+msgstr "Запит щодо розпізнавання на обліковому записі EteSync"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:188
+#, c-format
+msgid "Please enter the password for account “%s”."
+msgstr "Введіть пароль для облікового профілю «%s»."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:192
+#, c-format
+msgid "Please enter the encryption password for account “%s”."
+msgstr "Будь ласка, введіть пароль шифрування для облікового запису «%s»."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:196
+#, c-format
+msgid ""
+"Wrong password!\n"
+"\n"
+"Please enter the correct password for account “%s”."
+msgstr ""
+"Помилковий пароль!\n"
+"\n"
+"Будь ласка, введіть правильний пароль до облікового запису «%s»."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:200
+#, c-format
+msgid ""
+"Wrong encryption password!\n"
+"\n"
+"Please enter the correct encryption password for account “%s”."
+msgstr ""
+"Помилковий пароль шифрування!\n"
+"\n"
+"Будь ласка, введіть правильний пароль шифрування до облікового запису «%s»."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:204
+#, c-format
+msgid ""
+"Welcome to EteSync!\n"
+"\n"
+"Please set an encryption password below for account “%s”, and make sure you "
+"got it right, as it can't be recovered if lost!"
+msgstr ""
+"Вітаємо у EteSync!\n"
+"\n"
+"Будь ласка, вкажіть пароль для шифрування для облікового запису «%s» нижче."
+" Запам'ятайте його добре, оскільки його не можна буде відновити, якщо ви його"
+" забудете!"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:210
+#, c-format
+msgid "Please enter the correct credentials for account “%s”."
+msgstr "Введіть правильні реєстраційні дані для облікового профілю «%s»."
+
+#. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:216
+#, c-format
+msgid ""
+"\n"
+"(host: %s)"
+msgstr ""
+"\n"
+"(вузол: %s)"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:268
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:492
+msgid "_Cancel"
+msgstr "_Скасувати"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:269
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:493
+msgid "_OK"
+msgstr "_Гаразд"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:358
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:647
+msgid "_Encryption Password:"
+msgstr "Пароль _шифрування:"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:370
+msgid "Encryption _Password again:"
+msgstr "П_ароль шифрування ще раз:"
+
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:385
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:662
+msgid "_Add this password to your keyring"
+msgstr "_Додати цей пароль у зв'язку ключів"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:623
+msgid "_User Name:"
+msgstr "_Ім'я користувача:"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:635
+msgid "_Password:"
+msgstr "_Пароль:"
+
+#: ../src/credentials/e-etesync-service.c:53
+#: ../src/credentials/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "Не знайдено реєстраційних даних EteSync"
+
+#: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
+msgid "Credentials not found"
+msgstr "Не знайдено реєстраційних даних"
+
+#: ../src/evolution/e-etesync-config-lookup.c:55
+msgid "Look up for an EteSync account"
+msgstr "Пошук облікового запису EteSync"
+
+#: ../src/evolution/e-etesync-config-lookup.c:75
+msgid "EteSync account"
+msgstr "Обліковий запис EteSync"
+
+#: ../src/evolution/e-etesync-config-lookup.c:76
+msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgstr "EteSync неперервно шифрує ваші дані контактів, календарів та завдань."
+
+#: ../src/evolution/e-etesync-config-lookup.c:127
+msgid "Requires password to continue."
+msgstr "Для продовження потрібен пароль."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Wrong username, password or server."
+msgstr "Помилкове ім'я користувача, пароль або сервер."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Wrong username or password."
+msgstr "Помилкове ім'я користувача або пароль."
+
+#: ../src/evolution/e-etesync-config-lookup.c:165
+msgid ""
+"Malformed server name, please make sure to enter a full url (e.g https://"
+"etesync.example.com)."
+msgstr ""
+"Помилкове форматування назви сервера, будь ласка, переконайтеся, що адресу"
+" введено повністю (наприклад, https://etesync.example.com)."
