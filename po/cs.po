@@ -1,0 +1,182 @@
+# Czech translation for evolution-etesync.
+# Copyright (C) 2020 evolution-etesync's COPYRIGHT HOLDER
+# This file is distributed under the same license as the evolution-etesync package.
+# Marek Černocký <marek@manet.cz>, 2020.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: evolution-etesync\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/issues\n"
+"POT-Creation-Date: 2020-11-10 11:54+0000\n"
+"PO-Revision-Date: 2020-11-11 08:57+0100\n"
+"Last-Translator: Marek Černocký <marek@manet.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
+msgid "EteSync"
+msgstr "EteSync"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
+msgid "For accessing EteSync servers using EteSync C API"
+msgstr "Přístup k serverům EteSync pomocí API EteSync pro jazyk C"
+
+#: ../src/common/e-etesync-connection.c:454
+msgid "My Contacts"
+msgstr "Moje kontakty"
+
+#: ../src/common/e-etesync-connection.c:456
+msgid "My Calendar"
+msgstr "Můj kalendář"
+
+#: ../src/common/e-etesync-connection.c:458
+msgid "My Tasks"
+msgstr "Moje úkoly"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:123
+#, c-format
+msgid "Failed to obtain access token for account “%s”"
+msgstr "Selhalo získání přístupového tiketu pro účet „%s“"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:183
+msgid "EteSync account authentication request"
+msgstr "Požadavek na ověření k účtu EteSync"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:188
+#, c-format
+msgid "Please enter the password for account “%s”."
+msgstr "Zadajte prosím heslo pro účet „%s“."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:192
+#, c-format
+msgid "Please enter the encryption password for account “%s”."
+msgstr "Zadejte prosím šifrovací heslo pro účet „%s“."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:196
+#, c-format
+msgid ""
+"Wrong password!\n"
+"\n"
+"Please enter the correct password for account “%s”."
+msgstr ""
+"Nesprávné heslo!\n"
+"\n"
+"Zadejte prosím správné heslo pro účet „%s“."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:200
+#, c-format
+msgid ""
+"Wrong encryption password!\n"
+"\n"
+"Please enter the correct encryption password for account “%s”."
+msgstr ""
+"Nesprávné šifrovací heslo!\n"
+"\n"
+"Zadejte prosím správné šifrovací heslo pro účet „%s“."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:204
+#, c-format
+msgid ""
+"Welcome to EteSync!\n"
+"\n"
+"Please set an encryption password below for account “%s”, and make sure you "
+"got it right, as it can't be recovered if lost!"
+msgstr ""
+"Vítejte v EteSync!\n"
+"\n"
+"Nastavte prosím níže šifrovací heslo pro účet „%s“ a ujistěte se, že jej "
+"máte správně, protože při jeho ztrátě jej nelze obnovit."
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:210
+#, c-format
+msgid "Please enter the correct credentials for account “%s”."
+msgstr "Zadejte prosím správné pověření pro účet „%s“."
+
+#. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:216
+#, c-format
+msgid ""
+"\n"
+"(host: %s)"
+msgstr ""
+"\n"
+"(hostitel: %s)"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:268
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:492
+msgid "_Cancel"
+msgstr "_Zrušit"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:269
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:493
+msgid "_OK"
+msgstr "_Budiž"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:358
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:647
+msgid "_Encryption Password:"
+msgstr "Šifrovací h_eslo:"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:370
+msgid "Encryption _Password again:"
+msgstr "Šifrovací _heslo znovu:"
+
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:385
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:662
+msgid "_Add this password to your keyring"
+msgstr "Přid_at toto heslo do vaší klíčenky"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:623
+msgid "_User Name:"
+msgstr "_Uživatelské jméno:"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:635
+msgid "_Password:"
+msgstr "_Heslo:"
+
+#: ../src/credentials/e-etesync-service.c:53
+#: ../src/credentials/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "Nebylo nalezeno tajemství EteSync"
+
+#: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
+msgid "Credentials not found"
+msgstr "Nebylo nalezeno pověření"
+
+#: ../src/evolution/e-etesync-config-lookup.c:55
+msgid "Look up for an EteSync account"
+msgstr "Hledat účet EteSync"
+
+#: ../src/evolution/e-etesync-config-lookup.c:75
+msgid "EteSync account"
+msgstr "Účet EteSync"
+
+#: ../src/evolution/e-etesync-config-lookup.c:76
+msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgstr ""
+"Šifrování mezi koncovými body EteSync pro vaše kontakty, kalendáře a úkoly."
+
+#: ../src/evolution/e-etesync-config-lookup.c:127
+msgid "Requires password to continue."
+msgstr "K pokračování je zapotřebí heslo."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Wrong username, password or server."
+msgstr "Nesprávné uživatelské jméne, heslo nebo server."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Wrong username or password."
+msgstr "Nesprávné uživatelské jméne nebo heslo."
+
+#: ../src/evolution/e-etesync-config-lookup.c:165
+msgid ""
+"Malformed server name, please make sure to enter a full url (e.g https://"
+"etesync.example.com)."
+msgstr ""
+"Vadný název serveru. Zadejte prosím správně celou adresu URL (např. https://"
+"etesync.priklad.cz)."
