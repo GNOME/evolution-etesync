@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: evolution-etesync\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-11 11:10+0200\n"
-"PO-Revision-Date: 2020-10-11 11:11+0200\n"
+"POT-Creation-Date: 2020-11-29 11:59+0100\n"
+"PO-Revision-Date: 2020-11-29 12:00+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -27,79 +27,31 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "Dostęp do serwerów EteSync za pomocą API EteSync języka C"
 
-#: ../src/common/e-etesync-connection.c:454
-msgid "My Contacts"
-msgstr "Moje kontakty"
+#: ../src/common/e-etesync-connection.c:903
+#: ../src/common/e-etesync-connection.c:1002
+msgid "Item not found"
+msgstr "Nie odnaleziono elementu"
 
-#: ../src/common/e-etesync-connection.c:456
-msgid "My Calendar"
-msgstr "Mój kalendarz"
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "Nie odnaleziono hasła EteSync"
 
-#: ../src/common/e-etesync-connection.c:458
-msgid "My Tasks"
-msgstr "Moje zadania"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:123
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
 #, c-format
 msgid "Failed to obtain access token for account “%s”"
 msgstr "Uzyskanie tokenu dostępu dla konta „%s” się nie powiodło"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:183
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
 msgid "EteSync account authentication request"
 msgstr "Żądanie uwierzytelnienia konta EteSync"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:188
-#, c-format
-msgid "Please enter the password for account “%s”."
-msgstr "Proszę podać hasło dla konta „%s”."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:192
-#, c-format
-msgid "Please enter the encryption password for account “%s”."
-msgstr "Proszę podać hasło szyfrowania dla konta „%s”."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:196
-#, c-format
-msgid ""
-"Wrong password!\n"
-"\n"
-"Please enter the correct password for account “%s”."
-msgstr ""
-"Błędne hasło.\n"
-"\n"
-"Proszę podać właściwe hasło dla konta „%s”."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:200
-#, c-format
-msgid ""
-"Wrong encryption password!\n"
-"\n"
-"Please enter the correct encryption password for account “%s”."
-msgstr ""
-"Błędne hasło szyfrowania.\n"
-"\n"
-"Proszę podać właściwe hasło szyfrowania dla konta „%s”."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:204
-#, c-format
-msgid ""
-"Welcome to EteSync!\n"
-"\n"
-"Please set an encryption password below for account “%s”, and make sure you "
-"got it right, as it can't be recovered if lost!"
-msgstr ""
-"Witamy w EteSync!\n"
-"\n"
-"Proszę ustawić hasło szyfrowania dla konta „%s” poniżej. Należy pamiętać, że "
-"nie można go przywrócić w razie utracenia!"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:210
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
 #, c-format
 msgid "Please enter the correct credentials for account “%s”."
 msgstr "Proszę podać właściwe dane uwierzytelniające dla konta „%s”."
 
 #. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:216
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
 #, c-format
 msgid ""
 "\n"
@@ -108,73 +60,56 @@ msgstr ""
 "\n"
 "(serwer: %s)"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:268
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:492
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:269
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:493
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
 msgid "_OK"
 msgstr "_OK"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:358
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:647
-msgid "_Encryption Password:"
-msgstr "Hasło _szyfrowania:"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:370
-msgid "Encryption _Password again:"
-msgstr "_Ponownie hasło szyfrowania:"
-
-#. Remember password check
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:385
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:662
-msgid "_Add this password to your keyring"
-msgstr "_Dodanie tego hasła do bazy haseł użytkownika"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:623
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
 msgid "_User Name:"
 msgstr "_Nazwa użytkownika:"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:635
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
 msgid "_Password:"
 msgstr "_Hasło:"
 
-#: ../src/credentials/e-etesync-service.c:53
-#: ../src/credentials/e-etesync-service.c:82
-msgid "EteSync secret not found"
-msgstr "Nie odnaleziono hasła EteSync"
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "_Dodanie tego hasła do bazy haseł użytkownika"
 
 #: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
 msgid "Credentials not found"
 msgstr "Nie odnaleziono danych uwierzytelniających"
 
-#: ../src/evolution/e-etesync-config-lookup.c:55
+#: ../src/evolution/e-etesync-config-lookup.c:58
 msgid "Look up for an EteSync account"
 msgstr "Wyszukaj konto EteSync"
 
-#: ../src/evolution/e-etesync-config-lookup.c:75
+#: ../src/evolution/e-etesync-config-lookup.c:78
 msgid "EteSync account"
 msgstr "Konto EteSync"
 
-#: ../src/evolution/e-etesync-config-lookup.c:76
+#: ../src/evolution/e-etesync-config-lookup.c:79
 msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
 msgstr "EteSync szyfruje kontakty, kalendarze i zadania."
 
-#: ../src/evolution/e-etesync-config-lookup.c:127
+#: ../src/evolution/e-etesync-config-lookup.c:140
+msgid "Etebase server not found."
+msgstr "Nie odnaleziono serwera Etebase."
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "Połączenie z serwerem się nie powiodło."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
 msgid "Requires password to continue."
 msgstr "Do kontynuowania wymagane jest hasło."
 
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Wrong username, password or server."
-msgstr "Błędna nazwa użytkownika, hasło lub serwer."
-
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Wrong username or password."
-msgstr "Błędna nazwa użytkownika lub hasło."
-
-#: ../src/evolution/e-etesync-config-lookup.c:165
+#: ../src/evolution/e-etesync-config-lookup.c:182
 msgid ""
 "Malformed server name, please make sure to enter a full url (e.g https://"
 "etesync.example.com)."
