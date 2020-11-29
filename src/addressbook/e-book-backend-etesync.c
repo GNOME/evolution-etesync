@@ -641,6 +641,7 @@ e_book_backend_etesync_init (EBookBackendEteSync *bbetesync)
 	g_rec_mutex_init (&bbetesync->priv->etesync_lock);
 	bbetesync->priv->connection = NULL;
 	bbetesync->priv->col_obj = NULL;
+	/* coverity[missing_lock] */
 	bbetesync->priv->fetch_from_server = TRUE;
 	bbetesync->priv->preloaded_add = NULL;
 	bbetesync->priv->preloaded_modify = NULL;
