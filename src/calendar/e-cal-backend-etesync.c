@@ -781,6 +781,7 @@ e_cal_backend_etesync_init (ECalBackendEteSync *cbetesync)
 	g_rec_mutex_init (&cbetesync->priv->etesync_lock);
 	cbetesync->priv->connection = NULL;
 	cbetesync->priv->col_obj = NULL;
+	/* coverity[missing_lock] */
 	cbetesync->priv->fetch_from_server = TRUE;
 	cbetesync->priv->preloaded_add = NULL;
 	cbetesync->priv->preloaded_modify = NULL;
