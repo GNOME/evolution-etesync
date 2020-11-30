@@ -2,22 +2,23 @@
 # Copyright (C) 2020 evolution-etesync's COPYRIGHT HOLDER
 # This file is distributed under the same license as the evolution-etesync package.
 # Enrico Nicoletto <liverig@gmail.com>, 2020.
+# Henrique Roberto Gattermann Mittelstaedt <henrique.roberto97@gmail.com>, 2020
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2020-11-05 18:58+0000\n"
-"PO-Revision-Date: 2020-11-10 08:53-0300\n"
+"POT-Creation-Date: 2020-11-29 11:01+0000\n"
+"PO-Revision-Date: 2020-11-29 08:42-0300\n"
+"Last-Translator: Henrique Roberto Gattermann Mittelstaedt <henrique.roberto97@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-pt_br-list@gnome.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Last-Translator: Enrico Nicoletto <liverig@gmail.com>\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
 msgid "EteSync"
@@ -27,80 +28,31 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "Para acessar servidores EteSync usando a API EteSync C"
 
-#: ../src/common/e-etesync-connection.c:454
-msgid "My Contacts"
-msgstr "Meus contatos"
+#: ../src/common/e-etesync-connection.c:903
+#: ../src/common/e-etesync-connection.c:1002
+msgid "Item not found"
+msgstr "Item não encontrado"
 
-#: ../src/common/e-etesync-connection.c:456
-msgid "My Calendar"
-msgstr "Meu calendário"
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "Não foi encontrado o segredo do EteSync"
 
-#: ../src/common/e-etesync-connection.c:458
-msgid "My Tasks"
-msgstr "Minhas tarefas"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:123
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
 #, c-format
 msgid "Failed to obtain access token for account “%s”"
 msgstr "Falha ao obter token de acesso para a conta “%s”"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:183
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
 msgid "EteSync account authentication request"
 msgstr "Solicitação de autenticação à conta EteSync"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:188
-#, c-format
-msgid "Please enter the password for account “%s”."
-msgstr "Por favor, digite a senha para a conta “%s”."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:192
-#, c-format
-msgid "Please enter the encryption password for account “%s”."
-msgstr "Por favor, digite a senha de criptografia para a conta “%s”."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:196
-#, c-format
-msgid ""
-"Wrong password!\n"
-"\n"
-"Please enter the correct password for account “%s”."
-msgstr ""
-"A senha está incorreta!\n"
-"\n"
-"Por favor, digite a senha correta para a conta “%s”."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:200
-#, c-format
-msgid ""
-"Wrong encryption password!\n"
-"\n"
-"Please enter the correct encryption password for account “%s”."
-msgstr ""
-"A senha de criptografia está incorreta!\n"
-"\n"
-"Por favor, digite a senha de criptografia correta para a conta “%s”."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:204
-#, c-format
-msgid ""
-"Welcome to EteSync!\n"
-"\n"
-"Please set an encryption password below for account “%s”, and make sure you "
-"got it right, as it can't be recovered if lost!"
-msgstr ""
-"Boas-vindas ao EteSync!\n"
-"\n"
-"Por favor, defina uma senha de criptografia abaixo para a conta “%s” e "
-"certifique-se de tê-la feita corretamente, pois caso a perca, ela não pode "
-"ser recuperada!"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:210
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
 #, c-format
 msgid "Please enter the correct credentials for account “%s”."
 msgstr "Por favor, digite as credenciais corretas para a conta “%s”."
 
 #. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:216
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
 #, c-format
 msgid ""
 "\n"
@@ -109,77 +61,117 @@ msgstr ""
 "\n"
 "(servidor: %s)"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:268
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:492
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:269
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:493
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
 msgid "_OK"
 msgstr "_OK"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:358
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:647
-msgid "_Encryption Password:"
-msgstr "S_enha de criptografia:"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:370
-msgid "Encryption _Password again:"
-msgstr "Senha de cri_ptografia novamente:"
-
-#. Remember password check
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:385
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:662
-msgid "_Add this password to your keyring"
-msgstr "_Adicionar essa senha ao seu chaveiro"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:623
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
 msgid "_User Name:"
 msgstr "_Nome do usuário:"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:635
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
 msgid "_Password:"
 msgstr "_Senha:"
 
-#: ../src/credentials/e-etesync-service.c:53
-#: ../src/credentials/e-etesync-service.c:82
-msgid "EteSync secret not found"
-msgstr "Não foi encontrado o segredo do EteSync"
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "_Adicionar essa senha ao seu chaveiro"
 
 #: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
 msgid "Credentials not found"
 msgstr "Credenciais não encontradas"
 
-#: ../src/evolution/e-etesync-config-lookup.c:55
+#: ../src/evolution/e-etesync-config-lookup.c:58
 msgid "Look up for an EteSync account"
 msgstr "Pesquisar por uma conta EteSync"
 
-#: ../src/evolution/e-etesync-config-lookup.c:75
+#: ../src/evolution/e-etesync-config-lookup.c:78
 msgid "EteSync account"
 msgstr "Conta EteSync"
 
-#: ../src/evolution/e-etesync-config-lookup.c:76
+#: ../src/evolution/e-etesync-config-lookup.c:79
 msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
 msgstr ""
 "EteSync criptografa de ponta a ponta seus contatos, calendários e tarefas."
 
-#: ../src/evolution/e-etesync-config-lookup.c:127
+#: ../src/evolution/e-etesync-config-lookup.c:140
+msgid "Etebase server not found."
+msgstr "Servidor Etebase não encontrado."
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "Falha ao conectar ao servidor."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
 msgid "Requires password to continue."
 msgstr "É necessária a senha para continuar."
 
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Wrong username, password or server."
-msgstr "Está incorreto o nome de usuário, a senha ou o servidor."
-
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Wrong username or password."
-msgstr "Está incorreto o nome de usuário ou a senha."
-
-#: ../src/evolution/e-etesync-config-lookup.c:165
+#: ../src/evolution/e-etesync-config-lookup.c:182
 msgid ""
 "Malformed server name, please make sure to enter a full url (e.g https://"
 "etesync.example.com)."
 msgstr ""
-"Nome de servidor mal formado, por favor certifique-se de que digitou uma "
-"url completa (ex.: https://etesync.exemplo.com)."
+"Nome de servidor mal formado, por favor certifique-se de que digitou uma url "
+"completa (ex.: https://etesync.exemplo.com)."
+
+#~ msgid "My Contacts"
+#~ msgstr "Meus contatos"
+
+#~ msgid "My Calendar"
+#~ msgstr "Meu calendário"
+
+#~ msgid "My Tasks"
+#~ msgstr "Minhas tarefas"
+
+#~ msgid "Please enter the password for account “%s”."
+#~ msgstr "Por favor, digite a senha para a conta “%s”."
+
+#~ msgid "Please enter the encryption password for account “%s”."
+#~ msgstr "Por favor, digite a senha de criptografia para a conta “%s”."
+
+#~ msgid ""
+#~ "Wrong password!\n"
+#~ "\n"
+#~ "Please enter the correct password for account “%s”."
+#~ msgstr ""
+#~ "A senha está incorreta!\n"
+#~ "\n"
+#~ "Por favor, digite a senha correta para a conta “%s”."
+
+#~ msgid ""
+#~ "Wrong encryption password!\n"
+#~ "\n"
+#~ "Please enter the correct encryption password for account “%s”."
+#~ msgstr ""
+#~ "A senha de criptografia está incorreta!\n"
+#~ "\n"
+#~ "Por favor, digite a senha de criptografia correta para a conta “%s”."
+
+#~ msgid ""
+#~ "Welcome to EteSync!\n"
+#~ "\n"
+#~ "Please set an encryption password below for account “%s”, and make sure "
+#~ "you got it right, as it can't be recovered if lost!"
+#~ msgstr ""
+#~ "Boas-vindas ao EteSync!\n"
+#~ "\n"
+#~ "Por favor, defina uma senha de criptografia abaixo para a conta “%s” e "
+#~ "certifique-se de tê-la feita corretamente, pois caso a perca, ela não "
+#~ "pode ser recuperada!"
+
+#~ msgid "_Encryption Password:"
+#~ msgstr "S_enha de criptografia:"
+
+#~ msgid "Encryption _Password again:"
+#~ msgstr "Senha de cri_ptografia novamente:"
+
+#~ msgid "Wrong username, password or server."
+#~ msgstr "Está incorreto o nome de usuário, a senha ou o servidor."
+
+#~ msgid "Wrong username or password."
+#~ msgstr "Está incorreto o nome de usuário ou a senha."
