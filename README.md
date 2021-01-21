@@ -1,5 +1,9 @@
-## Please Note that the repo has been moved, the official repo is now [here](https://gitlab.gnome.org/GNOME/evolution-etesync)
-# BUILD
+# Evolution EteSync
+
+[EteSync](https://www.etesync.com/) plugin for [Evolution](https://wiki.gnome.org/Apps/Evolution/).
+
+## BUILD
+
 ### The development packages needed
 This is for ubuntu, please check simillar development package depending on you disto
 ```sh
@@ -12,7 +16,7 @@ $ sudo apt install libical2-dev/
     evolution-dev
 ```
 
-## Modue installation
+## Module installation
 Go to the evolution-etesync folder then run the following commands
 ```sh
 $ mkdir build
