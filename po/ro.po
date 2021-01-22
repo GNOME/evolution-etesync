@@ -1,0 +1,121 @@
+# Romanian translation for evolution-etesync.
+# Copyright (C) 2021 evolution-etesync's COPYRIGHT HOLDER
+# This file is distributed under the same license as the evolution-etesync package.
+# Daniel Șerbănescu <daniel@serbanescu.dk>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: evolution-etesync gnome-3-38\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
+"issues\n"
+"POT-Creation-Date: 2021-01-18 21:50+0000\n"
+"PO-Revision-Date: 2021-01-22 15:14+0100\n"
+"Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 "
+"< 20)) ? 1 : 2);;\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.4.2\n"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
+msgid "EteSync"
+msgstr "EteSync"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
+msgid "For accessing EteSync servers using EteSync C API"
+msgstr "Pentru accesarea serverelor EteSync folosind API-ul C EteSync"
+
+#: ../src/common/e-etesync-connection.c:903
+#: ../src/common/e-etesync-connection.c:1002
+msgid "Item not found"
+msgstr "Element negăsit"
+
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "Secret EteSync negăsit"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
+#, c-format
+msgid "Failed to obtain access token for account “%s”"
+msgstr "Nu s-a putut obține jetonul de acces pentru contul „%s”"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
+msgid "EteSync account authentication request"
+msgstr "Cerere de autentificare la contul EteSync"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
+#, c-format
+msgid "Please enter the correct credentials for account “%s”."
+msgstr "Introduceți credențialele corecte pentru contul „%s”."
+
+#. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
+#, c-format
+msgid ""
+"\n"
+"(host: %s)"
+msgstr ""
+"\n"
+"(gazdă: %s)"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
+msgid "_Cancel"
+msgstr "_Anulează"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
+msgid "_OK"
+msgstr "_OK"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
+msgid "_User Name:"
+msgstr "_Nume de utilizator:"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
+msgid "_Password:"
+msgstr "_Parola:"
+
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "_Adaugă această parolă la inelul de chei"
+
+#: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
+msgid "Credentials not found"
+msgstr "Credențialele nu au fost găsite"
+
+#: ../src/evolution/e-etesync-config-lookup.c:58
+msgid "Look up for an EteSync account"
+msgstr "Caută după un cont EteSync"
+
+#: ../src/evolution/e-etesync-config-lookup.c:78
+msgid "EteSync account"
+msgstr "Cont EteSync"
+
+#: ../src/evolution/e-etesync-config-lookup.c:79
+msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgstr ""
+"EteSync criptează în ambele sensuri contactele, calendarul și sarcinile "
+"dumneavoastră."
+
+#: ../src/evolution/e-etesync-config-lookup.c:140
+msgid "Etebase server not found."
+msgstr "Serverul Etebase nu a fost găsit"
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "Eșec la conectarea la server."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Requires password to continue."
+msgstr "Necesită parolă pentru a continua."
+
+#: ../src/evolution/e-etesync-config-lookup.c:182
+msgid ""
+"Malformed server name, please make sure to enter a full url (e.g https://"
+"etesync.example.com)."
+msgstr ""
+"Nume de server eronat, asigurați-vă că ați introdus un URL complet (ex. "
+"https://etesync.example.com)."
