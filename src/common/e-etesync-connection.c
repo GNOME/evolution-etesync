@@ -757,7 +757,7 @@ e_etesync_connection_get_changes_sync (EEteSyncConnection *connection,
 
 			/* At this point, items_data are not empty, then we should loop on items and add each
 			   one to the hashtable as meta backend info for each contact */
-			if (items_data && *items_data) {
+			if (items_data) {
 				for (item_iter = 0; item_iter < items_data_len; item_iter++) {
 					const EtebaseItem *item = items_data[item_iter];
 					gchar *content = NULL, *data_uid = NULL, *revision = NULL, *item_cache_b64, buf[BUFF_SIZE];
