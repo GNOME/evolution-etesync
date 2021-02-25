@@ -11,3 +11,6 @@
 
 /* Package name for gettext */
 #define GETTEXT_PACKAGE "@GETTEXT_PACKAGE@"
+
+/* Define to 1 when EBookMetaBackendClass::backend_module_directory exists. */
+#cmakedefine HAVE_BACKEND_MODULE_DIRECTORY 1

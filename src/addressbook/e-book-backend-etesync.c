@@ -658,6 +658,9 @@ e_book_backend_etesync_class_init (EBookBackendEteSyncClass *klass)
 	EBookMetaBackendClass *book_meta_backend_class;
 
 	book_meta_backend_class = E_BOOK_META_BACKEND_CLASS (klass);
+#ifdef HAVE_BACKEND_MODULE_DIRECTORY
+	book_meta_backend_class->backend_module_directory = BACKENDDIR;
+#endif
 	book_meta_backend_class->backend_module_filename = "libebookbackendetesync.so";
 	book_meta_backend_class->backend_factory_type_name = "EBookBackendEteSyncFactory";
 	book_meta_backend_class->connect_sync = ebb_etesync_connect_sync;

@@ -124,19 +124,41 @@ pkg_check_modules(GNOME_PLATFORM REQUIRED
 
 pkg_check_modules(ETESYNC REQUIRED etebase)
 
+set(CMAKE_REQUIRED_FLAGS ${LIBEDATABOOK_CFLAGS})
+set(CMAKE_REQUIRED_INCLUDES ${LIBEDATABOOK_INCLUDE_DIRS})
+set(CMAKE_REQUIRED_LIBRARIES ${LIBEDATABOOK_LIBS})
+CHECK_C_SOURCE_COMPILES("#include <libedata-book/libedata-book.h>
+			int main(void) { EBookMetaBackendClass cls; cls.backend_module_directory = NULL; return 0; }" HAVE_BACKEND_MODULE_DIRECTORY)
+unset(CMAKE_REQUIRED_FLAGS)
+unset(CMAKE_REQUIRED_INCLUDES)
+unset(CMAKE_REQUIRED_LIBRARIES)
+
 # ******************************
 # Special directories
 # ******************************
 
 set(privlibdir "${LIB_INSTALL_DIR}/${PROJECT_NAME}")
 
-pkg_check_variable(errordir evolution-shell-3.0 errordir)
-pkg_check_variable(evo_privlibdir evolution-shell-3.0 privlibdir)
 pkg_check_variable(ebook_backenddir libedata-book-1.2 backenddir)
 pkg_check_variable(ecal_backenddir libedata-cal-2.0 backenddir)
 pkg_check_variable(eds_moduledir libebackend-1.2 moduledir)
-pkg_check_variable(evo_moduledir evolution-shell-3.0 moduledir)
 pkg_check_variable(cred_moduledir libedataserver-1.2 credentialmoduledir)
+pkg_check_variable(evo_privlibdir evolution-shell-3.0 privlibdir)
+pkg_check_variable(errordir evolution-shell-3.0 errordir)
+pkg_check_variable(evo_moduledir evolution-shell-3.0 moduledir)
+
+add_printable_variable(FORCE_INSTALL_PREFIX "Whether to force install evolution-data-server and evolution files into the install prefix" OFF)
+if(FORCE_INSTALL_PREFIX)
+	pkg_check_variable(eds_prefix evolution-data-server-1.2 prefix)
+	string(REGEX REPLACE "^${eds_prefix}" "${CMAKE_INSTALL_PREFIX}" ebook_backenddir "${ebook_backenddir}")
+	string(REGEX REPLACE "^${eds_prefix}" "${CMAKE_INSTALL_PREFIX}" ecal_backenddir "${ecal_backenddir}")
+	string(REGEX REPLACE "^${eds_prefix}" "${CMAKE_INSTALL_PREFIX}" eds_moduledir "${eds_moduledir}")
+	string(REGEX REPLACE "^${eds_prefix}" "${CMAKE_INSTALL_PREFIX}" cred_moduledir "${cred_moduledir}")
+
+	pkg_check_variable(evo_prefix evolution-shell-3.0 prefix)
+	string(REGEX REPLACE "^${evo_prefix}" "${CMAKE_INSTALL_PREFIX}" errordir "${errordir}")
+	string(REGEX REPLACE "^${evo_prefix}" "${CMAKE_INSTALL_PREFIX}" evo_moduledir "${evo_moduledir}")
+endif(FORCE_INSTALL_PREFIX)
 
 SET(CMAKE_INSTALL_RPATH "${privlibdir}:${evo_privlibdir}")
 
