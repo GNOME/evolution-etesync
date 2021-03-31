@@ -272,9 +272,9 @@ e_etesync_connection_is_connected (EEteSyncConnection *connection)
 
 	g_rec_mutex_lock (&connection->priv->connection_lock);
 
-	success = (connection->priv->etebase_client
-		   && connection->priv->etebase_account
-		   && connection->priv->col_mgr) ? TRUE : FALSE;
+	success = (connection->priv->etebase_client &&
+		   connection->priv->etebase_account &&
+		   connection->priv->col_mgr) ? TRUE : FALSE;
 
 	g_rec_mutex_unlock (&connection->priv->connection_lock);
 
@@ -457,9 +457,9 @@ e_etesync_connection_collection_create_upload_sync (EEteSyncConnection *connecti
 	col_obj = etebase_collection_manager_create (connection->priv->col_mgr, col_type, item_metadata, "", 0);
 	success = !etebase_collection_manager_upload (connection->priv->col_mgr, col_obj, NULL);
 
-	if (!success
-	    && etebase_error_get_code () == ETEBASE_ERROR_CODE_UNAUTHORIZED
-	    && e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
+	if (!success &&
+	    etebase_error_get_code () == ETEBASE_ERROR_CODE_UNAUTHORIZED &&
+	    e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
 
 		success = !etebase_collection_manager_upload (connection->priv->col_mgr, col_obj, NULL);
 	}
@@ -508,9 +508,9 @@ e_etesync_connection_collection_modify_upload_sync (EEteSyncConnection *connecti
 	etebase_collection_set_meta (col_obj, item_metadata);
 	success = !etebase_collection_manager_upload (connection->priv->col_mgr, col_obj, NULL);
 
-	if (!success
-	    && etebase_error_get_code () == ETEBASE_ERROR_CODE_UNAUTHORIZED
-	    && e_etesync_connection_reconnect_sync (connection, NULL, NULL, &local_error)) {
+	if (!success &&
+	    etebase_error_get_code () == ETEBASE_ERROR_CODE_UNAUTHORIZED &&
+	    e_etesync_connection_reconnect_sync (connection, NULL, NULL, &local_error)) {
 
 		success = !etebase_collection_manager_upload (connection->priv->col_mgr, col_obj, NULL);
 	}
@@ -555,9 +555,9 @@ e_etesync_connection_collection_delete_upload_sync (EEteSyncConnection *connecti
 	etebase_collection_delete (col_obj);
 	success = !etebase_collection_manager_upload (connection->priv->col_mgr, col_obj, NULL);
 
-	if (!success
-	    && etebase_error_get_code () == ETEBASE_ERROR_CODE_UNAUTHORIZED
-	    && e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
+	if (!success &&
+	    etebase_error_get_code () == ETEBASE_ERROR_CODE_UNAUTHORIZED &&
+	    e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
 
 		success = !etebase_collection_manager_upload (connection->priv->col_mgr, col_obj, NULL);
 	}
@@ -573,6 +573,68 @@ e_etesync_connection_collection_delete_upload_sync (EEteSyncConnection *connecti
 }
 
 /* ------------------- Book and calendar common function ------------------- */
+static gboolean
+e_etesync_connection_backend_is_for_memos (EBackend *backend)
+{
+	return E_IS_CAL_BACKEND (backend) && e_cal_backend_get_kind (E_CAL_BACKEND (backend)) == I_CAL_VJOURNAL_COMPONENT;
+}
+
+static gchar *
+e_etesync_connection_notes_new_ical_string (time_t creation_date,
+					    time_t last_modified,
+					    const gchar *uid,
+					    const gchar *revision,
+					    const gchar *summary,
+					    const gchar *description)
+{
+	ICalComponent *icomp;
+	ICalTime *itt;
+	time_t tt;
+	gchar *ical_str;
+
+	icomp = i_cal_component_new_vjournal ();
+
+	if (creation_date > 0)
+		tt = creation_date;
+	else if (last_modified > 0)
+		tt = last_modified;
+	else
+		tt = time (NULL);
+
+	itt = i_cal_time_new_from_timet_with_zone (tt, FALSE, i_cal_timezone_get_utc_timezone ());
+	i_cal_component_take_property (icomp, i_cal_property_new_created (itt));
+	g_object_unref (itt);
+
+	if (last_modified > 0)
+		tt = last_modified;
+	else
+		tt = time (NULL);
+
+	itt = i_cal_time_new_from_timet_with_zone (tt, FALSE, i_cal_timezone_get_utc_timezone ());
+	i_cal_component_take_property (icomp, i_cal_property_new_lastmodified (itt));
+	g_object_unref (itt);
+
+	i_cal_component_set_uid (icomp, uid);
+
+	if (summary && g_str_has_suffix (summary, ".txt")) {
+		gchar *tmp;
+
+		tmp = g_strndup (summary, strlen (summary) - 4);
+		i_cal_component_set_summary (icomp, tmp);
+		g_free (tmp);
+	} else if (summary && *summary) {
+		i_cal_component_set_summary (icomp, summary);
+	}
+
+	if (description && *description)
+		i_cal_component_set_description (icomp, description);
+
+	ical_str = i_cal_component_as_ical_string (icomp);
+
+	g_object_unref (icomp);
+
+	return ical_str;
+}
 
 static gboolean
 e_etesync_connection_chunk_itemlist_fetch_sync (EtebaseItemManager *item_mgr,
@@ -619,6 +681,7 @@ e_etesync_connection_list_existing_sync (EEteSyncConnection *connection,
 	gchar *stoken = NULL;
 	gboolean done = FALSE;
 	gboolean success = TRUE;
+	gboolean is_memo;
 
 	*out_existing_objects = NULL;
 	*out_new_sync_tag = NULL;
@@ -630,6 +693,7 @@ e_etesync_connection_list_existing_sync (EEteSyncConnection *connection,
 		return FALSE;
 	}
 
+	is_memo = e_etesync_connection_backend_is_for_memos (backend);
 	item_mgr = etebase_collection_manager_get_item_manager (connection->priv->col_mgr, col_obj);
 
 	while (!done) {
@@ -677,9 +741,29 @@ e_etesync_connection_list_existing_sync (EEteSyncConnection *connection,
 						} else if (type == E_ETESYNC_CALENDAR) {
 							ECalMetaBackendInfo *nfo;
 
-							/* create ECalMetaBackendInfo * to be stored in GSList, data_uid is component uid */
-							e_etesync_utils_get_component_uid_revision (content ? content : buf, &data_uid, &revision);
-							nfo = e_cal_meta_backend_info_new (data_uid, revision, content ? content : buf, item_cache_b64);
+							if (is_memo) {
+								EtebaseItemMetadata *item_meta;
+								const gchar *summary;
+								gchar *ical_str;
+								glong now;
+
+								item_meta = etebase_item_get_meta (item);
+								summary = etebase_item_metadata_get_name (item_meta);
+								data_uid = g_strdup (etebase_item_get_uid (item));
+								e_etesync_utils_get_time_now (&now);
+
+								/* change plain text to a icomp vjournal object */
+								ical_str = e_etesync_connection_notes_new_ical_string ((time_t) now, (time_t) now, data_uid, NULL, summary, content ? content : buf);
+								nfo = e_cal_meta_backend_info_new (data_uid, NULL, ical_str, item_cache_b64);
+
+								g_free (ical_str);
+								etebase_item_metadata_destroy (item_meta);
+							} else {
+								/* create ECalMetaBackendInfo * to be stored in GSList, data_uid is component uid */
+								e_etesync_utils_get_component_uid_revision (content ? content : buf, &data_uid, &revision);
+								nfo = e_cal_meta_backend_info_new (data_uid, revision, content ? content : buf, item_cache_b64);
+							}
+
 							*out_existing_objects = g_slist_prepend (*out_existing_objects, nfo);
 						}
 
@@ -733,6 +817,7 @@ e_etesync_connection_get_changes_sync (EEteSyncConnection *connection,
 	gchar *stoken;
 	gboolean done = FALSE;
 	gboolean success = TRUE;
+	gboolean is_memo;
 
 	stoken = g_strdup (last_sync_tag);
 
@@ -743,6 +828,7 @@ e_etesync_connection_get_changes_sync (EEteSyncConnection *connection,
 		return FALSE;
 	}
 
+	is_memo = e_etesync_connection_backend_is_for_memos (backend);
 	item_mgr = etebase_collection_manager_get_item_manager (connection->priv->col_mgr, col_obj);
 
 	while (!done) {
@@ -802,10 +888,29 @@ e_etesync_connection_get_changes_sync (EEteSyncConnection *connection,
 					} else if (type == E_ETESYNC_CALENDAR) {
 						ECalMetaBackendInfo *nfo;
 
-						/* create ECalMetaBackendInfo * to be stored in GSList, data uid is compounent uid */
-						e_etesync_utils_get_component_uid_revision (content ? content : buf, &data_uid, &revision);
+						if (is_memo) {
+							EtebaseItemMetadata *item_meta;
+							const gchar *summary;
+							gchar *ical_str;
+							glong now;
 
-						nfo = e_cal_meta_backend_info_new (data_uid, revision, content ? content : buf, item_cache_b64);
+							item_meta = etebase_item_get_meta (item);
+							summary = etebase_item_metadata_get_name (item_meta);
+							data_uid = g_strdup (etebase_item_get_uid (item));
+							e_etesync_utils_get_time_now (&now);
+
+							/* change plain text to a icomp vjournal object */
+							ical_str = e_etesync_connection_notes_new_ical_string ((time_t) now, (time_t) now, data_uid, NULL, summary, content ? content : buf);
+							nfo = e_cal_meta_backend_info_new (data_uid, NULL, ical_str, item_cache_b64);
+
+							g_free (ical_str);
+							etebase_item_metadata_destroy (item_meta);
+						} else {
+							/* create ECalMetaBackendInfo * to be stored in GSList, data uid is compounent uid */
+							e_etesync_utils_get_component_uid_revision (content ? content : buf, &data_uid, &revision);
+							nfo = e_cal_meta_backend_info_new (data_uid, revision, content ? content : buf, item_cache_b64);
+						}
+
 						is_exist = e_cache_contains (cache, data_uid, E_CACHE_EXCLUDE_DELETED);
 
 						/* data with uid exist, then it is modified or deleted, else it is new data */
@@ -863,12 +968,14 @@ e_etesync_connection_item_upload_sync (EEteSyncConnection *connection,
 				       const gchar *content,
 				       const gchar *uid,
 				       const gchar *extra, /* item_cache_b64 */
+				       gchar **out_new_uid,
 				       gchar **out_new_extra,
 				       GCancellable *cancellable,
 				       GError **error)
 {
 	EtebaseItemManager *item_mgr;
 	gboolean success = TRUE;
+	gboolean is_memo;
 	const gchar *item_cache_b64 = extra;
 
 	g_return_val_if_fail (connection != NULL, FALSE);
@@ -879,22 +986,38 @@ e_etesync_connection_item_upload_sync (EEteSyncConnection *connection,
 
 	g_rec_mutex_lock (&connection->priv->connection_lock);
 
+	is_memo = e_etesync_connection_backend_is_for_memos (backend);
 	item_mgr = etebase_collection_manager_get_item_manager (connection->priv->col_mgr, col_obj);
 
 	if (item_mgr) {
 		EtebaseItemMetadata *item_metadata = NULL;
 		EtebaseItem *item;
 		time_t now;
+		gchar *item_name, *item_content; /* Added to support EteSync notes type */
 
 		e_etesync_utils_get_time_now (&now);
+
+		/* If it is etesync note item, then set the EteSyncitem metadata name (uid) to summary in VJOURNAL
+		   and set the EteSyncItem content to the description in VJOURNAL */
+		if (action != E_ETESYNC_ITEM_ACTION_DELETE && is_memo) {
+			ICalComponent *icomp = i_cal_component_new_from_string (content);
+
+			item_name = g_strdup (i_cal_component_get_summary (icomp)); /* set data_uid to summary */
+			item_content = g_strdup (i_cal_component_get_description (icomp)); /* set content to description */
+
+			g_object_unref (icomp);
+		} else {
+			item_name = g_strdup (uid);
+			item_content = g_strdup (content);
+		}
 
 		if (action == E_ETESYNC_ITEM_ACTION_CREATE) {
 			item_metadata = etebase_item_metadata_new ();
 
-			etebase_item_metadata_set_name (item_metadata, uid);
+			etebase_item_metadata_set_name (item_metadata, item_name);
 			etebase_item_metadata_set_mtime (item_metadata, &now);
 
-			item = etebase_item_manager_create (item_mgr, item_metadata, content, strlen (content));
+			item = etebase_item_manager_create (item_mgr, item_metadata, item_content ? item_content : "" , item_content ? strlen (item_content) : 0);
 		} else {
 			item = e_etesync_utils_etebase_item_from_base64 (item_cache_b64, item_mgr);
 			if (!item) {
@@ -904,11 +1027,12 @@ e_etesync_connection_item_upload_sync (EEteSyncConnection *connection,
 			} else {
 				item_metadata = etebase_item_get_meta (item);
 
+				etebase_item_metadata_set_name (item_metadata, item_name);
 				etebase_item_metadata_set_mtime (item_metadata, &now);
 				etebase_item_set_meta(item, item_metadata);
 
 				if (action == E_ETESYNC_ITEM_ACTION_MODIFY)
-					etebase_item_set_content (item, content, strlen (content));
+					etebase_item_set_content (item, item_content ? item_content : "" , item_content ? strlen (item_content) : 0);
 				else if (action == E_ETESYNC_ITEM_ACTION_DELETE)
 					etebase_item_delete (item);
 			}
@@ -921,8 +1045,8 @@ e_etesync_connection_item_upload_sync (EEteSyncConnection *connection,
 			if (!success) {
 				EtebaseErrorCode etebase_error = etebase_error_get_code ();
 				/* This is used to check if the error was due to expired token, if so try to get a new token, then try again */
-				if (etebase_error == ETEBASE_ERROR_CODE_UNAUTHORIZED
-					&& e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
+				if (etebase_error == ETEBASE_ERROR_CODE_UNAUTHORIZED &&
+				    e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
 
 					success = !etebase_item_manager_batch (item_mgr, (const EtebaseItem **) &item, 1, NULL);
 				}
@@ -934,11 +1058,20 @@ e_etesync_connection_item_upload_sync (EEteSyncConnection *connection,
 			if (out_new_extra)
 				*out_new_extra = success ? e_etesync_utils_etebase_item_to_base64 (item, item_mgr) : NULL;
 
+			/* Set the new uid for notes from the EteSyncitem uid, as EteSync notes item doesn't contain
+			   uid in its content as other etesync types (calendar, tasks, contacts) */
+			if (action == E_ETESYNC_ITEM_ACTION_CREATE &&
+			    out_new_uid &&
+			    is_memo)
+				*out_new_uid = g_strdup (etebase_item_get_uid (item));
+
 			if (item_metadata)
 				etebase_item_metadata_destroy (item_metadata);
 			etebase_item_destroy (item);
 		}
 
+		g_free (item_name);
+		g_free (item_content);
 		etebase_item_manager_destroy (item_mgr);
 	}
 
@@ -954,6 +1087,7 @@ e_etesync_connection_batch_modify_delete_sync (EEteSyncConnection *connection,
 					       const EteSyncAction action,
 					       const EteSyncType type,
 					       const gchar *const *content,
+					       const gchar *const *data_uids,
 					       guint content_len,
 					       ECache *cache,
 					       GSList **out_batch_info,
@@ -962,6 +1096,7 @@ e_etesync_connection_batch_modify_delete_sync (EEteSyncConnection *connection,
 {
 	EtebaseItemManager *item_mgr;
 	gboolean success = TRUE;
+	gboolean is_memo;
 
 	g_return_val_if_fail (connection != NULL, FALSE);
 	g_return_val_if_fail (col_obj != NULL, FALSE);
@@ -971,6 +1106,7 @@ e_etesync_connection_batch_modify_delete_sync (EEteSyncConnection *connection,
 
 	g_rec_mutex_lock (&connection->priv->connection_lock);
 
+	is_memo = e_etesync_connection_backend_is_for_memos (backend);
 	item_mgr = etebase_collection_manager_get_item_manager (connection->priv->col_mgr, col_obj);
 
 	if (item_mgr) {
@@ -990,7 +1126,12 @@ e_etesync_connection_batch_modify_delete_sync (EEteSyncConnection *connection,
 				e_etesync_utils_get_contact_uid_revision (content[ii], &data_uid, &revision);
 				e_book_cache_get_contact_extra (E_BOOK_CACHE (cache), data_uid, &item_cache_b64, NULL, NULL);
 			} else if (type == E_ETESYNC_CALENDAR) {/* Calendar */
-				e_etesync_utils_get_component_uid_revision (content[ii], &data_uid, &revision);
+
+				if (is_memo)
+					data_uid = g_strdup (data_uids[ii]);
+				else
+					e_etesync_utils_get_component_uid_revision (content[ii], &data_uid, &revision);
+
 				e_cal_cache_get_component_extra (E_CAL_CACHE (cache), data_uid, NULL, &item_cache_b64, NULL, NULL);
 			}
 
@@ -1006,9 +1147,25 @@ e_etesync_connection_batch_modify_delete_sync (EEteSyncConnection *connection,
 				etebase_item_metadata_set_mtime (item_metadata, &now);
 				etebase_item_set_meta(items[ii], item_metadata);
 
-				if (action == E_ETESYNC_ITEM_ACTION_MODIFY) /* Modify */
-					etebase_item_set_content (items[ii], content[ii], strlen (content[ii]));
-				else if (action == E_ETESYNC_ITEM_ACTION_DELETE) /* Delete */
+				if (action == E_ETESYNC_ITEM_ACTION_MODIFY) {/* Modify */
+
+					if (is_memo) { /* notes */
+						ICalComponent *icomp;
+						const gchar *notes_item_content; /* notes_item_content is add to support EteSync notes */
+
+						icomp = i_cal_component_new_from_string (content[ii]);
+						notes_item_content = i_cal_component_get_description (icomp);
+
+						etebase_item_metadata_set_name (item_metadata, i_cal_component_get_summary (icomp));
+						etebase_item_set_meta (items[ii], item_metadata);
+
+						etebase_item_set_content (items[ii], notes_item_content ? notes_item_content : "", notes_item_content ? strlen (notes_item_content) : 0);
+
+						g_object_unref (icomp);
+					} else { /* Events and Tasks */
+						etebase_item_set_content (items[ii], content[ii], strlen (content[ii]));
+					}
+				} else if (action == E_ETESYNC_ITEM_ACTION_DELETE) /* Delete */
 					etebase_item_delete (items[ii]);
 
 				g_free (item_cache_b64);
@@ -1041,8 +1198,8 @@ e_etesync_connection_batch_modify_delete_sync (EEteSyncConnection *connection,
 				EtebaseErrorCode etebase_error = etebase_error_get_code ();
 
 				/* This is used to check if the error was due to expired token, if so try to get a new token, then try again */
-				if (etebase_error == ETEBASE_ERROR_CODE_UNAUTHORIZED
-					&& e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
+				if (etebase_error == ETEBASE_ERROR_CODE_UNAUTHORIZED &&
+				    e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
 
 					success = !etebase_item_manager_batch (item_mgr, (const EtebaseItem **) items, ETEBASE_UTILS_C_ARRAY_LEN (items), NULL);
 				}
@@ -1074,6 +1231,7 @@ e_etesync_connection_batch_create_sync (EEteSyncConnection *connection,
 {
 	EtebaseItemManager *item_mgr;
 	gboolean success = TRUE;
+	gboolean is_memo;
 
 	g_return_val_if_fail (connection != NULL, FALSE);
 	g_return_val_if_fail (col_obj != NULL, FALSE);
@@ -1083,6 +1241,7 @@ e_etesync_connection_batch_create_sync (EEteSyncConnection *connection,
 
 	g_rec_mutex_lock (&connection->priv->connection_lock);
 
+	is_memo = e_etesync_connection_backend_is_for_memos (backend);
 	item_mgr = etebase_collection_manager_get_item_manager (connection->priv->col_mgr, col_obj);
 
 	if (item_mgr) {
@@ -1094,20 +1253,36 @@ e_etesync_connection_batch_create_sync (EEteSyncConnection *connection,
 
 		for (ii = 0; ii < content_len; ii++) {
 			EtebaseItemMetadata *item_metadata = NULL;
-			gchar *data_uid = NULL, *revision = NULL;
+			gchar *data_uid = NULL, *revision = NULL, *notes_item_content = NULL; /* notes_item_content is add to support EteSync notes */
 			gchar *item_cache_b64;
 
 			if (type == E_ETESYNC_ADDRESSBOOK) /* Contact */
 				e_etesync_utils_get_contact_uid_revision (content[ii], &data_uid, &revision);
-			else if (type == E_ETESYNC_CALENDAR) /* Calendar */
-				e_etesync_utils_get_component_uid_revision (content[ii], &data_uid, &revision);
+			else if (type == E_ETESYNC_CALENDAR) { /* Calendar */
+				if (is_memo) { /* Notes */
+					ICalComponent *icomp = i_cal_component_new_from_string (content[ii]);
+
+					data_uid = g_strdup (i_cal_component_get_summary (icomp));
+					notes_item_content = g_strdup (i_cal_component_get_description (icomp));
+
+					g_object_unref (icomp);
+				} else { /* Events and Tasks */
+					e_etesync_utils_get_component_uid_revision (content[ii], &data_uid, &revision);
+				}
+			}
 
 			item_metadata = etebase_item_metadata_new ();
 
 			etebase_item_metadata_set_name (item_metadata, data_uid);
 			etebase_item_metadata_set_mtime (item_metadata, &now);
 
-			items[ii] = etebase_item_manager_create (item_mgr, item_metadata, content[ii], strlen (content[ii]));
+			if (is_memo) { /* Notes */
+				items[ii] = etebase_item_manager_create (item_mgr, item_metadata, notes_item_content ? notes_item_content : "", notes_item_content ? strlen (notes_item_content) : 0);
+				g_free (notes_item_content);
+			} else { /* Addressbook, Calendar, Task */
+				items[ii] = etebase_item_manager_create (item_mgr, item_metadata, content[ii], strlen (content[ii]));
+			}
+
 			item_cache_b64 = e_etesync_utils_etebase_item_to_base64 (items[ii], item_mgr);
 
 			if (type == E_ETESYNC_ADDRESSBOOK) { /* Contact */
@@ -1117,6 +1292,11 @@ e_etesync_connection_batch_create_sync (EEteSyncConnection *connection,
 				*out_batch_info = g_slist_prepend (*out_batch_info, nfo);
 			} else if (type == E_ETESYNC_CALENDAR) { /* Calendar */
 				ECalMetaBackendInfo *nfo;
+
+				if (is_memo) { /* Notes */
+					g_free (data_uid);
+					data_uid = g_strdup (etebase_item_get_uid (items[ii]));
+				}
 
 				nfo = e_cal_meta_backend_info_new (data_uid, revision, content[ii], item_cache_b64);
 				*out_batch_info = g_slist_prepend (*out_batch_info, nfo);
@@ -1133,8 +1313,8 @@ e_etesync_connection_batch_create_sync (EEteSyncConnection *connection,
 			EtebaseErrorCode etebase_error = etebase_error_get_code ();
 
 			/* This is used to check if the error was due to expired token, if so try to get a new token, then try again */
-			if (etebase_error == ETEBASE_ERROR_CODE_UNAUTHORIZED
-				&& e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
+			if (etebase_error == ETEBASE_ERROR_CODE_UNAUTHORIZED &&
+			    e_etesync_connection_maybe_reconnect_sync (connection, backend, cancellable, error)) {
 
 				success = !etebase_item_manager_batch (item_mgr, (const EtebaseItem **) items, ETEBASE_UTILS_C_ARRAY_LEN (items), NULL);
 			}
@@ -1159,13 +1339,14 @@ e_etesync_connection_batch_modify_sync (EEteSyncConnection *connection,
 					const EtebaseCollection *col_obj,
 					const EteSyncType type,
 					const gchar *const *content,
+					const gchar *const *data_uids,
 					guint content_len,
 					ECache *cache,
 					GSList **out_batch_info,
 					GCancellable *cancellable,
 					GError **error)
 {
-	return e_etesync_connection_batch_modify_delete_sync (connection, backend, col_obj, E_ETESYNC_ITEM_ACTION_MODIFY, type, content, content_len, cache, out_batch_info, cancellable, error);
+	return e_etesync_connection_batch_modify_delete_sync (connection, backend, col_obj, E_ETESYNC_ITEM_ACTION_MODIFY, type, content, data_uids, content_len, cache, out_batch_info, cancellable, error);
 }
 
 gboolean
@@ -1174,13 +1355,14 @@ e_etesync_connection_batch_delete_sync (EEteSyncConnection *connection,
 					const EtebaseCollection *col_obj,
 					const EteSyncType type,
 					const gchar *const *content,
+					const gchar *const *data_uids,
 					guint content_len,
 					ECache *cache,
 					GSList **out_batch_info,
 					GCancellable *cancellable,
 					GError **error)
 {
-	return e_etesync_connection_batch_modify_delete_sync (connection, backend, col_obj, E_ETESYNC_ITEM_ACTION_DELETE, type, content, content_len, cache, out_batch_info, cancellable, error);
+	return e_etesync_connection_batch_modify_delete_sync (connection, backend, col_obj, E_ETESYNC_ITEM_ACTION_DELETE, type, content, data_uids, content_len, cache, out_batch_info, cancellable, error);
 }
 
 /*----------------------------GObject functions----------------------*/

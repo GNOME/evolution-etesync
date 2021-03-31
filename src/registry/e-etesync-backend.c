@@ -60,10 +60,11 @@ etesync_backend_update_enabled (ESource *data_source,
 
 	if (e_source_has_extension (data_source, E_SOURCE_EXTENSION_CALENDAR) ||
 	    e_source_has_extension (data_source, E_SOURCE_EXTENSION_TASK_LIST) ||
+	    e_source_has_extension (data_source, E_SOURCE_EXTENSION_MEMO_LIST) ||
 	    e_source_has_extension (data_source, E_SOURCE_EXTENSION_ADDRESS_BOOK)) {
-		part_enabled = !collection_extension
-				|| e_source_collection_get_calendar_enabled (collection_extension)
-				|| e_source_collection_get_contacts_enabled (collection_extension);
+		part_enabled = !collection_extension ||
+				e_source_collection_get_calendar_enabled (collection_extension) ||
+				e_source_collection_get_contacts_enabled (collection_extension);
 	}
 
 	e_source_set_enabled (data_source, part_enabled);
@@ -152,6 +153,8 @@ etesync_backend_new_child (EEteSyncBackend *backend,
 		extension_name = E_SOURCE_EXTENSION_TASK_LIST;
 	} else if (g_str_equal (type, E_ETESYNC_COLLECTION_TYPE_ADDRESS_BOOK)) {
 		extension_name = E_SOURCE_EXTENSION_ADDRESS_BOOK;
+	} else if (g_str_equal (type, E_ETESYNC_COLLECTION_TYPE_NOTES)) {
+		extension_name = E_SOURCE_EXTENSION_MEMO_LIST;
 	} else {
 		g_object_unref (source);
 		return NULL;
@@ -251,8 +254,10 @@ etesync_check_create_modify (EEteSyncBackend *backend,
 			extension_name = E_SOURCE_EXTENSION_CALENDAR;
 		if (e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST))
 			extension_name = E_SOURCE_EXTENSION_TASK_LIST;
+		if (e_source_has_extension (source, E_SOURCE_EXTENSION_MEMO_LIST))
+			extension_name = E_SOURCE_EXTENSION_MEMO_LIST;
 
-		/* If extention_name has be set then this is a calendar or task which both have colors
+		/* If extention_name has be set then this is a calendar or task or a memo which the three have colors
 		   address-book doesn't have color */
 		if (extension_name) {
 			source_backend = e_source_get_extension (source, extension_name);
@@ -499,28 +504,49 @@ etesync_backend_sync_folders_sync (EEteSyncBackend *backend,
 	if (is_first_time) {
 		EtebaseCollectionListResponse *col_list;
 		EtebaseFetchOptions *fetch_options;
+		const gchar *const *collection_supported_types;
+		const gchar *const *collection_supported_types_default_names;
+		gint ii;
 
 		fetch_options = etebase_fetch_options_new();
 		etebase_fetch_options_set_prefetch(fetch_options, ETEBASE_PREFETCH_OPTION_MEDIUM);
 		etebase_fetch_options_set_stoken (fetch_options, NULL);
 		etebase_fetch_options_set_limit (fetch_options, 1);
 
+		collection_supported_types = e_etesync_util_get_collection_supported_types ();
+		collection_supported_types_default_names = e_etesync_util_get_collection_supported_types_default_names ();
+
+		/* Check default type (contacts, calendar and tasks)
+		   First three types in `collection_supported_types` are contacts, calendar and tasks */
 		col_list =  etebase_collection_manager_list_multi (e_etesync_connection_get_collection_manager (connection),
-								   e_etesync_util_get_collection_supported_types (),
-								   EETESYNC_UTILS_SUPPORTED_TYPES_SIZE,
+								   collection_supported_types,
+								   3,
 								   fetch_options);
 
 		if (etebase_collection_list_response_get_data_length (col_list) == 0) {
-			gint ii = 0;
 			const gchar *temp_stoken;
-			const gchar *const *collection_supported_types;
-			const gchar *const *collection_supported_types_default_names;
 
-			collection_supported_types = e_etesync_util_get_collection_supported_types ();
-			collection_supported_types_default_names = e_etesync_util_get_collection_supported_types_default_names ();
+			for (ii = COLLECTION_INDEX_TYPE_ADDRESSBOOK; ii <= COLLECTION_INDEX_TYPE_TASKS; ii++)
+				temp_stoken = etesync_backend_create_and_add_collection_sync (backend, server, collection_supported_types[ii],
+											      collection_supported_types_default_names[ii], cancellable);
 
-			for (ii = 0; ii < EETESYNC_UTILS_SUPPORTED_TYPES_SIZE; ii++)
-				temp_stoken = etesync_backend_create_and_add_collection_sync (backend, server, collection_supported_types[ii], collection_supported_types_default_names[ii], cancellable);
+			if (temp_stoken) {
+				g_free (stoken);
+				stoken = g_strdup (temp_stoken);
+			}
+		}
+
+		/* Check (Notes) type */
+		etebase_collection_list_response_destroy (col_list);
+		col_list = etebase_collection_manager_list (e_etesync_connection_get_collection_manager (connection),
+							    E_ETESYNC_COLLECTION_TYPE_NOTES,
+							    fetch_options);
+
+		if (etebase_collection_list_response_get_data_length (col_list) == 0) {
+			const gchar *temp_stoken;
+
+			temp_stoken = etesync_backend_create_and_add_collection_sync (backend, server, collection_supported_types[COLLECTION_INDEX_TYPE_NOTES],
+										      collection_supported_types_default_names[COLLECTION_INDEX_TYPE_NOTES], cancellable);
 
 			if (temp_stoken) {
 				g_free (stoken);
@@ -580,16 +606,15 @@ etesync_backend_create_resource_sync (ECollectionBackend *backend,
 	if (e_source_has_extension (source, E_SOURCE_EXTENSION_ADDRESS_BOOK)) {
 		extension_name = E_SOURCE_EXTENSION_ADDRESS_BOOK;
 		col_type = E_ETESYNC_COLLECTION_TYPE_ADDRESS_BOOK;
-	}
-
-	if (e_source_has_extension (source, E_SOURCE_EXTENSION_CALENDAR)) {
+	} else if (e_source_has_extension (source, E_SOURCE_EXTENSION_CALENDAR)) {
 		extension_name = E_SOURCE_EXTENSION_CALENDAR;
 		col_type = E_ETESYNC_COLLECTION_TYPE_CALENDAR;
-	}
-
-	if (e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST)) {
+	} else if (e_source_has_extension (source, E_SOURCE_EXTENSION_TASK_LIST)) {
 		extension_name = E_SOURCE_EXTENSION_TASK_LIST;
 		col_type = E_ETESYNC_COLLECTION_TYPE_TASKS;
+	} else if (e_source_has_extension (source, E_SOURCE_EXTENSION_MEMO_LIST)) {
+		extension_name = E_SOURCE_EXTENSION_MEMO_LIST;
+		col_type = E_ETESYNC_COLLECTION_TYPE_NOTES;
 	}
 
 	if (col_type == NULL) {
@@ -756,8 +781,8 @@ etesync_backend_source_removed_cb (ESourceRegistryServer *server,
 		connection = e_etesync_connection_new (source);
 
 		/* Get credentials and set connection object, then use the connection object to logout */
-		if (e_etesync_service_lookup_credentials_sync (collection_uid, &credentials, NULL, NULL)
-		    && e_etesync_connection_set_connection_from_sources (connection, credentials)) {
+		if (e_etesync_service_lookup_credentials_sync (collection_uid, &credentials, NULL, NULL) &&
+		    e_etesync_connection_set_connection_from_sources (connection, credentials)) {
 
 			etebase_account_logout (e_etesync_connection_get_etebase_account (connection));
 		}

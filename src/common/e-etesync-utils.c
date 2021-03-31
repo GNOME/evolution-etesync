@@ -15,11 +15,13 @@
 static const gchar *const collection_supported_types[] = {
 			E_ETESYNC_COLLECTION_TYPE_ADDRESS_BOOK,
 			E_ETESYNC_COLLECTION_TYPE_CALENDAR,
-			E_ETESYNC_COLLECTION_TYPE_TASKS };
+			E_ETESYNC_COLLECTION_TYPE_TASKS,
+			E_ETESYNC_COLLECTION_TYPE_NOTES};
 static const gchar *const collection_supported_types_default_names[] = {
 			"My Contacts",
 			"My Calendar",
-			"My Tasks" };
+			"My Tasks",
+			"My Notes"};
 
 void
 e_etesync_utils_get_time_now (time_t *now)
@@ -47,6 +49,7 @@ e_etesync_utils_get_component_uid_revision (const gchar *content,
 		ICalComponentKind kind = i_cal_component_isa (subcomp);
 
 		if (kind == I_CAL_VEVENT_COMPONENT ||
+		    kind == I_CAL_VJOURNAL_COMPONENT ||
 		    kind == I_CAL_VTODO_COMPONENT) {
 			if (!*out_component_uid){
 				*out_component_uid = g_strdup (i_cal_component_get_uid (subcomp));

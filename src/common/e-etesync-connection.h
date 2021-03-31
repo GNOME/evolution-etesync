@@ -129,6 +129,7 @@ gboolean	e_etesync_connection_item_upload_sync
 						 const gchar *content,
 						 const gchar *uid,
 						 const gchar *extra,
+						 gchar **out_new_uid,
 						 gchar **out_new_extra,
 						 GCancellable *cancellable,
 						 GError **error);
@@ -148,6 +149,7 @@ gboolean	e_etesync_connection_batch_modify_sync
 						 const EtebaseCollection *col_obj,
 						 const EteSyncType type,
 						 const gchar *const *content,
+						 const gchar *const *data_uids,
 						 guint content_len,
 						 ECache *cache,
 						 GSList **out_batch_info,
@@ -159,6 +161,7 @@ gboolean	e_etesync_connection_batch_delete_sync
 						 const EtebaseCollection *col_obj,
 						 const EteSyncType type,
 						 const gchar *const *content,
+						 const gchar *const *data_uids,
 						 guint content_len,
 						 ECache *cache,
 						 GSList **out_batch_info,
