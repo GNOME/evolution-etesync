@@ -20,6 +20,9 @@ typedef ECalBackendFactoryClass ECalBackendEteSyncEventsFactoryClass;
 typedef ECalBackendFactory ECalBackendEteSyncTodosFactory;
 typedef ECalBackendFactoryClass ECalBackendEteSyncTodosFactoryClass;
 
+typedef ECalBackendFactory ECalBackendEteSyncJournalFactory;
+typedef ECalBackendFactoryClass ECalBackendEteSyncJournalFactoryClass;
+
 static EModule *e_module;
 
 /* Module Entry Points */
@@ -29,7 +32,7 @@ void e_module_unload (GTypeModule *type_module);
 /* Forward Declarations */
 GType e_cal_backend_etesync_events_factory_get_type (void);
 GType e_cal_backend_etesync_todos_factory_get_type (void);
-
+GType e_cal_backend_etesync_journal_factory_get_type (void);
 
 G_DEFINE_DYNAMIC_TYPE (
 	ECalBackendEteSyncEventsFactory,
@@ -39,6 +42,11 @@ G_DEFINE_DYNAMIC_TYPE (
 G_DEFINE_DYNAMIC_TYPE (
 	ECalBackendEteSyncTodosFactory,
 	e_cal_backend_etesync_todos_factory,
+	E_TYPE_CAL_BACKEND_FACTORY)
+
+G_DEFINE_DYNAMIC_TYPE (
+	ECalBackendEteSyncJournalFactory,
+	e_cal_backend_etesync_journal_factory,
 	E_TYPE_CAL_BACKEND_FACTORY)
 
 static void
@@ -89,6 +97,30 @@ e_cal_backend_etesync_todos_factory_init (ECalBackendFactory *factory)
 {
 }
 
+static void
+e_cal_backend_etesync_journal_factory_class_init (ECalBackendFactoryClass *class)
+{
+	EBackendFactoryClass *backend_factory_class;
+
+	backend_factory_class = E_BACKEND_FACTORY_CLASS (class);
+	backend_factory_class->e_module = e_module;
+	backend_factory_class->share_subprocess = TRUE;
+
+	class->factory_name = FACTORY_NAME;
+	class->component_kind = I_CAL_VJOURNAL_COMPONENT;
+	class->backend_type = E_TYPE_CAL_BACKEND_ETESYNC;
+}
+
+static void
+e_cal_backend_etesync_journal_factory_class_finalize (ECalBackendFactoryClass *class)
+{
+}
+
+static void
+e_cal_backend_etesync_journal_factory_init (ECalBackendFactory *factory)
+{
+}
+
 G_MODULE_EXPORT void
 e_module_load (GTypeModule *type_module)
 {
@@ -101,6 +133,7 @@ e_module_load (GTypeModule *type_module)
 
 	e_cal_backend_etesync_events_factory_register_type (type_module);
 	e_cal_backend_etesync_todos_factory_register_type (type_module);
+	e_cal_backend_etesync_journal_factory_register_type (type_module);
 }
 
 G_MODULE_EXPORT void

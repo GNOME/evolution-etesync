@@ -24,6 +24,7 @@ typedef enum {
 #define E_ETESYNC_COLLECTION_TYPE_CALENDAR "etebase.vevent"
 #define E_ETESYNC_COLLECTION_TYPE_ADDRESS_BOOK "etebase.vcard"
 #define E_ETESYNC_COLLECTION_TYPE_TASKS "etebase.vtodo"
+#define E_ETESYNC_COLLECTION_TYPE_NOTES "etebase.md.note"
 
 #define E_ETESYNC_COLLECTION_DEFAULT_COLOR "#8BC34A"
 

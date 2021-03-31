@@ -35,6 +35,7 @@ cal_config_etesync_allow_creation (ESourceConfigBackend *backend)
 	switch (source_type) {
 		case E_CAL_CLIENT_SOURCE_TYPE_EVENTS:
 		case E_CAL_CLIENT_SOURCE_TYPE_TASKS:
+		case E_CAL_CLIENT_SOURCE_TYPE_MEMOS:
 			allow_creation = TRUE;
 			break;
 
@@ -88,6 +89,11 @@ cal_config_etesync_commit_changes (ESourceConfigBackend *backend,
 			if (e_source_has_extension (scratch_source, E_SOURCE_EXTENSION_TASK_LIST)) {
 				extension_name = E_SOURCE_EXTENSION_TASK_LIST;
 				col_type = E_ETESYNC_COLLECTION_TYPE_TASKS;
+			}
+
+			if (e_source_has_extension (scratch_source, E_SOURCE_EXTENSION_MEMO_LIST)) {
+				extension_name = E_SOURCE_EXTENSION_MEMO_LIST;
+				col_type = E_ETESYNC_COLLECTION_TYPE_NOTES;
 			}
 
 			if (col_type) {

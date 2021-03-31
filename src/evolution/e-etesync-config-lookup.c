@@ -76,7 +76,7 @@ etesync_config_lookup_worker_result (EConfigLookupWorker *lookup_worker,
 		E_CONFIG_LOOKUP_RESULT_PRIORITY_POP3,
 		TRUE, "etesync",
 		_("EteSync account"),
-		_("EteSync end-to-end encrypts your contacts, calendars and tasks."),
+		_("EteSync end-to-end encrypts your contacts, calendars, memos and tasks."),
 		params && e_named_parameters_exists (params, E_CONFIG_LOOKUP_PARAM_PASSWORD) &&
 		e_named_parameters_exists (params, E_CONFIG_LOOKUP_PARAM_REMEMBER_PASSWORD) ?
 		e_named_parameters_get (params, E_CONFIG_LOOKUP_PARAM_PASSWORD) : NULL);

@@ -279,10 +279,10 @@ ebb_etesync_save_contact_sync (EBookMetaBackend *meta_backend,
 
 	if (overwrite_existing) {
 		success = e_etesync_connection_item_upload_sync (connection, E_BACKEND (meta_backend), bbetesync->priv->col_obj,
-				E_ETESYNC_ITEM_ACTION_MODIFY, content, uid, extra, out_new_extra, cancellable, error);
+				E_ETESYNC_ITEM_ACTION_MODIFY, content, uid, extra, NULL, out_new_extra, cancellable, error);
 	} else {
 		success = e_etesync_connection_item_upload_sync (connection, E_BACKEND (meta_backend), bbetesync->priv->col_obj,
-				E_ETESYNC_ITEM_ACTION_CREATE, content, uid, NULL, out_new_extra, cancellable, error);
+				E_ETESYNC_ITEM_ACTION_CREATE, content, uid, NULL, NULL, out_new_extra, cancellable, error);
 	}
 
 	g_free (content);
@@ -314,7 +314,7 @@ ebb_etesync_remove_contact_sync (EBookMetaBackend *meta_backend,
 	g_rec_mutex_lock (&bbetesync->priv->etesync_lock);
 
 	success = e_etesync_connection_item_upload_sync (connection, E_BACKEND (meta_backend), bbetesync->priv->col_obj,
-				E_ETESYNC_ITEM_ACTION_DELETE, NULL, uid, extra, NULL, cancellable, error);
+				E_ETESYNC_ITEM_ACTION_DELETE, NULL, uid, extra, NULL, NULL, cancellable, error);
 
 	g_rec_mutex_unlock (&bbetesync->priv->etesync_lock);
 
@@ -347,13 +347,11 @@ ebb_etesync_create_modify_contacts_sync (EBookBackendSync *backend,
 	while (length > 0 && success) {
 		GSList *batch_contacts = NULL; /* EContact */
 		GSList *batch_info = NULL; /* EBookMetaBackendInfo */
-		gchar **content;
+		gchar *content[E_ETESYNC_ITEM_PUSH_LIMIT];
 		guint ii;
 
 		batch_length = length > E_ETESYNC_ITEM_PUSH_LIMIT ? E_ETESYNC_ITEM_PUSH_LIMIT : length;
 		length -= batch_length;
-
-		content = g_slice_alloc0 (batch_length * sizeof (gchar *));
 
 		for (ii = 0; ii < batch_length; ii++) {
 			EContact *contact;
@@ -394,6 +392,7 @@ ebb_etesync_create_modify_contacts_sync (EBookBackendSync *backend,
 										  bbetesync->priv->col_obj,
 										  E_ETESYNC_ADDRESSBOOK,
 										  (const gchar *const*) content,
+										  NULL,
 										  batch_length, /* length of content */
 										  E_CACHE (book_cache), /* uses book_cache if type is addressbook */
 										  &batch_info,
@@ -417,7 +416,6 @@ ebb_etesync_create_modify_contacts_sync (EBookBackendSync *backend,
 
 		for (ii = 0; ii < batch_length; ii++)
 			g_free (content[ii]);
-		g_slice_free1 (batch_length * sizeof (gchar *), content);
 		batch_number++;
 	}
 
@@ -518,13 +516,12 @@ ebb_etesync_remove_contacts_sync (EBookBackendSync *backend,
 	while (length > 0 && success) {
 		GSList *batch_contacts_id = NULL; /* gchar */
 		GSList *batch_info = NULL; /* EBookMetaBackendInfo */
-		gchar **content;
+		gchar *content[E_ETESYNC_ITEM_PUSH_LIMIT];
 		guint ii;
 
 		batch_length = length > E_ETESYNC_ITEM_PUSH_LIMIT ? E_ETESYNC_ITEM_PUSH_LIMIT : length;
 		length -= batch_length;
 		*out_removed_uids = NULL;
-		content = g_slice_alloc0 (batch_length * sizeof (gchar *));
 
 		for (ii = 0; ii < batch_length; ii++) {
 			const gchar 		*id;
@@ -545,6 +542,7 @@ ebb_etesync_remove_contacts_sync (EBookBackendSync *backend,
 								  bbetesync->priv->col_obj,
 								  E_ETESYNC_ADDRESSBOOK,
 								  (const gchar *const*) content,
+								  NULL,
 								  batch_length, /* length of content */
 								  E_CACHE (book_cache), /* uses book_cache if type is addressbook */
 								  &batch_info,
@@ -561,7 +559,6 @@ ebb_etesync_remove_contacts_sync (EBookBackendSync *backend,
 
 		for (ii = 0; ii < batch_length; ii++)
 			g_free (content[ii]);
-		g_slice_free1 (batch_length * sizeof (gchar *), content);
 		batch_number++;
 	}
 

@@ -11,7 +11,15 @@
 #include <libedataserver/libedataserver.h>
 #include <etebase.h>
 
-#define EETESYNC_UTILS_SUPPORTED_TYPES_SIZE 3
+#define EETESYNC_UTILS_SUPPORTED_TYPES_SIZE 4
+
+/* Collection indexs in 'collection_supported_types' */
+enum {
+	COLLECTION_INDEX_TYPE_ADDRESSBOOK,
+	COLLECTION_INDEX_TYPE_CALENDAR,
+	COLLECTION_INDEX_TYPE_TASKS,
+	COLLECTION_INDEX_TYPE_NOTES
+};
 
 G_BEGIN_DECLS
 

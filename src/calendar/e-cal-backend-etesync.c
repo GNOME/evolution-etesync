@@ -291,10 +291,10 @@ ecb_etesync_save_component_sync (ECalMetaBackend *meta_backend,
 
 	if (overwrite_existing) {
 		success = e_etesync_connection_item_upload_sync (connection, E_BACKEND (meta_backend), cbetesync->priv->col_obj,
-			E_ETESYNC_ITEM_ACTION_MODIFY, content, uid, extra, out_new_extra, cancellable, error);
+			E_ETESYNC_ITEM_ACTION_MODIFY, content, uid, extra, NULL, out_new_extra, cancellable, error);
 	} else {
 		success = e_etesync_connection_item_upload_sync (connection, E_BACKEND (meta_backend), cbetesync->priv->col_obj,
-			E_ETESYNC_ITEM_ACTION_CREATE, content, uid, NULL, out_new_extra, cancellable, error);
+			E_ETESYNC_ITEM_ACTION_CREATE, content, uid, NULL, out_new_uid, out_new_extra, cancellable, error);
 	}
 
 	g_free (content);
@@ -327,7 +327,7 @@ ecb_etesync_remove_component_sync (ECalMetaBackend *meta_backend,
 	g_rec_mutex_lock (&cbetesync->priv->etesync_lock);
 
 	success = e_etesync_connection_item_upload_sync (connection, E_BACKEND (meta_backend), cbetesync->priv->col_obj,
-				E_ETESYNC_ITEM_ACTION_DELETE, NULL, uid, extra, NULL, cancellable, error);
+				E_ETESYNC_ITEM_ACTION_DELETE, NULL, uid, extra, NULL, NULL, cancellable, error);
 
 	g_rec_mutex_unlock (&cbetesync->priv->etesync_lock);
 
@@ -368,13 +368,11 @@ ecb_etesync_create_objects_sync (ECalBackendSync *backend,
 
 	/* extract the components and mass-add them to the server "batch by batch" */
 	while (l && success) {
-		gchar **content;
+		gchar *content[E_ETESYNC_ITEM_PUSH_LIMIT];
 		GSList *batch_uids = NULL; /* gchar* */
 		GSList *batch_components= NULL; /* ECalComponent* */
 		GSList *batch_info = NULL; /* ECalMetaBackendInfo* */
 		guint ii,  batch_length = 0;
-
-		content = g_slice_alloc0 (E_ETESYNC_ITEM_PUSH_LIMIT * sizeof (gchar *));
 
 		/* Data Preproccessing */
 		for (ii = 0 ; ii < E_ETESYNC_ITEM_PUSH_LIMIT && l; l = l->next, ii++) {
@@ -430,7 +428,7 @@ ecb_etesync_create_objects_sync (ECalBackendSync *backend,
 
 		if (success) {
 			success = e_etesync_connection_batch_create_sync (connection,
-									  E_BACKEND (E_CAL_META_BACKEND (cbetesync)),
+									  E_BACKEND (cbetesync),
 									  cbetesync->priv->col_obj,
 									  E_ETESYNC_CALENDAR,
 									  (const gchar *const*) content,
@@ -453,7 +451,6 @@ ecb_etesync_create_objects_sync (ECalBackendSync *backend,
 
 		for (ii = 0; ii < batch_length; ii++)
 			g_free (content[ii]);
-		g_slice_free1 (E_ETESYNC_ITEM_PUSH_LIMIT * sizeof (gchar *), content);
 	}
 
 	if (success) {
@@ -511,20 +508,18 @@ ecb_etesync_modify_objects_sync (ECalBackendSync *backend,
 
 	/* extract the components and mass-add them to the server "batch by batch" */
 	while (l && success) {
-		gchar **content;
+		gchar *data_uids[E_ETESYNC_ITEM_PUSH_LIMIT];
+		gchar *content[E_ETESYNC_ITEM_PUSH_LIMIT];
 		GSList *batch_out_old_components = NULL; /* ECalComponent* */
 		GSList *batch_out_new_components= NULL; /* ECalComponent* */
 		GSList *batch_info = NULL; /* ECalMetaBackendInfo* */
 		guint ii,  batch_length = 0;
-
-		content = g_slice_alloc0 (E_ETESYNC_ITEM_PUSH_LIMIT * sizeof (gchar *));
 
 		/* Data Preproccessing */
 		for (ii = 0 ; ii < E_ETESYNC_ITEM_PUSH_LIMIT && l; l = l->next, ii++) {
 			ICalComponent *icomp, *vcal;
 			ECalComponent *comp;
 			ICalTime *current;
-			const gchar *comp_uid;
 			GSList *instances;
 
 			/* Parse the icalendar text */
@@ -549,10 +544,10 @@ ecb_etesync_modify_objects_sync (ECalBackendSync *backend,
 			} else
 				content[ii] = i_cal_component_as_ical_string (icomp);
 
-			comp_uid = i_cal_component_get_uid (icomp);
+			data_uids[ii] = g_strdup (i_cal_component_get_uid (icomp));
 			batch_out_new_components = g_slist_prepend (batch_out_new_components, e_cal_component_clone (comp));
 
-			if (e_cal_cache_get_components_by_uid (cal_cache, comp_uid, &instances, NULL, NULL))
+			if (e_cal_cache_get_components_by_uid (cal_cache, data_uids[ii], &instances, NULL, NULL))
 				batch_out_old_components = g_slist_concat (batch_out_old_components, instances);
 
 			g_object_unref (comp);
@@ -562,11 +557,12 @@ ecb_etesync_modify_objects_sync (ECalBackendSync *backend,
 
 		if (success) {
 			success = e_etesync_connection_batch_modify_sync (connection,
-									  E_BACKEND (E_CAL_META_BACKEND (cbetesync)),
+									  E_BACKEND (cbetesync),
 									  cbetesync->priv->col_obj,
 									  E_ETESYNC_CALENDAR,
 									  (const gchar *const*) content,
-									  batch_length, /* length of content */
+									  (const gchar *const*) data_uids,
+									  batch_length, /* length of batch */
 									  E_CACHE (cal_cache), /* uses cal_cache if type is calendar */
 									  &batch_info,
 									  cancellable,
@@ -583,9 +579,10 @@ ecb_etesync_modify_objects_sync (ECalBackendSync *backend,
 			}
 		}
 
-		for (ii = 0; ii < batch_length; ii++)
+		for (ii = 0; ii < batch_length; ii++) {
 			g_free (content[ii]);
-		g_slice_free1 (E_ETESYNC_ITEM_PUSH_LIMIT * sizeof (gchar *), content);
+			g_free (data_uids[ii]);
+		}
 	}
 
 	if (success) {
@@ -644,12 +641,11 @@ ecb_etesync_remove_objects_sync (ECalBackendSync *backend,
 
 	/* extract the components and mass-add them to the server "batch by batch" */
 	while (l && success) {
-		gchar **content;
+		gchar *data_uids[E_ETESYNC_ITEM_PUSH_LIMIT];
+		gchar *content[E_ETESYNC_ITEM_PUSH_LIMIT];
 		GSList *batch_out_old_components = NULL; /* ECalComponent* */
 		GSList *batch_info = NULL; /* ECalMetaBackendInfo* */
 		guint ii,  batch_length = 0;
-
-		content = g_slice_alloc0 (E_ETESYNC_ITEM_PUSH_LIMIT * sizeof (gchar *));
 
 		/* Data Preproccessing */
 		for (ii = 0; ii < E_ETESYNC_ITEM_PUSH_LIMIT && l; l = l->next, ii++) {
@@ -659,6 +655,7 @@ ecb_etesync_remove_objects_sync (ECalBackendSync *backend,
 			if (e_cal_cache_get_components_by_uid (cal_cache, e_cal_component_id_get_uid (l->data), &instances, cancellable, NULL)) {
 				vcal = e_cal_meta_backend_merge_instances (E_CAL_META_BACKEND (cbetesync), instances, TRUE);
 				content[ii] = i_cal_component_as_ical_string (vcal);
+				data_uids[ii] = g_strdup (e_cal_component_id_get_uid (l->data));
 				g_object_unref (vcal);
 			} else {
 				success = FALSE;
@@ -673,11 +670,12 @@ ecb_etesync_remove_objects_sync (ECalBackendSync *backend,
 
 		if (success) {
 			success = e_etesync_connection_batch_delete_sync (connection,
-									  E_BACKEND (E_CAL_META_BACKEND (cbetesync)),
+									  E_BACKEND (cbetesync),
 									  cbetesync->priv->col_obj,
 									  E_ETESYNC_CALENDAR,
 									  (const gchar *const*) content,
-									  batch_length, /* length of content */
+									  (const gchar *const*) data_uids,
+									  batch_length, /* length of batch */
 									  E_CACHE (cal_cache), /* uses cal_cache if type is calendar */
 									  &batch_info,
 									  cancellable,
@@ -692,9 +690,10 @@ ecb_etesync_remove_objects_sync (ECalBackendSync *backend,
 			}
 		}
 
-		for (ii = 0; ii < batch_length; ii++)
+		for (ii = 0; ii < batch_length; ii++) {
 			g_free (content[ii]);
-		g_slice_free1 (E_ETESYNC_ITEM_PUSH_LIMIT * sizeof (gchar *), content);
+			g_free (data_uids[ii]);
+		}
 	}
 
 	if (success) {
@@ -733,6 +732,7 @@ ecb_etesync_get_backend_property (ECalBackend *cal_backend,
 			E_CAL_STATIC_CAPABILITY_TASK_CAN_RECUR,
 			E_CAL_STATIC_CAPABILITY_COMPONENT_COLOR,
 			E_CAL_STATIC_CAPABILITY_NO_EMAIL_ALARMS,
+			E_CAL_STATIC_CAPABILITY_SIMPLE_MEMO,
 			e_cal_meta_backend_get_capabilities (E_CAL_META_BACKEND (cbetesync)),
 			NULL);
 	}  else if (g_str_equal (prop_name, E_CAL_BACKEND_PROPERTY_ALARM_EMAIL_ADDRESS)) {
