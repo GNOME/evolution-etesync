@@ -10,7 +10,6 @@ endif(CMAKE_CXX_COMPILER_ID)
 
 macro(setup_build_flags _maintainer_mode)
 	list(APPEND proposed_flags
-		-Werror-implicit-function-declaration
 		-Wformat
 		-Wformat-security
 		-Winit-self
@@ -21,7 +20,7 @@ macro(setup_build_flags _maintainer_mode)
 		-Wundef
 		-Wwrite-strings
 		-Wno-cast-function-type
-		-no-undefined
+		-Wl,--no-undefined
 		-fno-strict-aliasing
 	)
 
@@ -35,11 +34,12 @@ macro(setup_build_flags _maintainer_mode)
 	else(${_maintainer_mode})
 		list(APPEND proposed_flags
 			-Wno-deprecated-declarations
-			-Wno-missing-include-dir)
+			-Wno-missing-include-dirs)
 	endif(${_maintainer_mode})
 
 	list(APPEND proposed_c_flags
 		${proposed_flags}
+		-Werror-implicit-function-declaration
 		-Wdeclaration-after-statement
 		-Wno-missing-field-initializers
 		-Wno-sign-compare
