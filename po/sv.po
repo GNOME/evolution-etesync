@@ -1,15 +1,15 @@
 # Swedish translation for evolution-etesync.
-# Copyright © 2020 evolution-etesync's COPYRIGHT HOLDER
+# Copyright © 2020, 2021 evolution-etesync's COPYRIGHT HOLDER
 # This file is distributed under the same license as the evolution-etesync package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2020-11-27 16:07+0000\n"
-"PO-Revision-Date: 2020-11-27 20:31+0100\n"
+"POT-Creation-Date: 2021-04-27 23:44+0000\n"
+"PO-Revision-Date: 2021-04-28 22:39+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -27,8 +27,8 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "För att komma åt EteSync-servrar med C-API:t för EteSync"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
 msgid "Item not found"
 msgstr "Objekt hittades inte"
 
@@ -94,8 +94,9 @@ msgid "EteSync account"
 msgstr "EteSync-konto"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
-msgstr "EteSync totalsträckskrypterar dina kontakter, kalendrar och uppgifter."
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
+msgstr ""
+"EteSync totalsträckskrypterar dina kontakter, kalendrar, memon och uppgifter."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
 msgid "Etebase server not found."
