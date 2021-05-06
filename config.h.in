@@ -14,3 +14,6 @@
 
 /* Define to 1 when EBookMetaBackendClass::backend_module_directory exists. */
 #cmakedefine HAVE_BACKEND_MODULE_DIRECTORY 1
+
+/* Define to 1 when libecal has E_CAL_STATIC_CAPABILITY_SIMPLE_MEMO_WITH_SUMMARY. */
+#cmakedefine HAVE_SIMPLE_MEMO_WITH_SUMMARY_CAPABILITY 1

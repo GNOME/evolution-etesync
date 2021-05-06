@@ -133,6 +133,19 @@ unset(CMAKE_REQUIRED_FLAGS)
 unset(CMAKE_REQUIRED_INCLUDES)
 unset(CMAKE_REQUIRED_LIBRARIES)
 
+# *********************************************************
+# E_CAL_STATIC_CAPABILITY_SIMPLE_MEMO_WITH_SUMMARY checking
+# *********************************************************
+
+set(CMAKE_REQUIRED_FLAGS ${LIBECAL_CFLAGS})
+set(CMAKE_REQUIRED_INCLUDES ${LIBECAL_INCLUDE_DIRS})
+set(CMAKE_REQUIRED_LIBRARIES ${LIBECAL_LIBS})
+CHECK_C_SOURCE_COMPILES ("#include <libecal/libecal.h>
+			  int main(void) { const char *str = E_CAL_STATIC_CAPABILITY_SIMPLE_MEMO_WITH_SUMMARY; return 0; }" HAVE_SIMPLE_MEMO_WITH_SUMMARY_CAPABILITY)
+unset(CMAKE_REQUIRED_FLAGS)
+unset(CMAKE_REQUIRED_INCLUDES)
+unset(CMAKE_REQUIRED_LIBRARIES)
+
 # ******************************
 # Special directories
 # ******************************
