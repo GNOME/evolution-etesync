@@ -5,11 +5,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: evolution-etesync gnome-3-38\n"
+"Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2020-11-27 16:07+0000\n"
-"PO-Revision-Date: 2020-12-04 16:21+0700\n"
+"POT-Creation-Date: 2021-04-27 23:44+0000\n"
+"PO-Revision-Date: 2021-05-31 17:32+0700\n"
 "Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
@@ -27,8 +27,8 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "Untuk mengakses server EteSync menggunakan EteSync C API"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
 msgid "Item not found"
 msgstr "Butir tak ditemukan"
 
@@ -94,9 +94,10 @@ msgid "EteSync account"
 msgstr "Akun EteSync"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
 msgstr ""
-"EteSync mengenkripsi kontak, kalender, dan tugas Anda dari ujung ke ujung."
+"EteSync mengenkripsi kontak, kalender, memo, dan tugas Anda dari ujung ke "
+"ujung."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
 msgid "Etebase server not found."
