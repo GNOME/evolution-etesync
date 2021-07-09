@@ -1,3 +1,39 @@
+Evolution-EteSync 1.1.0 2021-07-09
+----------------------------------
+
+Bug Fixes:
+	I#1 - Add support for notes (Nour E-Din El-Nhass)
+	I#3 - Annotate false positives for Coverity Scan closes #3 (Nour E-Din El-Nhass)
+	I#7 - Use of uninitialized memory closes #7 (Nour E-Din El-Nhass)
+	I#10 - Memos: Summary is overwritten by first line in the description (Nour E-Din El-Nhass)
+
+Miscellaneous:
+	GLibTools.cmake: Use basename in glib-mkenums templates (Milan Crha)
+	GLibTools.cmake: Generate signal marshallers without source reference (Milan Crha)
+	Add project name and description to the top of README (Tadej Janež)
+	CMake: Add FORCE_INSTALL_PREFIX compile time option (Milan Crha)
+	PrintableOptions.cmake: Correct variable name comparison (Milan Crha)
+	Sync CMake modules with those in evolution-data-server (Milan Crha)
+
+Translations:
+	Anders Jonsson (sv)
+	Andika Triwidada (id)
+	Asier Sarasua Garmendia (eu)
+	Aurimas Černius (lt)
+	Balázs Úr (hu)
+	Christian Kirbach (de)
+	Daniel Mustieles (es)
+	Daniel Șerbănescu (ro)
+	Emin Tufan Çetin (tr)
+	Enrico Nicoletto (pt_BR)
+	Florentina Mușat (ro)
+	Gianvito Cavasoli (it)
+	Marek Černocký (cs)
+	Nathan Follens (nl)
+	Piotr Drąg (pl)
+	Yuri Chornoivan (uk)
+	Мирослав Николић (sr)
+
 Evolution-EteSync 1.0.0 2020-11-25
 ----------------------------------
 
