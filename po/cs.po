@@ -1,15 +1,16 @@
 # Czech translation for evolution-etesync.
 # Copyright (C) 2020 evolution-etesync's COPYRIGHT HOLDER
 # This file is distributed under the same license as the evolution-etesync package.
-# Marek Černocký <marek@manet.cz>, 2020.
+#
+# Marek Černocký <marek@manet.cz>, 2020, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: evolution-etesync\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2020-11-26 16:00+0000\n"
-"PO-Revision-Date: 2020-11-27 09:26+0100\n"
+"POT-Creation-Date: 2021-04-27 23:44+0000\n"
+"PO-Revision-Date: 2021-08-31 13:50+0200\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "Language: cs\n"
@@ -26,8 +27,8 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "Přístup k serverům EteSync pomocí API EteSync pro jazyk C"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
 msgid "Item not found"
 msgstr "Položka nebyla nalezena"
 
@@ -93,9 +94,10 @@ msgid "EteSync account"
 msgstr "Účet EteSync"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
 msgstr ""
-"Šifrování mezi koncovými body EteSync pro vaše kontakty, kalendáře a úkoly."
+"Šifrování mezi koncovými body EteSync pro vaše kontakty, kalendáře, poznámky "
+"a úkoly."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
 msgid "Etebase server not found."
