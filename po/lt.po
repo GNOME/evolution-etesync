@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2020-11-26 16:00+0000\n"
-"PO-Revision-Date: 2021-01-05 12:35+0200\n"
+"POT-Creation-Date: 2021-04-27 23:44+0000\n"
+"PO-Revision-Date: 2021-09-06 13:57+0300\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"X-Generator: Gtranslator 40.0\n"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
 msgid "EteSync"
@@ -28,9 +28,8 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "EteSync serverių pasiekimui naudojant EteSync C API"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
-#| msgid "EteSync secret not found"
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
 msgid "Item not found"
 msgstr "Elementas nerastas"
 
@@ -96,11 +95,13 @@ msgid "EteSync account"
 msgstr "EteSync paskyra"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
-msgstr "EteSync visiškai šifruoja jūsų kontaktus, kalendorius bei užduotis."
+#| msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
+msgstr ""
+"EteSync visiškai šifruoja jūsų kontaktus, kalendorius, raštelius bei "
+"užduotis."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
-#| msgid "EteSync secret not found"
 msgid "Etebase server not found."
 msgstr "EteSync serveris nerastas."
 
