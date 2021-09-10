@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/issues"
 "\n"
-"POT-Creation-Date: 2021-01-31 12:19+0000\n"
-"PO-Revision-Date: 2021-02-14 01:38+0100\n"
-"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2021-04-27 23:44+0000\n"
+"PO-Revision-Date: 2021-09-10 21:38+0200\n"
+"Last-Translator: Balázs Úr <ur.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list@gnome.org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,8 @@ msgid "For accessing EteSync servers using EteSync C API"
 msgstr ""
 "Az EteSync kiszolgálókhoz EteSync C API használatával történő hozzáféréshez"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
 msgid "Item not found"
 msgstr "Az elem nem található"
 
@@ -95,10 +95,11 @@ msgid "EteSync account"
 msgstr "EteSync-fiók"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+#| msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
 msgstr ""
-"Az EteSync titkosítja a végpontok között a névjegyeit, a naptárait és a"
-" feladatait."
+"Az EteSync titkosítja a végpontok között a névjegyeit, a naptárait, a"
+" feljegyzéseit és a feladatait."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
 msgid "Etebase server not found."
@@ -117,5 +118,5 @@ msgid ""
 "Malformed server name, please make sure to enter a full url (e.g https://"
 "etesync.example.com)."
 msgstr ""
-"Helytelenül formázott kiszolgálónév. Győződjön meg arról, hogy teljes URL-t"
-" adott-e meg (például https://etesync.example.com)."
+"Helytelenül formázott kiszolgálónév. Győződjön meg arról, hogy teljes URL-t "
+"adott-e meg (például https://etesync.example.com)."
