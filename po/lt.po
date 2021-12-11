@@ -1,15 +1,15 @@
 # Lithuanian translation for evolution-etesync.
 # Copyright (C) 2020 evolution-etesync's COPYRIGHT HOLDER
 # This file is distributed under the same license as the evolution-etesync package.
-# Aurimas Černius <aurisc4@gmail.com>, 2020.
+# Aurimas Černius <aurisc4@gmail.com>, 2020-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2020-11-11 08:18+0000\n"
-"PO-Revision-Date: 2020-11-18 23:31+0200\n"
+"POT-Creation-Date: 2021-09-17 14:24+0000\n"
+"PO-Revision-Date: 2021-12-11 21:17+0200\n"
 "Last-Translator: Aurimas Černius <aurisc4@gmail.com>\n"
 "Language-Team: Lietuvių <gnome-lt@lists.akl.lt>\n"
 "Language: lt\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"X-Generator: Gtranslator 40.0\n"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
 msgid "EteSync"
@@ -28,79 +28,32 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "EteSync serverių pasiekimui naudojant EteSync C API"
 
-#: ../src/common/e-etesync-connection.c:454
-msgid "My Contacts"
-msgstr "Mano kontaktai"
+#: ../src/common/e-etesync-connection.c:903
+#: ../src/common/e-etesync-connection.c:1002
+#| msgid "EteSync secret not found"
+msgid "Item not found"
+msgstr "Elementas nerastas"
 
-#: ../src/common/e-etesync-connection.c:456
-msgid "My Calendar"
-msgstr "Mano kalendorius"
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "EteSync paslaptis nerasta"
 
-#: ../src/common/e-etesync-connection.c:458
-msgid "My Tasks"
-msgstr "Mano užduotys"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:123
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
 #, c-format
 msgid "Failed to obtain access token for account “%s”"
 msgstr "Nepavyko gauti prieigos leksemos paskyrai „%s“"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:183
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
 msgid "EteSync account authentication request"
 msgstr "EteSync paskyros tapatybės patvirtinimo užklausa"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:188
-#, c-format
-msgid "Please enter the password for account “%s”."
-msgstr "Įveskite slaptažodį paskyrai „%s“."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:192
-#, c-format
-msgid "Please enter the encryption password for account “%s”."
-msgstr "Įveskite šifravimo slaptažodį paskyrai „%s“."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:196
-#, c-format
-msgid ""
-"Wrong password!\n"
-"\n"
-"Please enter the correct password for account “%s”."
-msgstr ""
-"Neteisingas slaptažodis!\n"
-"\n"
-"Įveskite teisingą slaptažodį paskyrai „%s“."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:200
-#, c-format
-msgid ""
-"Wrong encryption password!\n"
-"\n"
-"Please enter the correct encryption password for account “%s”."
-msgstr ""
-"Neteisingas šifravimo  slaptažodis!\n"
-"\n"
-"Įveskite teisingą šifravimo slaptažodį paskyrai „%s“."
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:204
-#, c-format
-msgid ""
-"Welcome to EteSync!\n"
-"\n"
-"Please set an encryption password below for account “%s”, and make sure you "
-"got it right, as it can't be recovered if lost!"
-msgstr ""
-"Sveiki pradėję naudoti EteSync!\n"
-"\n"
-"Žemiau nustatykite šifravimo slaptažodį paskyrai „%s“, būkite atidus, "
-"kadangi vėliau jo atgauti negalėsite!"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:210
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
 #, c-format
 msgid "Please enter the correct credentials for account “%s”."
 msgstr "Įveskite teisingus įgaliojimus paskyrai „%s“."
 
 #. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:216
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
 #, c-format
 msgid ""
 "\n"
@@ -109,76 +62,116 @@ msgstr ""
 "\n"
 "(serveris: %s)"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:268
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:492
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
 msgid "_Cancel"
 msgstr "_Atsisakyti"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:269
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:493
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
 msgid "_OK"
 msgstr "_Gerai"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:358
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:647
-msgid "_Encryption Password:"
-msgstr "_Šifravimo slaptažodis:"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:370
-msgid "Encryption _Password again:"
-msgstr "Šifravimo sla_ptažodis dar kartą:"
-
-#. Remember password check
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:385
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:662
-msgid "_Add this password to your keyring"
-msgstr "_Pridėti šį slaptažodį į raktinę"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:623
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
 msgid "_User Name:"
 msgstr "Na_udotojo vardas:"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:635
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
 msgid "_Password:"
 msgstr "Sla_ptažodis:"
 
-#: ../src/credentials/e-etesync-service.c:53
-#: ../src/credentials/e-etesync-service.c:82
-msgid "EteSync secret not found"
-msgstr "EteSync paslaptis nerasta"
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "_Pridėti šį slaptažodį į raktinę"
 
 #: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
 msgid "Credentials not found"
 msgstr "Įgaliojimai nerasti"
 
-#: ../src/evolution/e-etesync-config-lookup.c:55
+#: ../src/evolution/e-etesync-config-lookup.c:58
 msgid "Look up for an EteSync account"
 msgstr "Ieškoti EteSync paskyros"
 
-#: ../src/evolution/e-etesync-config-lookup.c:75
+#: ../src/evolution/e-etesync-config-lookup.c:78
 msgid "EteSync account"
 msgstr "EteSync paskyra"
 
-#: ../src/evolution/e-etesync-config-lookup.c:76
+#: ../src/evolution/e-etesync-config-lookup.c:79
 msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
 msgstr "EteSync visiškai šifruoja jūsų kontaktus, kalendorius bei užduotis."
 
-#: ../src/evolution/e-etesync-config-lookup.c:127
+#: ../src/evolution/e-etesync-config-lookup.c:140
+#| msgid "EteSync secret not found"
+msgid "Etebase server not found."
+msgstr "Etebase serveris nerastas"
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "Nepavyko prisijungti prie serverio."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
 msgid "Requires password to continue."
 msgstr "Norint tęsti reikia slaptažodžio."
 
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Wrong username, password or server."
-msgstr "Neteisingas naudotojo vardas, slaptažodis arba serveris."
-
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Wrong username or password."
-msgstr "Neteisingas naudotojo vardas arba slaptažodis."
-
-#: ../src/evolution/e-etesync-config-lookup.c:165
+#: ../src/evolution/e-etesync-config-lookup.c:182
 msgid ""
 "Malformed server name, please make sure to enter a full url (e.g https://"
 "etesync.example.com)."
 msgstr ""
 "Blogai įvestas serverio pavadinimas, įsitikinkite, kad įvedate visą url "
 "(pvz. https://etesync.pavyzdys.lt)."
+
+#~ msgid "My Contacts"
+#~ msgstr "Mano kontaktai"
+
+#~ msgid "My Calendar"
+#~ msgstr "Mano kalendorius"
+
+#~ msgid "My Tasks"
+#~ msgstr "Mano užduotys"
+
+#~ msgid "Please enter the password for account “%s”."
+#~ msgstr "Įveskite slaptažodį paskyrai „%s“."
+
+#~ msgid "Please enter the encryption password for account “%s”."
+#~ msgstr "Įveskite šifravimo slaptažodį paskyrai „%s“."
+
+#~ msgid ""
+#~ "Wrong password!\n"
+#~ "\n"
+#~ "Please enter the correct password for account “%s”."
+#~ msgstr ""
+#~ "Neteisingas slaptažodis!\n"
+#~ "\n"
+#~ "Įveskite teisingą slaptažodį paskyrai „%s“."
+
+#~ msgid ""
+#~ "Wrong encryption password!\n"
+#~ "\n"
+#~ "Please enter the correct encryption password for account “%s”."
+#~ msgstr ""
+#~ "Neteisingas šifravimo  slaptažodis!\n"
+#~ "\n"
+#~ "Įveskite teisingą šifravimo slaptažodį paskyrai „%s“."
+
+#~ msgid ""
+#~ "Welcome to EteSync!\n"
+#~ "\n"
+#~ "Please set an encryption password below for account “%s”, and make sure "
+#~ "you got it right, as it can't be recovered if lost!"
+#~ msgstr ""
+#~ "Sveiki pradėję naudoti EteSync!\n"
+#~ "\n"
+#~ "Žemiau nustatykite šifravimo slaptažodį paskyrai „%s“, būkite atidus, "
+#~ "kadangi vėliau jo atgauti negalėsite!"
+
+#~ msgid "_Encryption Password:"
+#~ msgstr "_Šifravimo slaptažodis:"
+
+#~ msgid "Encryption _Password again:"
+#~ msgstr "Šifravimo sla_ptažodis dar kartą:"
+
+#~ msgid "Wrong username, password or server."
+#~ msgstr "Neteisingas naudotojo vardas, slaptažodis arba serveris."
+
+#~ msgid "Wrong username or password."
+#~ msgstr "Neteisingas naudotojo vardas arba slaptažodis."
