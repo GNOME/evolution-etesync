@@ -4,22 +4,23 @@
 # Christian Kirbach <Christian.Kirbach@gmail.com>, 2020.
 # Philipp Kiemle <philipp.kiemle@gmail.com>, 2020.
 # Tim Sabsch <tim@sabsch.com>, 2020.
+# Jürgen Benvenuti <gastornis@posteo.org>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2020-12-09 10:08+0000\n"
-"PO-Revision-Date: 2020-12-28 13:05+0100\n"
-"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
+"POT-Creation-Date: 2021-04-27 23:44+0000\n"
+"PO-Revision-Date: 2022-07-07 12:54+0200\n"
+"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 3.38.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1\n"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
 msgid "EteSync"
@@ -29,8 +30,8 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "Um auf EteSync-Server mit der EteSync-API zuzugreifen"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
 msgid "Item not found"
 msgstr "Element nicht gefunden"
 
@@ -96,10 +97,10 @@ msgid "EteSync account"
 msgstr "EteSync-Konto"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
 msgstr ""
-"EteSync verschlüsselt Ihre Kontakte, Kalender und Aufgaben mittels Ende-zu-"
-"Ende-Verschlüsselung."
+"EteSync verschlüsselt Ihre Kontakte, Kalender, Notizen und Aufgaben mittels "
+"Ende-zu-Ende-Verschlüsselung."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
 msgid "Etebase server not found."
