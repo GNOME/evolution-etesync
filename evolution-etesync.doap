@@ -8,8 +8,9 @@
   <shortdesc xml:lang="en">EteSync module for accessing EteSync accounts through Evolution</shortdesc>
   <description>EteSync module for the Evolution application</description>
   <homepage rdf:resource="https://wiki.gnome.org/Apps/Evolution" />
-  <mailing-list rdf:resource="https://mail.gnome.org/mailman/listinfo/evolution-list" />
+  <mailing-list rdf:resource="https://lists.osuosl.org/mailman/listinfo/evolution-users" />
   <download-page rdf:resource="https://gitlab.gnome.org/nourmat/evolution-etesync" />
+  <support-forum rdf:resource="https://discourse.gnome.org/tag/evolution" />
   <bug-database rdf:resource="https://gitlab.gnome.org/nourmat/evolution-etesync/-/issues/" />
   <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
   <programming-language>C</programming-language>
@@ -34,7 +35,7 @@
     <foaf:Person>
       <foaf:name>Tom Hacohen</foaf:name>
       <foaf:mbox rdf:resource="mailto:gnome@stosb.com" />
-      <gnome:userid>tomha</gnome:userid>
+<!--      <gnome:userid>tomha</gnome:userid> -->
     </foaf:Person>
   </maintainer>
 
