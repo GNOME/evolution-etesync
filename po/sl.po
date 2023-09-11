@@ -10,9 +10,9 @@ msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2020-11-01 13:37+0000\n"
-"PO-Revision-Date: 2020-11-05 18:31+0100\n"
-"Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
+"POT-Creation-Date: 2022-11-30 09:38+0000\n"
+"PO-Revision-Date: 2023-09-11 19:17+0200\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
@@ -21,153 +21,109 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
 msgid "EteSync"
 msgstr "EteSync"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
+#, fuzzy
 msgid "For accessing EteSync servers using EteSync C API"
-msgstr ""
+msgstr "Za dostopanje do strežnikov EteSync z uporabo API-ja C EteSync"
 
-#: ../src/common/e-etesync-connection.c:454
-msgid "My Contacts"
-msgstr "Stiki"
+#: ../src/common/e-etesync-connection.c:903
+#: ../src/common/e-etesync-connection.c:1002
+#, fuzzy
+#| msgid "Credentials not found"
+msgid "Item not found"
+msgstr "Poveril ni mogoče najti"
 
-#: ../src/common/e-etesync-connection.c:456
-msgid "My Calendar"
-msgstr "Koledar"
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+#, fuzzy
+msgid "EteSync secret not found"
+msgstr "Skrivnosti EteSync ni mogoče najti"
 
-#: ../src/common/e-etesync-connection.c:458
-msgid "My Tasks"
-msgstr "Naloge"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:123
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
 #, c-format
 msgid "Failed to obtain access token for account “%s”"
-msgstr ""
+msgstr "Pridobivanje žetona za dostop računa »%s« je spodletelo"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:183
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
+#, fuzzy
 msgid "EteSync account authentication request"
-msgstr ""
+msgstr "Zahteva za overitev računa EteSync"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:188
-#, c-format
-msgid "Please enter the password for account “%s”."
-msgstr ""
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:192
-#, c-format
-msgid "Please enter the encryption password for account “%s”."
-msgstr ""
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:196
-#, c-format
-msgid ""
-"Wrong password!\n"
-"\n"
-"Please enter the correct password for account “%s”."
-msgstr ""
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:200
-#, c-format
-msgid ""
-"Wrong encryption password!\n"
-"\n"
-"Please enter the correct encryption password for account “%s”."
-msgstr ""
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:204
-#, c-format
-msgid ""
-"Welcome to EteSync!\n"
-"\n"
-"Please set an encryption password below for account “%s”, and make sure you "
-"got it right, as it can't be recovered if lost!"
-msgstr ""
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:210
-#, c-format
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
+#, fuzzy, c-format
 msgid "Please enter the correct credentials for account “%s”."
-msgstr ""
+msgstr "Vnesite pravilne poverilnice za račun »%s«."
 
 #. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:216
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
 #, c-format
 msgid ""
 "\n"
 "(host: %s)"
 msgstr ""
+"\n"
+"(gostitelj: %s)"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:268
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:492
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
 msgid "_Cancel"
 msgstr "_Prekliči"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:269
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:493
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
 msgid "_OK"
 msgstr "_V redu"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:358
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:647
-msgid "_Encryption Password:"
-msgstr "_Šifrirno geslo:"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:370
-msgid "Encryption _Password again:"
-msgstr "_Ponovitev \tgesla:"
-
-#. Remember password check
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:385
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:662
-msgid "_Add this password to your keyring"
-msgstr ""
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:623
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
 msgid "_User Name:"
 msgstr "_Uporabniško ime:"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:635
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
 msgid "_Password:"
 msgstr "_Geslo:"
 
-#: ../src/credentials/e-etesync-service.c:53
-#: ../src/credentials/e-etesync-service.c:82
-msgid "EteSync secret not found"
-msgstr ""
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "Dodaj _geslo v zbirko ključev"
 
 #: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
 msgid "Credentials not found"
 msgstr "Poveril ni mogoče najti"
 
-#: ../src/evolution/e-etesync-config-lookup.c:55
+#: ../src/evolution/e-etesync-config-lookup.c:58
+#, fuzzy
 msgid "Look up for an EteSync account"
-msgstr ""
+msgstr "Poiščite račun EteSync"
 
-#: ../src/evolution/e-etesync-config-lookup.c:75
+#: ../src/evolution/e-etesync-config-lookup.c:78
 msgid "EteSync account"
 msgstr "Račun EteSync"
 
-#: ../src/evolution/e-etesync-config-lookup.c:76
+#: ../src/evolution/e-etesync-config-lookup.c:79
+#, fuzzy
 msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
-msgstr ""
+msgstr "EteSync po celi poti šifrira vaše stike, koledarje in opravila."
 
-#: ../src/evolution/e-etesync-config-lookup.c:127
+#: ../src/evolution/e-etesync-config-lookup.c:140
+msgid "Etebase server not found."
+msgstr "Strežnika Etebase ni mogoče najti."
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "Povezovanje s strežnikom je spodletelo."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
 msgid "Requires password to continue."
 msgstr "Za nadaljevanje je zahtevano geslo."
 
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Wrong username, password or server."
-msgstr "Napačno uporabniško ime, geslo ali strežnik."
-
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Wrong username or password."
-msgstr "Napačno uporabniško ime ali geslo."
-
-#: ../src/evolution/e-etesync-config-lookup.c:165
+#: ../src/evolution/e-etesync-config-lookup.c:182
 msgid ""
 "Malformed server name, please make sure to enter a full url (e.g https://"
 "etesync.example.com)."
 msgstr ""
+"Nepravilno oblikovano ime strežnika, preverite, da ste vnesli polni URL "
+"(npr. https://etesync.primer.si)."
