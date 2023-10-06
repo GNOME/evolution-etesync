@@ -1,0 +1,117 @@
+# Chinese (China) translation for evolution-etesync.
+# Copyright (C) 2023 evolution-etesync's COPYRIGHT HOLDER
+# This file is distributed under the same license as the evolution-etesync package.
+# Boyuan Yang <073plan@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: evolution-etesync gnome-3-38\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
+"issues\n"
+"POT-Creation-Date: 2023-09-11 17:18+0000\n"
+"PO-Revision-Date: 2023-10-05 23:35-0400\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"X-Generator: Poedit 2.4.3\n"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
+msgid "EteSync"
+msgstr "EteSync"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
+msgid "For accessing EteSync servers using EteSync C API"
+msgstr "用于使用 EteSync C API 访问 EteSync 服务器"
+
+#: ../src/common/e-etesync-connection.c:903
+#: ../src/common/e-etesync-connection.c:1002
+msgid "Item not found"
+msgstr "项目未找到"
+
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "未找到 EteSync 机密"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
+#, c-format
+msgid "Failed to obtain access token for account “%s”"
+msgstr "无法获取账户“%s”的访问令牌"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
+msgid "EteSync account authentication request"
+msgstr "EteSync 账户认证请求"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
+#, c-format
+msgid "Please enter the correct credentials for account “%s”."
+msgstr "请输入账户“%s”的正确凭证。"
+
+#. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
+#, c-format
+msgid ""
+"\n"
+"(host: %s)"
+msgstr ""
+"\n"
+"（主机：%s）"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
+msgid "_Cancel"
+msgstr "取消(_C)"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
+msgid "_OK"
+msgstr "确认(_O)"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
+msgid "_User Name:"
+msgstr "用户名(_U)："
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
+msgid "_Password:"
+msgstr "密码(_P):"
+
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "将该密码添加到您的密钥环(_A)"
+
+#: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
+msgid "Credentials not found"
+msgstr "找不到凭证"
+
+#: ../src/evolution/e-etesync-config-lookup.c:58
+msgid "Look up for an EteSync account"
+msgstr "查找 EteSync 账户"
+
+#: ../src/evolution/e-etesync-config-lookup.c:78
+msgid "EteSync account"
+msgstr "EteSync 账户"
+
+#: ../src/evolution/e-etesync-config-lookup.c:79
+msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgstr "EteSync 端到端加密您的联系人、日历、备忘和任务。"
+
+#: ../src/evolution/e-etesync-config-lookup.c:140
+msgid "Etebase server not found."
+msgstr "未找到 Etebase 服务器。"
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "连接到服务器失败。"
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Requires password to continue."
+msgstr "需要密码才能继续。"
+
+#: ../src/evolution/e-etesync-config-lookup.c:182
+msgid ""
+"Malformed server name, please make sure to enter a full url (e.g https://"
+"etesync.example.com)."
+msgstr ""
+"服务器名称格式错误，请确保输入完整 URL（例如 https://etesync.example."
+"com）。"
