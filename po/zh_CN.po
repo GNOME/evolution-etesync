@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2022-07-13 18:49+0000\n"
-"PO-Revision-Date: 2022-09-13 15:45-0400\n"
+"POT-Creation-Date: 2023-09-11 17:18+0000\n"
+"PO-Revision-Date: 2023-10-05 23:35-0400\n"
 "Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
 msgid "EteSync"
@@ -33,21 +33,21 @@ msgstr "项目未找到"
 
 #: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
 msgid "EteSync secret not found"
-msgstr "找不到 EteSync 机密"
+msgstr "未找到 EteSync 机密"
 
 #: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
 #, c-format
 msgid "Failed to obtain access token for account “%s”"
-msgstr "无法获取帐户“%s”的访问令牌"
+msgstr "无法获取账户“%s”的访问令牌"
 
 #: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
 msgid "EteSync account authentication request"
-msgstr "EteSync 帐户认证请求"
+msgstr "EteSync 账户认证请求"
 
 #: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
 #, c-format
 msgid "Please enter the correct credentials for account “%s”."
-msgstr "请输入帐户“%s”的正确证书。"
+msgstr "请输入账户“%s”的正确凭证。"
 
 #. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
 #: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
@@ -82,15 +82,15 @@ msgstr "将此密码添加到您的密钥环(_A)"
 
 #: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
 msgid "Credentials not found"
-msgstr "找不到证书"
+msgstr "找不到凭证"
 
 #: ../src/evolution/e-etesync-config-lookup.c:58
 msgid "Look up for an EteSync account"
-msgstr "查找 EteSync 帐户"
+msgstr "查找 EteSync 账户"
 
 #: ../src/evolution/e-etesync-config-lookup.c:78
 msgid "EteSync account"
-msgstr "EteSync 帐户"
+msgstr "EteSync 账户"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
 msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
