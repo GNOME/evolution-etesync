@@ -9,16 +9,16 @@ msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2022-01-13 08:19+0000\n"
-"PO-Revision-Date: 2022-03-05 01:13+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2023-10-06 03:38+0000\n"
+"PO-Revision-Date: 2023-10-14 12:46+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.4\n"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
 msgid "EteSync"
@@ -63,7 +63,7 @@ msgstr ""
 
 #: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
 msgid "_Cancel"
-msgstr "_İptal"
+msgstr "İ_ptal"
 
 #: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
 msgid "_OK"
@@ -97,8 +97,8 @@ msgstr "EteSync hesabı"
 #: ../src/evolution/e-etesync-config-lookup.c:79
 msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
 msgstr ""
-"EteSync kişilerinizi, takvimlerinizi, notlarınızı ve görevlerinizi uçtan "
-"uca şifreler."
+"EteSync kişilerinizi, takvimlerinizi, notlarınızı ve görevlerinizi uçtan uca "
+"şifreler."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
 msgid "Etebase server not found."
