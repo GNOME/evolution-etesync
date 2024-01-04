@@ -1,123 +1,797 @@
-# Slovenian translation for evolution-etesync.
-# Copyright (C) 2020 evolution-etesync's COPYRIGHT HOLDER
-# This file is distributed under the same license as the evolution-etesync package.
+# Slovenian translation for authenticator.
+# Copyright (C) 2020 authenticator's COPYRIGHT HOLDER
+# This file is distributed under the same license as the authenticator package.
 #
-# Matej Urbančič <mateju@svn.gnome.org>, 2020–.
-#
+# Matej Urbančič <mateju@src.gnome.org>, 2020–2022.
+# Martin Srebotnjak <miles@filmsi.net>, 2022-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: evolution-etesync master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
-"issues\n"
-"POT-Creation-Date: 2023-09-11 17:18+0000\n"
-"PO-Revision-Date: 2024-01-04 21:03+0100\n"
+"Project-Id-Version: authenticator master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Authenticator/issues\n"
+"POT-Creation-Date: 2024-01-01 13:33+0000\n"
+"PO-Revision-Date: 2024-01-04 20:58+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups."
-"com>\n"
+"Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
-"n%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
-msgid "EteSync"
-msgstr "EteSync"
+#: data/com.belmoussaoui.Authenticator.desktop.in.in:3
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:7
+#: data/resources/ui/window.ui:36 src/application.rs:91 src/main.rs:40
+msgid "Authenticator"
+msgstr "Overjevalnik"
 
-#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
-msgid "For accessing EteSync servers using EteSync C API"
-msgstr "Za dostop do strežnikov EteSync z uporabo API-ja C EteSync"
+#: data/com.belmoussaoui.Authenticator.desktop.in.in:4
+msgid "Two-Factor Authentication"
+msgstr "Dvostopenjsko overjanje"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
-msgid "Item not found"
-msgstr "Element ni bil najden"
+#: data/com.belmoussaoui.Authenticator.desktop.in.in:5
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:8
+#: src/application.rs:94
+msgid "Generate Two-Factor Codes"
+msgstr "Ustvarjanje dvostopenjske overitvene kode"
 
-#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
-msgid "EteSync secret not found"
-msgstr "Skrivnosti EteSync ni mogoče najti"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
-#, c-format
-msgid "Failed to obtain access token for account “%s”"
-msgstr "Pridobivanje žetona za dostop računa »%s« je spodletelo"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
-msgid "EteSync account authentication request"
-msgstr "Zahteva za overitev računa EteSync"
-
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
-#, c-format
-msgid "Please enter the correct credentials for account “%s”."
-msgstr "Vnesite pravilne poverilnice za račun »%s«."
-
-#. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
-#, c-format
-msgid ""
-"\n"
-"(host: %s)"
+#: data/com.belmoussaoui.Authenticator.desktop.in.in:10
+msgid "Gnome;GTK;Verification;2FA;Authentication;OTP;TOTP;"
 msgstr ""
-"\n"
-"(gostitelj: %s)"
+"Gnome;GTK;Verifikacija;2FA;Authentication;OTP;TwoFactor;Overitev;"
+"Dvostopenjsko;Autentifikator;overjanje;overjevalnik;"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
-msgid "_Cancel"
-msgstr "_Prekliči"
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:6
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:7
+msgid "Default window width"
+msgstr "Privzeta širina okna"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
-msgid "_OK"
-msgstr "_V redu"
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:11
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:12
+msgid "Default window height"
+msgstr "Privzeta višina okna"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
-msgid "_User Name:"
-msgstr "_Uporabniško ime:"
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:16
+msgid "Default window maximized behaviour"
+msgstr "Obnašanje privzeto razpetega okna"
 
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
-msgid "_Password:"
-msgstr "_Geslo:"
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:21
+msgid "Auto lock"
+msgstr "Samodejno zaklepanje"
 
-#. Remember password check
-#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
-msgid "_Add this password to your keyring"
-msgstr "Dodaj _geslo v zbirko ključev"
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:22
+msgid "Whether to auto lock the application or not"
+msgstr "Ali naj se program samodejno zaklene"
 
-#: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
-msgid "Credentials not found"
-msgstr "Poveril ni mogoče najti"
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:26
+msgid "Auto lock timeout"
+msgstr "Časovni zamik zaklepanja"
 
-#: ../src/evolution/e-etesync-config-lookup.c:58
-msgid "Look up for an EteSync account"
-msgstr "Poiščite račun EteSync"
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:27
+msgid "Lock the application on idle after X minutes"
+msgstr "Zakleni program ob nedejavnosti po X minutah"
 
-#: ../src/evolution/e-etesync-config-lookup.c:78
-msgid "EteSync account"
-msgstr "Račun EteSync"
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:34
+msgid "Download Favicons"
+msgstr "Prenesi zaznamke (favikone)"
 
-#: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
-msgstr "EteSync po celi poti šifrira vaše stike, koledarje in opravila."
-
-#: ../src/evolution/e-etesync-config-lookup.c:140
-msgid "Etebase server not found."
-msgstr "Strežnika Etebase ni mogoče najti."
-
-#: ../src/evolution/e-etesync-config-lookup.c:142
-msgid "Failed connecting to server."
-msgstr "Povezovanje s strežnikom je spodletelo."
-
-#: ../src/evolution/e-etesync-config-lookup.c:147
-msgid "Requires password to continue."
-msgstr "Za nadaljevanje je zahtevano geslo."
-
-#: ../src/evolution/e-etesync-config-lookup.c:182
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:35
 msgid ""
-"Malformed server name, please make sure to enter a full url (e.g https://"
-"etesync.example.com)."
+"Whether the application should attempt to find an icon for the providers."
+msgstr "Ali naj program poskusi najti ikono za ponudnike."
+
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:39
+msgid "Download Favicons over metered connections"
+msgstr "Prenesi zaznamke (favikone) prek omejenih povezav"
+
+#: data/com.belmoussaoui.Authenticator.gschema.xml.in:40
+msgid ""
+"Whether the application should download favicons over a metered connection."
+msgstr "Ali naj prenese prenese zaznamke (favikone) preko omejene povezave."
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:10
+msgid "Simple application for generating Two-Factor Authentication Codes."
+msgstr "Program za ustvarjanje dvostopenjskih overitvenih kod."
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:11
+msgid "Features:"
+msgstr "Zmožnosti:"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:13
+msgid "Time-based/Counter-based/Steam methods support"
+msgstr "Podpora za Steam, časovno, števčno zaklepanje"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:14
+msgid "SHA-1/SHA-256/SHA-512 algorithms support"
+msgstr "Podpora algoritmom SHA1/SHA256/SHA512"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:15
+msgid "QR code scanner using a camera or from a screenshot"
+msgstr "Bralnik kode QR s kamero ali prek zajete slike zaslona"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:16
+msgid "Lock the application with a password"
+msgstr "Zaklepanje programa z geslom"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:17
+msgid "Beautiful UI"
+msgstr "Prefinjen grafični vmesnik"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:18
+msgid "GNOME Shell search provider"
+msgstr "Ponudnik iskanja GNOME Shell"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:19
+msgid ""
+"Backup/Restore from/into known applications like FreeOTP+, Aegis "
+"(encrypted / plain-text), andOTP, Google Authenticator"
 msgstr ""
-"Nepravilno oblikovano ime strežnika, preverite, da ste vnesli polni URL "
-"(npr. https://etesync.primer.si)."
+"Varnostno kopiranje/obnovitev s podporo uveljavljenih programov, kot so "
+"FreeOTP+, Aegis (šifrirano/navadno besedilo), andOTP in Overjevalnik Google "
+"(Google Authenticator)."
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:25
+msgid "Main Window"
+msgstr "Glavno okno"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:29
+#: data/resources/ui/account_add.ui:32 data/resources/ui/account_add.ui:49
+msgid "Add a New Account"
+msgstr "Dodaj račun"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:33
+msgid "Add a New Provider"
+msgstr "Dodaj novega ponudnika"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:37
+msgid "Account Details"
+msgstr "Podrobnosti računa"
+
+#: data/com.belmoussaoui.Authenticator.metainfo.xml.in.in:41
+msgid "Backup/Restore formats support"
+msgstr "Podpora zapisom varnostnega kopiranja in obnovitve"
+
+#: data/resources/ui/account_add.ui:6 src/widgets/preferences/window.rs:292
+msgid "_Camera"
+msgstr "_Kamera"
+
+#: data/resources/ui/account_add.ui:10 src/widgets/preferences/window.rs:296
+msgid "_Screenshot"
+msgstr "_Zaslonska slika"
+
+#: data/resources/ui/account_add.ui:14 src/widgets/preferences/window.rs:301
+msgid "_QR Code Image"
+msgstr "Slika kode _QR"
+
+#: data/resources/ui/account_add.ui:58
+msgid "Cancel"
+msgstr "Prekliči"
+
+#: data/resources/ui/account_add.ui:64
+msgid "_Add"
+msgstr "_Dodaj"
+
+#: data/resources/ui/account_add.ui:76 src/widgets/preferences/window.rs:287
+msgid "Scan QR Code"
+msgstr "Preberi kodo QR"
+
+#: data/resources/ui/account_add.ui:114
+#: data/resources/ui/account_details_page.ui:96
+#: data/resources/ui/provider_page.ui:22
+#: data/resources/ui/providers_dialog.ui:110
+msgid "Provider"
+msgstr "Ponudnik"
+
+#: data/resources/ui/account_add.ui:115
+msgid "Token issuer"
+msgstr "Izdajatelj žetona"
+
+#: data/resources/ui/account_add.ui:129
+#: data/resources/ui/account_details_page.ui:91
+msgid "Account"
+msgstr "Račun"
+
+#: data/resources/ui/account_add.ui:135
+msgid "Token"
+msgstr "Žeton"
+
+#: data/resources/ui/account_add.ui:141
+#: data/resources/ui/account_details_page.ui:139
+#: data/resources/ui/provider_page.ui:158
+msgid "Counter"
+msgstr "Števec"
+
+#: data/resources/ui/account_add.ui:159
+#: data/resources/ui/account_details_page.ui:119
+#: data/resources/ui/provider_page.ui:133
+msgid "Algorithm"
+msgstr "Algoritem"
+
+#: data/resources/ui/account_add.ui:171
+#: data/resources/ui/account_details_page.ui:129
+#: data/resources/ui/provider_page.ui:118
+msgid "Computing Method"
+msgstr "Način računanja"
+
+#: data/resources/ui/account_add.ui:183
+#: data/resources/ui/account_details_page.ui:148
+#: data/resources/ui/provider_page.ui:149
+msgid "Period"
+msgstr "Obdobje"
+
+#: data/resources/ui/account_add.ui:184
+#: data/resources/ui/account_details_page.ui:149
+#: data/resources/ui/provider_page.ui:150
+msgid "Duration in seconds until the next password update"
+msgstr "Čas v sekundah do naslednje posodobitve gesla"
+
+#: data/resources/ui/account_add.ui:196
+#: data/resources/ui/account_details_page.ui:159
+#: data/resources/ui/provider_page.ui:167
+msgid "Digits"
+msgstr "Števke"
+
+#: data/resources/ui/account_add.ui:197
+#: data/resources/ui/account_details_page.ui:160
+#: data/resources/ui/provider_page.ui:168
+msgid "Length of the generated code"
+msgstr "Dolžina ustvarjene kode"
+
+#: data/resources/ui/account_add.ui:209
+#: data/resources/ui/account_details_page.ui:170
+#: data/resources/ui/provider_page.ui:112
+msgid "Website"
+msgstr "Spletna stran"
+
+#: data/resources/ui/account_add.ui:214
+msgid "How to Set Up"
+msgstr "Kako nastaviti program"
+
+#: data/resources/ui/account_add.ui:234
+#: data/resources/ui/preferences_camera_page.ui:4
+msgid "Camera"
+msgstr "Kamera"
+
+#: data/resources/ui/account_add.ui:246
+msgid "Create Provider"
+msgstr "Ustvari ponudnika"
+
+#: data/resources/ui/account_details_page.ui:56
+#: data/resources/ui/preferences_password_page.ui:17
+#: data/resources/ui/provider_page.ui:29
+msgid "_Save"
+msgstr "_Shrani"
+
+#: data/resources/ui/account_details_page.ui:67
+#: data/resources/ui/provider_page.ui:185
+msgid "_Delete"
+msgstr "_Izbriši"
+
+#: data/resources/ui/account_details_page.ui:175
+msgid "Help"
+msgstr "Pomoč"
+
+#: data/resources/ui/account_row.ui:23
+msgid "Increment the counter"
+msgstr "Povečaj števec"
+
+#: data/resources/ui/account_row.ui:34
+msgid "Copy PIN to clipboard"
+msgstr "Kopiraj kodo PIN v odložišče"
+
+#: data/resources/ui/account_row.ui:43
+msgid "Account details"
+msgstr "Podrobnosti računa"
+
+#: data/resources/ui/camera.ui:36
+msgid "No Camera Found"
+msgstr "Ni zaznane kamere"
+
+#: data/resources/ui/camera.ui:39
+msgid "_From a Screenshot"
+msgstr "_Iz zaslonske slike"
+
+#: data/resources/ui/keyring_error_dialog.ui:8
+msgid "Secret Service Error"
+msgstr "Napaka tajne storitve"
+
+#: data/resources/ui/keyring_error_dialog.ui:35
+msgid ""
+"Authenticator relies on a Secret Service Provider to manage your sensitive "
+"session information and an error occurred while we were trying to store or "
+"get your session."
+msgstr ""
+"Overjevalnik se pri upravljanju vaših občutljivih podatkov o seji zanaša na "
+"ponudnika tajnih storitev, pri poskusu shranjevanja ali pridobivanja vaše "
+"seje pa je prišlo do napake."
+
+#: data/resources/ui/keyring_error_dialog.ui:47
+msgid ""
+"Here are a few things that might help you fix issues with the Secret Service:"
+msgstr ""
+"Tukaj je nekaj stvari, ki vam lahko pomagajo pri reševanju težav s tajno "
+"storitvijo:"
+
+#: data/resources/ui/keyring_error_dialog.ui:64
+msgid ""
+"Make sure you have a Secret Service Provider installed, like gnome-keyring."
+msgstr ""
+"Prepričajte se, da imate nameščenega ponudnika tajnih storitev, kot je gnome-"
+"keyring."
+
+#: data/resources/ui/keyring_error_dialog.ui:83
+msgid "Check that you have a default keyring and that it is unlocked."
+msgstr "Preverite, ali imate privzeti obesek za ključe in ali je odklenjen."
+
+#: data/resources/ui/keyring_error_dialog.ui:95
+msgid ""
+"Check the application logs and your distribution’s documentation for more "
+"details."
+msgstr ""
+"Za več podrobnosti preverite zapisnike programov in dokumentacijo "
+"distribucije."
+
+#: data/resources/ui/preferences.ui:16
+msgid "General"
+msgstr "Splošno"
+
+#: data/resources/ui/preferences.ui:19
+msgid "Privacy"
+msgstr "Zasebnost"
+
+#: data/resources/ui/preferences.ui:22
+msgid "_Passphrase"
+msgstr "_Šifrirno geslo"
+
+#: data/resources/ui/preferences.ui:24
+msgid "Set up a passphrase to lock the application with"
+msgstr "Nastavi šifrirno geslo za zaklepanje uporabe programa"
+
+#: data/resources/ui/preferences.ui:37
+msgid "_Auto Lock the Application"
+msgstr "_Samodejno zakleni program"
+
+#: data/resources/ui/preferences.ui:39
+msgid "Whether to automatically lock the application"
+msgstr "Ali naj se program samodejno zaklene"
+
+#: data/resources/ui/preferences.ui:45
+msgid "Auto Lock _Timeout"
+msgstr "_Časovni zamik zaklepanja"
+
+#: data/resources/ui/preferences.ui:46
+msgid "The time in minutes"
+msgstr "Čas v minutah"
+
+#: data/resources/ui/preferences.ui:59
+msgid "Network"
+msgstr "Omrežje"
+
+#: data/resources/ui/preferences.ui:62
+msgid "_Download Favicons"
+msgstr "_Prenesi zaznamke (favikone)"
+
+#: data/resources/ui/preferences.ui:64
+msgid "Automatically attempt fetching a website icon"
+msgstr "Samodejno poskusi pridobiti ikono spletnega mesta"
+
+#: data/resources/ui/preferences.ui:69
+msgid "_Metered Connection"
+msgstr "_Omejena povezava"
+
+#: data/resources/ui/preferences.ui:71
+msgid "Fetch a website icon on a metered connection"
+msgstr "Pridobi ikono spletnega mesta prek omejene povezave"
+
+#: data/resources/ui/preferences.ui:81
+msgid "Backup/Restore"
+msgstr "Ustvari kopijo/Obnovi"
+
+#: data/resources/ui/preferences.ui:84 src/widgets/preferences/window.rs:476
+msgid "Backup"
+msgstr "Varnostna kopija"
+
+#: data/resources/ui/preferences.ui:89 src/widgets/preferences/window.rs:484
+msgid "Restore"
+msgstr "Obnovi"
+
+#: data/resources/ui/preferences_password_page.ui:4
+msgid "Create Password"
+msgstr "Ustvari geslo"
+
+#: data/resources/ui/preferences_password_page.ui:28
+msgid "Set up a Passphrase"
+msgstr "Nastavi šifrirno geslo"
+
+#: data/resources/ui/preferences_password_page.ui:29
+msgid "Authenticator will start locked after a passphrase is set."
+msgstr "Program bo po nastavitvi šifrirnega gesla vedno zagnan zaklenjen."
+
+#: data/resources/ui/preferences_password_page.ui:53
+msgid "Current Passphrase"
+msgstr "Trenutno šifrirno geslo"
+
+#: data/resources/ui/preferences_password_page.ui:59
+msgid "New Passphrase"
+msgstr "Novo šifrirno geslo"
+
+#: data/resources/ui/preferences_password_page.ui:65
+msgid "Repeat Passphrase"
+msgstr "Ponovi šifrirno geslo"
+
+#: data/resources/ui/preferences_password_page.ui:79
+#: data/resources/ui/provider_page.ui:73
+msgid "_Reset"
+msgstr "_Ponastavi"
+
+#: data/resources/ui/provider_page.ui:83
+msgid "Select a _File"
+msgstr "Izbor _datoteke"
+
+#: data/resources/ui/provider_page.ui:106
+msgid "Name"
+msgstr "Ime"
+
+#: data/resources/ui/provider_page.ui:159
+msgid "The by default value for counter-based computing method"
+msgstr "Privzeta vrednost za števčni način"
+
+#: data/resources/ui/provider_page.ui:177
+msgid "Help URL"
+msgstr "Naslov URL pomoči"
+
+#: data/resources/ui/providers_dialog.ui:10
+#: data/resources/ui/providers_dialog.ui:21
+msgid "Providers"
+msgstr "Ponudniki"
+
+#: data/resources/ui/providers_dialog.ui:31 src/widgets/providers/page.rs:209
+msgid "New Provider"
+msgstr "Nov ponudnik"
+
+#: data/resources/ui/providers_dialog.ui:38
+#: data/resources/ui/providers_dialog.ui:54 data/resources/ui/window.ui:207
+#: data/resources/ui/window.ui:228
+msgid "Search"
+msgstr "Iskanje"
+
+#: data/resources/ui/providers_dialog.ui:49 data/resources/ui/window.ui:202
+msgid "Search…"
+msgstr "Poišči …"
+
+#: data/resources/ui/providers_dialog.ui:95
+#: data/resources/ui/providers_list.ui:38
+msgid "No Results"
+msgstr "Ni najdenih zadetkov"
+
+#: data/resources/ui/providers_dialog.ui:96
+msgid "No providers matching the query were found."
+msgstr "Ni mogoče najti ponudnika na poizvedbo."
+
+#: data/resources/ui/providers_dialog.ui:141
+msgid "No Provider Selected"
+msgstr "Ponudnik ni izbran"
+
+#: data/resources/ui/providers_dialog.ui:142
+msgid "Select a provider or create a new one"
+msgstr "Izberite ponudnika ali ustvarite novega"
+
+#: data/resources/ui/providers_list.ui:39
+msgid "No accounts or providers matching the query were found."
+msgstr "Ni mogoče najti računa oziroma ponudnika za poizvedbo."
+
+#: data/resources/ui/shortcuts.ui:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Splošno"
+
+#: data/resources/ui/shortcuts.ui:14
+msgctxt "shortcut window"
+msgid "Keyboard Shortcuts"
+msgstr "Tipkovne bližnjice"
+
+#: data/resources/ui/shortcuts.ui:20
+msgctxt "shortcut window"
+msgid "Lock"
+msgstr "Zaklene program"
+
+#: data/resources/ui/shortcuts.ui:26
+msgctxt "shortcut window"
+msgid "Preferences"
+msgstr "Možnosti"
+
+#: data/resources/ui/shortcuts.ui:32
+msgctxt "shortcut window"
+msgid "Quit"
+msgstr "Konča program"
+
+#: data/resources/ui/shortcuts.ui:40
+msgctxt "shortcut window"
+msgid "Accounts"
+msgstr "Odpre račune"
+
+#: data/resources/ui/shortcuts.ui:43
+msgctxt "shortcut window"
+msgid "New Account"
+msgstr "Nov račun"
+
+#: data/resources/ui/shortcuts.ui:49
+msgctxt "shortcut window"
+msgid "Search"
+msgstr "Odpre iskalno okno"
+
+#: data/resources/ui/shortcuts.ui:55
+msgctxt "shortcut window"
+msgid "Show Providers List"
+msgstr "Pokaže seznam ponudnikov"
+
+#: data/resources/ui/window.ui:6
+msgid "_Lock the Application"
+msgstr "_Zakleni program"
+
+#: data/resources/ui/window.ui:12
+msgid "P_roviders"
+msgstr "_Ponudniki"
+
+#: data/resources/ui/window.ui:16
+msgid "_Preferences"
+msgstr "_Nastavitve"
+
+#: data/resources/ui/window.ui:22
+msgid "_Keyboard Shortcuts"
+msgstr "_Tipkovne bližnjice"
+
+#: data/resources/ui/window.ui:26
+msgid "_About Authenticator"
+msgstr "_O Programu"
+
+#: data/resources/ui/window.ui:66
+msgid "Authenticator is Locked"
+msgstr "Overjevalnik je zaklenjen"
+
+#: data/resources/ui/window.ui:92
+msgid "_Unlock"
+msgstr "_Odkleni"
+
+#: data/resources/ui/window.ui:122
+msgid "Accounts"
+msgstr "Računi"
+
+#: data/resources/ui/window.ui:137 data/resources/ui/window.ui:176
+msgid "New Account"
+msgstr "Nov račun"
+
+#: data/resources/ui/window.ui:145 data/resources/ui/window.ui:222
+msgid "Main Menu"
+msgstr "Glavni meni"
+
+#: data/resources/ui/window.ui:153
+msgid "No Accounts"
+msgstr "Ni odprtih računov"
+
+#: data/resources/ui/window.ui:154
+msgid "Add an account or scan a QR code first."
+msgstr "Najprej dodajte račun oziroma uporabite kodo QR."
+
+#: src/application.rs:77
+msgid "Accounts restored successfully"
+msgstr "Računi so bili uspešno obnovljeni"
+
+#: src/application.rs:103
+msgid "translator-credits"
+msgstr ""
+"Matej Urbančič <mateju@src.gnome.org>,Martin Srebotnjak <miles@filmsi.net>"
+
+#: src/application.rs:392 src/widgets/accounts/row.rs:46
+msgid "One-Time password copied"
+msgstr "Kopirano enkratno geslo"
+
+#: src/application.rs:393
+msgid "Password was copied successfully"
+msgstr "Geslo je bilo uspešno kopirano"
+
+#. Translators: This is for making a backup for the aegis Android app.
+#. Translators: This is for restoring a backup from the aegis Android app.
+#: src/backup/aegis.rs:399 src/backup/aegis.rs:439
+msgid "Aegis"
+msgstr "Aegis"
+
+#: src/backup/aegis.rs:403
+msgid "Into a JSON file containing plain-text or encrypted fields"
+msgstr ""
+"V datoteko JSON, ki vsebuje polja z navadnim besedilom ali šifrirana polja"
+
+#: src/backup/aegis.rs:443
+msgid "From a JSON file containing plain-text or encrypted fields"
+msgstr "Iz datoteke JSON z navadnim besedilom ali šifriranimi polji"
+
+#. Translators: This is for making a backup for the andOTP Android app.
+#: src/backup/andotp.rs:79
+msgid "a_ndOTP"
+msgstr "a_ndOTP"
+
+#: src/backup/andotp.rs:83
+msgid "Into a plain-text JSON file"
+msgstr "V besedilno datoteko JSON"
+
+#. Translators: This is for restoring a backup from the andOTP Android app.
+#: src/backup/andotp.rs:127
+msgid "an_dOTP"
+msgstr "an_dOTP"
+
+#: src/backup/andotp.rs:131 src/backup/bitwarden.rs:124 src/backup/legacy.rs:45
+msgid "From a plain-text JSON file"
+msgstr "Iz besedne datoteke JSON"
+
+#: src/backup/bitwarden.rs:47
+msgid "Unknown account"
+msgstr "Neznan račun"
+
+#: src/backup/bitwarden.rs:55
+msgid "Unknown issuer"
+msgstr "Naznan izdajatelj"
+
+#. Translators: This is for restoring a backup from Bitwarden.
+#: src/backup/bitwarden.rs:120
+msgid "_Bitwarden"
+msgstr "_Bitwarden"
+
+#: src/backup/freeotp.rs:18
+msgid "_Authenticator"
+msgstr "_Overjevalnik"
+
+#: src/backup/freeotp.rs:22
+msgid "Into a plain-text file, compatible with FreeOTP+"
+msgstr "V besedno datoteko, skladno z zapisom FreeTOP+"
+
+#: src/backup/freeotp.rs:51
+msgid "A_uthenticator"
+msgstr "O_verjevalnik"
+
+#: src/backup/freeotp.rs:55
+msgid "From a plain-text file, compatible with FreeOTP+"
+msgstr "Iz besedne datoteke, skladne z zapisom FreeTOP+"
+
+#: src/backup/freeotp_json.rs:87
+msgid "FreeOTP+"
+msgstr "FreeOTP+"
+
+#: src/backup/freeotp_json.rs:91
+msgid "From a plain-text JSON file, compatible with FreeOTP+"
+msgstr "Iz besedne datoteke JSON, skladne z zapisom FreeTOP+"
+
+#: src/backup/google.rs:19
+msgid "Google Authenticator"
+msgstr "Overjevalnik Google"
+
+#: src/backup/google.rs:23
+msgid "From a QR code generated by Google Authenticator"
+msgstr "Iz QR-kode, ki jo ustvari Overjevalnik Google"
+
+#. Translators: this is for restoring a backup from the old Authenticator
+#. release
+#: src/backup/legacy.rs:41
+msgid "Au_thenticator (Legacy)"
+msgstr "Ove_rjevalnik (opuščeno)"
+
+#: src/backup/raivootp.rs:101
+msgid "Raivo OTP"
+msgstr "Raivo OTP"
+
+#: src/backup/raivootp.rs:105
+msgid "From a ZIP export generated by Raivo OTP"
+msgstr "Iz izvoza ZIP, ki ga ustvari Raivo OTP"
+
+#: src/models/algorithm.rs:60
+msgid "Counter-based"
+msgstr "Števčno"
+
+#: src/models/algorithm.rs:61
+msgid "Time-based"
+msgstr "Časovno"
+
+#. Translators: Steam refers to the gaming application by Valve.
+#: src/models/algorithm.rs:63
+msgid "Steam"
+msgstr "S Steam"
+
+#: src/models/algorithm.rs:126
+msgid "SHA-1"
+msgstr "SHA-1"
+
+#: src/models/algorithm.rs:127
+msgid "SHA-256"
+msgstr "SHA-256"
+
+#: src/models/algorithm.rs:128
+msgid "SHA-512"
+msgstr "SHA-512"
+
+#: src/widgets/accounts/add.rs:269 src/widgets/preferences/window.rs:414
+#: src/widgets/providers/page.rs:292
+msgid "Image"
+msgstr "Slika"
+
+#: src/widgets/accounts/add.rs:277 src/widgets/preferences/window.rs:422
+msgid "Select QR Code"
+msgstr "Izberite kodo QR"
+
+#: src/widgets/accounts/add.rs:295
+msgid "Invalid Token"
+msgstr "Neveljaven žeton"
+
+#: src/widgets/accounts/details.rs:127
+msgid "Are you sure you want to delete the account?"
+msgstr "Ali ste prepričani, da želite izbrisati račun?"
+
+#: src/widgets/accounts/details.rs:128
+msgid "This action is irreversible"
+msgstr "To dejanje je nepovratno"
+
+#: src/widgets/accounts/details.rs:132
+msgid "No"
+msgstr "Ne"
+
+#: src/widgets/accounts/details.rs:132
+msgid "Yes"
+msgstr "Da"
+
+#: src/widgets/preferences/password_page.rs:172
+#: src/widgets/preferences/password_page.rs:214
+msgid "Wrong Passphrase"
+msgstr "Napačno šifrirno geslo"
+
+#: src/widgets/preferences/window.rs:191 src/widgets/preferences/window.rs:263
+msgid "Key / Passphrase"
+msgstr "Ključ / Šifrirno geslo"
+
+#: src/widgets/preferences/window.rs:202 src/widgets/preferences/window.rs:275
+msgid "Select File"
+msgstr "Izbor datoteke"
+
+#: src/widgets/preferences/window.rs:226
+msgid "Failed to create a backup"
+msgstr "Ustvarjanje varnostne kopije je spodletelo"
+
+#: src/widgets/preferences/window.rs:338
+msgid "Failed to restore from camera"
+msgstr "Obnovitev iz kamere je spodletela"
+
+#: src/widgets/preferences/window.rs:349
+msgid "Failed to restore from a screenshot"
+msgstr "Obnovitev s posnetka zaslona je spodletela"
+
+#: src/widgets/preferences/window.rs:359
+msgid "Failed to restore from an image"
+msgstr "Obnovitev iz slike je spodletela"
+
+#: src/widgets/preferences/window.rs:372
+msgid "Failed to restore from a file"
+msgstr "Obnovitev iz datoteke je spodletela"
+
+#: src/widgets/providers/dialog.rs:235
+msgid "Provider created successfully"
+msgstr "Ponudnik je bil uspešno ustvarjen"
+
+#: src/widgets/providers/dialog.rs:245
+msgid "Provider updated successfully"
+msgstr "Ponudnik je uspešno posodobljen"
+
+#: src/widgets/providers/dialog.rs:261
+msgid "Provider removed successfully"
+msgstr "Ponudnik je uspešno odstranjen"
+
+#: src/widgets/providers/page.rs:186
+msgid "Editing Provider: {}"
+msgstr "Urejanje ponudnika: {}"
+
+#: src/widgets/providers/page.rs:325
+msgid "The provider has accounts assigned to it, please remove them first"
+msgstr "Ponudnik že ima dodeljene račune, najprej je treba te odstraniti."
+
+#: src/widgets/window.rs:115
+msgid "Wrong Password"
+msgstr "Napačno geslo"
