@@ -10,16 +10,17 @@ msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
 "issues\n"
-"POT-Creation-Date: 2022-11-30 09:38+0000\n"
-"PO-Revision-Date: 2023-09-11 19:17+0200\n"
+"POT-Creation-Date: 2023-09-11 17:18+0000\n"
+"PO-Revision-Date: 2024-01-04 21:03+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups."
+"com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
 "X-Generator: Poedit 2.2.1\n"
 
@@ -28,19 +29,15 @@ msgid "EteSync"
 msgstr "EteSync"
 
 #: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
-#, fuzzy
 msgid "For accessing EteSync servers using EteSync C API"
-msgstr "Za dostopanje do strežnikov EteSync z uporabo API-ja C EteSync"
+msgstr "Za dostop do strežnikov EteSync z uporabo API-ja C EteSync"
 
 #: ../src/common/e-etesync-connection.c:903
 #: ../src/common/e-etesync-connection.c:1002
-#, fuzzy
-#| msgid "Credentials not found"
 msgid "Item not found"
-msgstr "Poveril ni mogoče najti"
+msgstr "Element ni bil najden"
 
 #: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
-#, fuzzy
 msgid "EteSync secret not found"
 msgstr "Skrivnosti EteSync ni mogoče najti"
 
@@ -50,12 +47,11 @@ msgid "Failed to obtain access token for account “%s”"
 msgstr "Pridobivanje žetona za dostop računa »%s« je spodletelo"
 
 #: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
-#, fuzzy
 msgid "EteSync account authentication request"
 msgstr "Zahteva za overitev računa EteSync"
 
 #: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
-#, fuzzy, c-format
+#, c-format
 msgid "Please enter the correct credentials for account “%s”."
 msgstr "Vnesite pravilne poverilnice za račun »%s«."
 
@@ -95,7 +91,6 @@ msgid "Credentials not found"
 msgstr "Poveril ni mogoče najti"
 
 #: ../src/evolution/e-etesync-config-lookup.c:58
-#, fuzzy
 msgid "Look up for an EteSync account"
 msgstr "Poiščite račun EteSync"
 
@@ -104,7 +99,6 @@ msgid "EteSync account"
 msgstr "Račun EteSync"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-#, fuzzy
 msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
 msgstr "EteSync po celi poti šifrira vaše stike, koledarje in opravila."
 
