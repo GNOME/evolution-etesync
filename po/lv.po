@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/issues"
 "\n"
-"POT-Creation-Date: 2023-10-09 14:48+0000\n"
-"PO-Revision-Date: 2024-01-01 22:20+0200\n"
+"POT-Creation-Date: 2024-01-01 20:22+0000\n"
+"PO-Revision-Date: 2024-03-09 16:08+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
 "Language: lv\n"
@@ -27,8 +27,8 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "Piekļūšanai EteSync serveriem, izmantojot EteSync C API"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
 msgid "Item not found"
 msgstr "Vienums nav atrasts"
 
@@ -94,8 +94,10 @@ msgid "EteSync account"
 msgstr "EteSync konts"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
-msgstr "EteSync veic pilnīgu jūsu kontaktu, kalendāru un uzdevumu šifrēšanu."
+#| msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
+msgstr ""
+"EteSync veic pilnīgu jūsu kontaktu, kalendāru, memo un uzdevumu šifrēšanu."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
 msgid "Etebase server not found."
@@ -114,6 +116,6 @@ msgid ""
 "Malformed server name, please make sure to enter a full url (e.g https://"
 "etesync.example.com)."
 msgstr ""
-"Slikti noformēts servera nosaukums, lūdzu, pārliecinieties, ka ir ievadīts"
-" pilns url (e.g https://etesync.example.com)."
+"Slikti noformēts servera nosaukums, lūdzu, pārliecinieties, ka ir ievadīts "
+"pilns url (e.g https://etesync.example.com)."
 
