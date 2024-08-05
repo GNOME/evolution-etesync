@@ -1,0 +1,118 @@
+# Finnish translation for evolution-etesync.
+# Copyright (C) 2024 evolution-etesync's COPYRIGHT HOLDER
+# This file is distributed under the same license as the evolution-etesync package.
+# Jiri Grönroos <jiri.gronroos@iki.fi>,  2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: evolution-etesync master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/nourmat/evolution-etesync/-/"
+"issues/\n"
+"POT-Creation-Date: 2024-07-29 17:41+0000\n"
+"PO-Revision-Date: 2024-08-05 20:30+0300\n"
+"Last-Translator: \n"
+"Language-Team: Finnish <Finnish>\n"
+"Language: fi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
+msgid "EteSync"
+msgstr "EteSync"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
+msgid "For accessing EteSync servers using EteSync C API"
+msgstr ""
+
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
+msgid "Item not found"
+msgstr ""
+
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr ""
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
+#, c-format
+msgid "Failed to obtain access token for account “%s”"
+msgstr ""
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
+msgid "EteSync account authentication request"
+msgstr "EteSync-tilin tunnistautumispyyntö"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
+#, c-format
+msgid "Please enter the correct credentials for account “%s”."
+msgstr "Anna oikeat kirjautumistiedot tilille “%s”."
+
+#. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
+#, c-format
+msgid ""
+"\n"
+"(host: %s)"
+msgstr ""
+"\n"
+"(palvelin: %s)"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
+msgid "_Cancel"
+msgstr "_Peru"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
+msgid "_OK"
+msgstr "_OK"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
+msgid "_User Name:"
+msgstr "_Käyttäjätunnus:"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
+msgid "_Password:"
+msgstr "_Salasana:"
+
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "_Lisää tämä salasana avainnippuusi"
+
+#: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
+msgid "Credentials not found"
+msgstr "Kirjautumistietoja ei löytynyt"
+
+#: ../src/evolution/e-etesync-config-lookup.c:58
+msgid "Look up for an EteSync account"
+msgstr "Etsi EteSync-tiliä"
+
+#: ../src/evolution/e-etesync-config-lookup.c:78
+msgid "EteSync account"
+msgstr "EteSync-tili"
+
+#: ../src/evolution/e-etesync-config-lookup.c:79
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
+msgstr ""
+"EteSync tekee päästä päähän -salauksen yhteystiedoillesi, kalentereillesi, "
+"muistioillesi ja tehtävillesi."
+
+#: ../src/evolution/e-etesync-config-lookup.c:140
+msgid "Etebase server not found."
+msgstr "Etebase-palvelinta ei löytynyt."
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "Palvelimeen yhdistäminen epäonnistui."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Requires password to continue."
+msgstr "Jatkaminen vaatii salasanan."
+
+#: ../src/evolution/e-etesync-config-lookup.c:182
+msgid ""
+"Malformed server name, please make sure to enter a full url (e.g https://"
+"etesync.example.com)."
+msgstr ""
