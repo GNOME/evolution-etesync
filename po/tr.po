@@ -1,18 +1,19 @@
 # Turkish translation for evolution-etesync.
-# Copyright (C) 2020 evolution-etesync's COPYRIGHT HOLDER
+# Copyright (C) 2020-2024 evolution-etesync's COPYRIGHT HOLDER
 # This file is distributed under the same license as the evolution-etesync package.
+#
 # Muhammed Celil Altıparmak <vublayancanavar@gmail.com>, 2020.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2021, 2022.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2021, 2022, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: evolution-etesync master\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
-"issues\n"
-"POT-Creation-Date: 2023-10-06 03:38+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/nourmat/evolution-etesync/-/"
+"issues/\n"
+"POT-Creation-Date: 2024-08-05 17:30+0000\n"
 "PO-Revision-Date: 2023-10-14 12:46+0300\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
-"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
