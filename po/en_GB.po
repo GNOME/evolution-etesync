@@ -6,10 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: evolution-etesync gnome-3-38\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/evolution-etesync/"
-"issues\n"
-"POT-Creation-Date: 2024-01-04 20:04+0000\n"
-"PO-Revision-Date: 2024-03-08 11:04+0000\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/nourmat/evolution-etesync/-/"
+"issues/\n"
+"POT-Creation-Date: 2024-03-08 13:55+0000\n"
+"PO-Revision-Date: 2024-03-11 17:35+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: British English <en_GB@li.org>\n"
 "Language: en_GB\n"
@@ -27,8 +27,8 @@ msgstr "EteSync"
 msgid "For accessing EteSync servers using EteSync C API"
 msgstr "For accessing EteSync servers using EteSync C API"
 
-#: ../src/common/e-etesync-connection.c:903
-#: ../src/common/e-etesync-connection.c:1002
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
 msgid "Item not found"
 msgstr "Item not found"
 
@@ -94,8 +94,10 @@ msgid "EteSync account"
 msgstr "EteSync account"
 
 #: ../src/evolution/e-etesync-config-lookup.c:79
-msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
-msgstr "EteSync end-to-end encrypts your contacts, calendars and tasks."
+#| msgid "EteSync end-to-end encrypts your contacts, calendars and tasks."
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
+msgstr ""
+"EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
 
 #: ../src/evolution/e-etesync-config-lookup.c:140
 msgid "Etebase server not found."
