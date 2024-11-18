@@ -1,6 +1,6 @@
 # Evolution EteSync
 
-[EteSync](https://www.etesync.com/) plugin for [Evolution](https://wiki.gnome.org/Apps/Evolution/).
+[EteSync](https://www.etesync.com/) plugin for [Evolution](https://gitlab.gnome.org/GNOME/evolution/-/wikis/home).
 
 ## BUILD
 
@@ -14,6 +14,16 @@ $ sudo apt install libical2-dev/
     libedata-book1.2-dev
     evolution-data-server-dev
     evolution-dev
+```
+
+## libetebase prerequisite
+Download libetebase from GitHub: https://github.com/etesync/libetebase and compile it as written in its README.md file.
+
+In short:
+```sh
+   git clone https://github.com/etesync/libetebase.git
+   cd ./libetebase
+   make && make install
 ```
 
 ## Module installation
