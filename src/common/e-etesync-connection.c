@@ -745,7 +745,7 @@ e_etesync_connection_list_existing_sync (EEteSyncConnection *connection,
 								EtebaseItemMetadata *item_meta;
 								const gchar *summary;
 								gchar *ical_str;
-								glong now;
+								time_t now;
 
 								item_meta = etebase_item_get_meta (item);
 								summary = etebase_item_metadata_get_name (item_meta);
@@ -892,7 +892,7 @@ e_etesync_connection_get_changes_sync (EEteSyncConnection *connection,
 							EtebaseItemMetadata *item_meta;
 							const gchar *summary;
 							gchar *ical_str;
-							glong now;
+							time_t now;
 
 							item_meta = etebase_item_get_meta (item);
 							summary = etebase_item_metadata_get_name (item_meta);
