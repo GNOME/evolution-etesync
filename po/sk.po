@@ -1,0 +1,120 @@
+# Slovak translation for evolution-etesync.
+# Copyright (C) 2025 evolution-etesync's COPYRIGHT HOLDER
+# This file is distributed under the same license as the evolution-etesync package.
+# Dušan Kazik <prescott66@gmail.com>,  2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: evolution-etesync gnome-3-38\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/nourmat/evolution-etesync/-/"
+"issues/\n"
+"POT-Creation-Date: 2025-08-10 13:21+0000\n"
+"PO-Revision-Date: 2025-08-14 12:19+0200\n"
+"Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
+"Language-Team: Slovak <sk@li.org>\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
+"X-Generator: Poedit 3.6\n"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
+msgid "EteSync"
+msgstr "EteSync"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
+msgid "For accessing EteSync servers using EteSync C API"
+msgstr "Na prístup k serverom služby EteSync použitím rozhrania API Etesync C."
+
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
+msgid "Item not found"
+msgstr "Položka sa nenašla"
+
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "Tajomstvo služby EteSync sa nenašlo"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
+#, c-format
+msgid "Failed to obtain access token for account “%s”"
+msgstr "Zlyhalo získanie prístupového tokenu pre účet „%s“"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
+msgid "EteSync account authentication request"
+msgstr "Požiadavka na overenie totožnosti účtu služby EteSync"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
+#, c-format
+msgid "Please enter the correct credentials for account “%s”."
+msgstr "Prosím, zadajte správne poverenia pre účet „%s“."
+
+#. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
+#, c-format
+msgid ""
+"\n"
+"(host: %s)"
+msgstr ""
+"\n"
+"(hostiteľ: %s)"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
+msgid "_Cancel"
+msgstr "_Zrušiť"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
+msgid "_OK"
+msgstr "_OK"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
+msgid "_User Name:"
+msgstr "Meno po_užívateľa:"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
+msgid "_Password:"
+msgstr "_Heslo:"
+
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "_Pridať toto heslo do vašej kľúčenky"
+
+#: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
+msgid "Credentials not found"
+msgstr "Poverenia sa nenašli"
+
+#: ../src/evolution/e-etesync-config-lookup.c:58
+msgid "Look up for an EteSync account"
+msgstr "Hľadanie účtu služby EteSync"
+
+#: ../src/evolution/e-etesync-config-lookup.c:78
+msgid "EteSync account"
+msgstr "Účet služby EteSync"
+
+#: ../src/evolution/e-etesync-config-lookup.c:79
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
+msgstr ""
+"Služba EteSync šifruje spôsobom end-to-end vaše kontakty, kalendáre, "
+"poznámky a úlohy."
+
+#: ../src/evolution/e-etesync-config-lookup.c:140
+msgid "Etebase server not found."
+msgstr "Server Etebase sa nenašiel."
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "Zlyhalo pripájanie k serveru."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Requires password to continue."
+msgstr "Na pokračovanie sa vyžaduje heslo."
+
+#: ../src/evolution/e-etesync-config-lookup.c:182
+msgid ""
+"Malformed server name, please make sure to enter a full url (e.g https://"
+"etesync.example.com)."
+msgstr ""
+"Poškodený názov servera. Prosím, uistite sa, že ste zadali celý odkaz URL "
+"(napr. https://etesync.priklad.sk)."
