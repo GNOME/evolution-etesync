@@ -274,7 +274,11 @@ ebb_etesync_save_contact_sync (EBookMetaBackend *meta_backend,
 
 	g_rec_mutex_lock (&bbetesync->priv->etesync_lock);
 
+	#if EDS_CHECK_VERSION(3, 59, 1)
+	content = e_vcard_to_string (E_VCARD (contact));
+	#else
 	content = e_vcard_to_string (E_VCARD (contact), EVC_FORMAT_VCARD_30);
+	#endif
 	uid = e_contact_get_const (contact, E_CONTACT_UID);
 
 	if (overwrite_existing) {
@@ -365,7 +369,11 @@ ebb_etesync_create_modify_contacts_sync (EBookBackendSync *backend,
 				g_free (uid);
 			}
 
+			#if EDS_CHECK_VERSION(3, 59, 1)
+			content[ii] = e_vcard_to_string (E_VCARD (contact));
+			#else
 			content[ii] = e_vcard_to_string (E_VCARD (contact), EVC_FORMAT_VCARD_30);
+			#endif
 			batch_contacts = g_slist_prepend (batch_contacts, contact);
 		}
 
@@ -531,7 +539,11 @@ ebb_etesync_remove_contacts_sync (EBookBackendSync *backend,
 
 			e_book_cache_get_contact (book_cache, id, FALSE, &contact, cancellable, NULL);
 
+			#if EDS_CHECK_VERSION(3, 59, 1)
+			content[ii] = e_vcard_to_string (E_VCARD (contact));
+			#else
 			content[ii] = e_vcard_to_string (E_VCARD (contact), EVC_FORMAT_VCARD_30);
+			#endif
 			batch_contacts_id = g_slist_prepend (batch_contacts_id, g_strdup (id));
 
 			g_object_unref (contact);
