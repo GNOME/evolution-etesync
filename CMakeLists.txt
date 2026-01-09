@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.15)
 cmake_policy(VERSION 3.15)
 
 project(evolution-etesync
-	VERSION 1.1.2
+	VERSION 1.1.3
 	LANGUAGES C)
 set(PROJECT_BUGREPORT "https://gitlab.gnome.org/GNOME/evolution-etesync/issues/")
 
