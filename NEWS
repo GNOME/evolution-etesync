@@ -1,3 +1,30 @@
+Evolution-EteSync 1.1.2 2026-01-09
+----------------------------------
+
+Miscellaneous:
+	DOAP: Update mailing-list URL; add link to Discourse support-forum (Andre Klapper)
+	metainfo.xml.in: Update homepage URI from GNOME wiki to GNOME GitLab (Andre Klapper)
+	build: Correct flags for code-compiles checks
+	src/common/e-etesync-connection.c: Replace glong by time_t (Samuel Kalbfleisch)
+	Upgrade minimum required cmake to 3.15 (Roman Kovtyukh)
+	Adapt to evolution-data-server 3.59.1 EVCard API changes
+	Update cmake_uninstall.cmake.in file to conform to newer CMake
+
+Translations:
+	Aleksandr Melman (ru)
+	Alexandre Franke (fr)
+	Andi Chandler (en_GB)
+	Boyuan Yang (zh_CN)
+	Danial Behzadi (fa)
+	Dušan Kazik (sk)
+	Jiri Grönroos (fi)
+	Jordi Mas (ca)
+	Martin (sl)
+	Rūdolfs Mazurs (lv)
+	Sabri Ünal (tr)
+	Scrambled 777 (hi)
+	twlvnn kraftwerk (bg)
+
 Evolution-EteSync 1.1.1 2023-03-03
 ----------------------------------
 
