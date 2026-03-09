@@ -1,0 +1,120 @@
+# Kazakh translation for evolution-etesync.
+# Copyright (C) 2026 evolution-etesync's COPYRIGHT HOLDER
+# This file is distributed under the same license as the evolution-etesync package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: evolution-etesync master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/nourmat/evolution-etesync/-/"
+"issues/\n"
+"POT-Creation-Date: 2026-02-10 13:15+0000\n"
+"PO-Revision-Date: 2026-03-07 08:13+0500\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <kk_KZ@googlegroups.com>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:1
+msgid "EteSync"
+msgstr "EteSync"
+
+#: ../org.gnome.Evolution-etesync.metainfo.xml.in.h:2
+msgid "For accessing EteSync servers using EteSync C API"
+msgstr "EteSync C API көмегімен EteSync серверлеріне қол жеткізу үшін"
+
+#: ../src/common/e-etesync-connection.c:1026
+#: ../src/common/e-etesync-connection.c:1143
+msgid "Item not found"
+msgstr "Элемент табылмады"
+
+#: ../src/common/e-etesync-service.c:53 ../src/common/e-etesync-service.c:82
+msgid "EteSync secret not found"
+msgstr "EteSync құпиясы табылмады"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:97
+#, c-format
+msgid "Failed to obtain access token for account “%s”"
+msgstr "«%s» тіркелгісі үшін қол жеткізу токенін алу сәтсіз аяқталды"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:154
+msgid "EteSync account authentication request"
+msgstr "EteSync тіркелгісінің аутентификация сұранысы"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:157
+#, c-format
+msgid "Please enter the correct credentials for account “%s”."
+msgstr "«%s» тіркелгісі үшін дұрыс тіркелгі мәліметтерін енгізіңіз."
+
+#. Translators: This is part of a credential prompt, constructing for example: "Please enter the correct credentials for account “%s”.\n(host: hostname)"
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:161
+#, c-format
+msgid ""
+"\n"
+"(host: %s)"
+msgstr ""
+"\n"
+"(хост: %s)"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:213
+msgid "_Cancel"
+msgstr "Ба_с тарту"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:214
+msgid "_OK"
+msgstr "_ОК"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:326
+msgid "_User Name:"
+msgstr "Па_йдаланушы аты:"
+
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:338
+msgid "_Password:"
+msgstr "_Пароль:"
+
+#. Remember password check
+#: ../src/credentials/e-credentials-prompter-impl-etesync.c:353
+msgid "_Add this password to your keyring"
+msgstr "Бұл парольді кілттер бауына қос_у"
+
+#: ../src/credentials/e-source-credentials-provider-impl-etesync.c:156
+msgid "Credentials not found"
+msgstr "Тіркелгі мәліметтері табылмады"
+
+#: ../src/evolution/e-etesync-config-lookup.c:58
+msgid "Look up for an EteSync account"
+msgstr "EteSync тіркелгісін іздеу"
+
+#: ../src/evolution/e-etesync-config-lookup.c:78
+msgid "EteSync account"
+msgstr "EteSync тіркелгісі"
+
+#: ../src/evolution/e-etesync-config-lookup.c:79
+msgid "EteSync end-to-end encrypts your contacts, calendars, memos and tasks."
+msgstr ""
+"EteSync контактілеріңізді, күнтізбелеріңізді, жазбаларыңызды және "
+"тапсырмаларыңызды бастан-аяқ шифрлейді."
+
+#: ../src/evolution/e-etesync-config-lookup.c:140
+msgid "Etebase server not found."
+msgstr "Etebase сервері табылмады."
+
+#: ../src/evolution/e-etesync-config-lookup.c:142
+msgid "Failed connecting to server."
+msgstr "Серверге қосылу сәтсіз аяқталды."
+
+#: ../src/evolution/e-etesync-config-lookup.c:147
+msgid "Requires password to continue."
+msgstr "Жалғастыру үшін пароль қажет."
+
+#: ../src/evolution/e-etesync-config-lookup.c:182
+msgid ""
+"Malformed server name, please make sure to enter a full url (e.g https://"
+"etesync.example.com)."
+msgstr ""
+"Сервер атауы қате, толық url енгізгеніңізге көз жеткізіңіз (мысалы, https://"
+"etesync.example.com)."
